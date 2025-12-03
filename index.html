@@ -146,12 +146,7 @@
 
                     <select id="branch" name="branch" required class="w-full p-3 rounded bg-black/50 border border-zinc-600 text-sm text-white focus:outline-none focus:border-yellow-500">
                         <option value="" disabled selected>상담받을 지점 선택 (필수)</option>
-                        <option value="세종 소담점">세종 소담점</option>
-                        <option value="세종 종촌점">세종 종촌점</option>
-                        <option value="대전 목동점">대전 목동점</option>
-                        <option value="대전 복수점">대전 복수점</option>
-                        <option value="대전 용전점">대전 용전점</option>
-                        <option value="대전 반석점">대전 반석점</option>
+                        <!-- 옵션은 자바스크립트에서 로드됨 -->
                     </select>
 
                     <div class="space-y-2 pt-2 border-t border-zinc-700">
@@ -294,11 +289,14 @@
                     <div><label class="block text-xs font-bold text-slate-500 mb-1">배경 이미지 URL</label><input type="text" id="conf-heroImage" class="w-full border p-2 rounded"></div>
                 </div>
 
-                <!-- [추가됨] 매장 연락처 관리 섹션 -->
+                <!-- [수정됨] 매장 관리 섹션 (이메일 포함) -->
                 <div class="space-y-4 border-t pt-4">
-                    <h2 class="text-lg font-bold border-b pb-2 flex items-center text-slate-700"><i data-lucide="phone" class="mr-2 w-5"></i> 매장 연락처 관리</h2>
-                    <div class="grid md:grid-cols-2 gap-4" id="branch-inputs">
+                    <h2 class="text-lg font-bold border-b pb-2 flex items-center text-slate-700"><i data-lucide="store" class="mr-2 w-5"></i> 매장 정보 관리 (전화번호 & 이메일)</h2>
+                    <div id="branch-inputs" class="space-y-4">
                         <!-- 자바스크립트로 자동 생성됨 -->
+                    </div>
+                    <div class="text-xs text-slate-500 bg-slate-50 p-2 rounded">
+                        * 여기에 입력한 이메일로 고객 상담 내역이 발송됩니다.
                     </div>
                 </div>
 
@@ -332,30 +330,20 @@
     <script type="module">
         lucide.createIcons();
 
-        // ⚠️ [중요] 지점별 이메일 (이건 코드에서만 수정 가능)
-        const BRANCH_EMAILS = {
-            "세종 소담점": "sodam_manager@gmail.com",
-            "세종 종촌점": "jongchon_manager@gmail.com",
-            "대전 목동점": "mokdong_manager@gmail.com",
-            "대전 복수점": "boksu_manager@gmail.com",
-            "대전 용전점": "yongjeon_manager@gmail.com",
-            "대전 반석점": "banseok_manager@gmail.com"
-        };
-
-        // 기본 설정값 (전화번호 포함)
+        // 기본 설정값
         const DEFAULT_CONFIG = {
             title: "KT 가우리엔터프라이즈",
             subtitle: "우리 동네 1등 혜택! 인터넷+TV+휴대폰 최대 지원",
             heroImage: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=2000",
             
-            // 매장별 전화번호 초기값
+            // [지점 정보: 전화번호와 이메일을 모두 여기서 관리]
             branches: {
-                "세종 소담점": "010-0000-0000",
-                "세종 종촌점": "010-0000-0000",
-                "대전 목동점": "010-0000-0000",
-                "대전 복수점": "010-0000-0000",
-                "대전 용전점": "010-0000-0000",
-                "대전 반석점": "010-0000-0000"
+                "세종 소담점": { phone: "010-0000-0000", email: "sodam@test.com" },
+                "세종 종촌점": { phone: "010-0000-0000", email: "jongchon@test.com" },
+                "대전 목동점": { phone: "010-0000-0000", email: "mokdong@test.com" },
+                "대전 복수점": { phone: "010-0000-0000", email: "boksu@test.com" },
+                "대전 용전점": { phone: "010-0000-0000", email: "yongjeon@test.com" },
+                "대전 반석점": { phone: "010-0000-0000", email: "banseok@test.com" }
             },
             
             prod1Name: "Galaxy S25", prod1Badge: "최신기종", prod1Price: "0원",
@@ -368,7 +356,6 @@
         function loadConfig() {
             const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
             
-            // 화면 업데이트
             safeSetHTML('main-title', config.title); 
             safeSetText('main-subtitle', config.subtitle); 
             safeSetSrc('hero-image', config.heroImage);
@@ -384,31 +371,50 @@
             safeSetValue('conf-prod1-name', config.prod1Name); safeSetValue('conf-prod1-badge', config.prod1Badge); safeSetValue('conf-prod1-price', config.prod1Price); safeSetValue('conf-prod1-img', config.prod1Img);
             safeSetValue('conf-prod2-name', config.prod2Name); safeSetValue('conf-prod2-badge', config.prod2Badge); safeSetValue('conf-prod2-price', config.prod2Price); safeSetValue('conf-prod2-img', config.prod2Img);
 
-            // 매장 연락처 입력폼 생성 및 채우기
+            // [수정됨] 지점 선택 박스 (고객용) 업데이트
+            const branchSelect = document.getElementById('branch');
+            if (branchSelect) {
+                branchSelect.innerHTML = '<option value="" disabled selected>상담받을 지점 선택 (필수)</option>' + 
+                    Object.keys(config.branches).map(b => `<option value="${b}">${b}</option>`).join('');
+            }
+
+            // [수정됨] 매장 정보 입력폼 (관리자용) - 이메일 입력란 추가
             const branchInputs = document.getElementById('branch-inputs');
             if (branchInputs) {
                 branchInputs.innerHTML = Object.keys(config.branches).map(b => `
-                    <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-1">${b}</label>
-                        <input type="text" class="branch-input w-full border p-2 rounded text-sm" data-branch="${b}" value="${config.branches[b]}">
+                    <div class="border p-3 rounded-lg bg-slate-50 branch-group" data-branch="${b}">
+                        <label class="block text-sm font-bold text-slate-700 mb-2 border-b pb-1">${b}</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-xs text-slate-500 block mb-1">전화번호</label>
+                                <input type="text" class="branch-phone w-full border p-2 rounded text-xs" value="${config.branches[b].phone}">
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-500 block mb-1">담당자 이메일</label>
+                                <input type="text" class="branch-email w-full border p-2 rounded text-xs" value="${config.branches[b].email || ''}">
+                            </div>
+                        </div>
                     </div>
                 `).join('');
             }
         }
 
         window.saveConfig = function() {
-            // 매장 연락처 수집
-            const branchInputs = document.querySelectorAll('.branch-input');
+            // 매장 정보 수집 (전화번호 + 이메일)
+            const branchGroups = document.querySelectorAll('.branch-group');
             const branches = {};
-            branchInputs.forEach(input => {
-                branches[input.dataset.branch] = input.value;
+            branchGroups.forEach(group => {
+                const name = group.dataset.branch;
+                const phone = group.querySelector('.branch-phone').value;
+                const email = group.querySelector('.branch-email').value;
+                branches[name] = { phone, email };
             });
 
             const newConfig = {
                 title: document.getElementById('conf-title').value,
                 subtitle: document.getElementById('conf-subtitle').value,
                 heroImage: document.getElementById('conf-heroImage').value,
-                branches: branches, // 저장된 연락처
+                branches: branches, 
                 
                 prod1Name: document.getElementById('conf-prod1-name').value,
                 prod1Badge: document.getElementById('conf-prod1-badge').value,
@@ -425,16 +431,16 @@
             loadConfig();
         }
 
-        // 전화 팝업 렌더링 (저장된 설정 사용)
+        // 전화 팝업 렌더링
         window.renderPhoneMenu = function() {
             const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
             const list = document.getElementById('phone-list');
             
             list.innerHTML = Object.keys(config.branches).map(branch => `
-                <a href="tel:${config.branches[branch]}" class="flex items-center justify-between p-4 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition group border border-zinc-600">
+                <a href="tel:${config.branches[branch].phone}" class="flex items-center justify-between p-4 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition group border border-zinc-600">
                     <span class="font-bold text-white">${branch}</span>
                     <div class="flex items-center text-yellow-400 text-sm">
-                        <span class="mr-2 text-zinc-400 text-xs">${config.branches[branch]}</span>
+                        <span class="mr-2 text-zinc-400 text-xs">${config.branches[branch].phone}</span>
                         <i data-lucide="phone-call" class="w-4 h-4"></i>
                     </div>
                 </a>
@@ -467,12 +473,14 @@
             btn.innerText = "전송 중...";
             btn.disabled = true;
             
+            const config = JSON.parse(localStorage.getItem('kt_config')) || DEFAULT_CONFIG;
             const selectedBranch = document.getElementById('branch').value;
-            const targetEmail = BRANCH_EMAILS[selectedBranch] || "pbh350111@gmail.com"; 
             
-            const currentFee = document.getElementById('current_fee').value || "미선택";
-            const desiredModel = document.getElementById('desired_model').value || "미선택";
-            const promoItem = document.getElementById('promo_item').value || "미선택";
+            // [수정됨] 설정된 지점 이메일 가져오기 (없으면 기본값)
+            let targetEmail = "pbh350111@gmail.com"; // 기본값 (사장님 이메일)
+            if (config.branches[selectedBranch] && config.branches[selectedBranch].email) {
+                targetEmail = config.branches[selectedBranch].email;
+            }
 
             const formParams = {
                 name: document.getElementById('name').value,
@@ -480,9 +488,9 @@
                 branch: selectedBranch,
                 mobile_carrier: document.getElementById('mobile_carrier').value,
                 internet_carrier: document.getElementById('internet_carrier').value,
-                current_fee: currentFee,
-                desired_model: desiredModel,
-                promo_item: promoItem,
+                current_fee: document.getElementById('current_fee').value || "미선택",
+                desired_model: document.getElementById('desired_model').value || "미선택",
+                promo_item: document.getElementById('promo_item').value || "미선택",
                 date: new Date().toLocaleString(),
                 manager_email: targetEmail 
             };
@@ -492,7 +500,7 @@
 
             emailjs.send(serviceID, templateID, formParams)
                 .then(() => {
-                    alert("접수되었습니다! 담당자가 곧 연락드립니다.");
+                    alert(`[${selectedBranch}]으로 접수되었습니다!\n담당자가 확인 후 연락드리겠습니다.`);
                     saveLocally(formParams);
                     document.getElementById('consultForm').reset();
                 })
