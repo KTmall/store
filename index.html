@@ -25,6 +25,9 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
+        /* 스크롤 부드럽게 이동 설정 */
+        html { scroll-behavior: smooth; }
+
         .text-gold {
             background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
@@ -130,7 +133,7 @@
             </div>
         </div>
 
-        <!-- 상담 신청 폼 -->
+        <!-- 상담 신청 폼 (ID: consult-section) -->
         <div id="consult-section" class="p-6 pb-10 bg-zinc-900">
             <div class="rounded-2xl bg-zinc-800 border border-zinc-700 p-6 text-white shadow-xl relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
@@ -223,9 +226,10 @@
                 <i data-lucide="phone" class="w-5 mb-0.5"></i>
                 <span class="text-[10px] font-bold">전화 상담</span>
             </a>
-            <button onclick="document.getElementById('consult-section').scrollIntoView({behavior:'smooth'})" class="flex-[2] bg-gold text-white font-bold text-lg flex items-center justify-center active:opacity-90">
+            <!-- [수정됨] 무조건 폼으로 이동하는 앵커 링크 -->
+            <a href="#consult-section" class="flex-[2] bg-gold text-white font-bold text-lg flex items-center justify-center active:opacity-90">
                 혜택 조회하기 <i data-lucide="chevron-right" class="ml-1 w-5"></i>
-            </button>
+            </a>
         </div>
 
         <!-- 관리자 버튼 -->
@@ -394,7 +398,6 @@
             const selectedBranch = document.getElementById('branch').value;
             const targetEmail = BRANCH_EMAILS[selectedBranch] || "pbh350111@gmail.com"; 
             
-            // [추가된 선택 항목 값 가져오기]
             const currentFee = document.getElementById('current_fee').value || "미선택";
             const desiredModel = document.getElementById('desired_model').value || "미선택";
             const promoItem = document.getElementById('promo_item').value || "미선택";
@@ -405,7 +408,6 @@
                 branch: selectedBranch,
                 mobile_carrier: document.getElementById('mobile_carrier').value,
                 internet_carrier: document.getElementById('internet_carrier').value,
-                // 이메일 템플릿에도 이 변수들을 추가해야 메일에 보입니다 (예: {{current_fee}})
                 current_fee: currentFee,
                 desired_model: desiredModel,
                 promo_item: promoItem,
