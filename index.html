@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KT 가우리엔터프라이즈</title>
     
-    <!-- 1. 필수 도구 로드 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
-    <!-- 2. 디자인 스타일 -->
+    <script type="text/javascript">
+        (function(){
+            // ✅ 사장님 공개키
+            emailjs.init("oM5C3k8SXXow-GN5v");
+        })();
+    </script>
+
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         body { font-family: 'Pretendard', sans-serif; }
@@ -33,176 +38,180 @@
 </head>
 <body class="bg-black text-white pb-24 md:pb-0">
 
-    <!-- ================= [1] 고객용 화면 ================= -->
-    <div id="user-page" class="mx-auto max-w-md bg-zinc-900 shadow-2xl min-h-screen relative border-x border-zinc-800">
+    <!-- [1] 고객용 화면 (반응형 적용: max-w-md -> max-w-7xl) -->
+    <div id="user-page" class="mx-auto max-w-7xl bg-zinc-900 shadow-2xl min-h-screen relative border-x border-zinc-800">
         
         <!-- 상단 배너 -->
-        <div class="relative h-80 bg-black overflow-hidden">
+        <div class="relative h-80 md:h-[500px] bg-black overflow-hidden">
             <img id="hero-image" src="" onerror="this.src='https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=1000'" class="absolute inset-0 h-full w-full object-cover opacity-40 transition-transform duration-[30s] hover:scale-110" alt="매장 배경">
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-            <div class="relative z-10 flex h-full flex-col justify-end p-6 pb-10 fade-in">
-                <div class="mb-2 inline-flex self-start rounded border border-yellow-500/50 bg-black/50 backdrop-blur px-3 py-1 text-xs font-bold text-yellow-400">KT 공식인증 대리점</div>
-                <h1 id="main-title" class="text-3xl font-bold leading-tight drop-shadow-lg text-white"></h1>
-                <p id="main-subtitle" class="mt-2 text-yellow-200/80 font-medium text-sm"></p>
+            <div class="relative z-10 flex h-full flex-col justify-end p-6 pb-10 md:p-12 md:pb-16 fade-in">
+                <div class="mb-3 inline-flex self-start rounded border border-yellow-500/50 bg-black/50 backdrop-blur px-3 py-1 text-xs md:text-sm font-bold text-yellow-400">KT 공식인증 대리점</div>
+                <h1 id="main-title" class="text-3xl md:text-5xl font-bold leading-tight drop-shadow-lg text-white"></h1>
+                <p id="main-subtitle" class="mt-3 text-yellow-200/80 font-medium text-sm md:text-lg"></p>
             </div>
         </div>
 
         <!-- 핵심 통계 -->
-        <div class="grid grid-cols-3 divide-x divide-zinc-700 border-b border-zinc-800 bg-zinc-900 p-4 text-center shadow-lg relative z-20 -mt-6 mx-4 rounded-xl fade-in border border-zinc-700">
-            <div><div class="text-lg font-bold text-yellow-400">6개</div><div class="text-xs text-zinc-400">직영 매장</div></div>
-            <div><div class="text-lg font-bold text-yellow-400">80만</div><div class="text-xs text-zinc-400">최대 사은품</div></div>
-            <div><div class="text-lg font-bold text-yellow-400">100%</div><div class="text-xs text-zinc-400">당일개통</div></div>
+        <div class="grid grid-cols-3 divide-x divide-zinc-700 border-b border-zinc-800 bg-zinc-900 p-4 md:p-6 text-center shadow-lg relative z-20 -mt-6 mx-4 md:mx-10 rounded-xl fade-in border border-zinc-700">
+            <div><div class="text-lg md:text-2xl font-bold text-yellow-400">6개</div><div class="text-xs md:text-sm text-zinc-400">직영 매장</div></div>
+            <div><div class="text-lg md:text-2xl font-bold text-yellow-400">80만</div><div class="text-xs md:text-sm text-zinc-400">최대 사은품</div></div>
+            <div><div class="text-lg md:text-2xl font-bold text-yellow-400">100%</div><div class="text-xs md:text-sm text-zinc-400">당일개통</div></div>
         </div>
 
-        <!-- 상품 진열 -->
-        <div class="p-6">
-            <h2 class="mb-2 text-xl font-bold flex items-center text-white"><i data-lucide="crown" class="mr-2 text-yellow-500 w-5"></i> 프리미엄 특가 모델</h2>
+        <!-- 메인 컨텐츠 영역 (PC에서는 2단 레이아웃) -->
+        <div class="flex flex-col lg:flex-row gap-8 p-6 md:p-10">
             
-            <div class="mb-5 text-xs text-zinc-400 ml-7 border-l-2 border-yellow-600/50 pl-3">
-                <p class="text-yellow-500 font-bold mb-1 text-sm">신한카드 프로모션</p>
-                <p>• 월 30만원 이용조건 (2년)</p>
-                <p>• 6개월 요금제 이용시</p>
-                <p class="text-zinc-300">• 통신비, 관리비, 학원비, 병원비 실적 인정 가능</p>
-            </div>
-            
-            <div class="space-y-4">
-                <!-- 상품 1 (갤럭시 S25 - 이미지 변경됨) -->
-                <div class="group relative overflow-hidden rounded-xl bg-zinc-800 border border-zinc-700 shadow-lg flex">
-                    <div class="w-1/3 relative">
-                        <img id="img-prod1" src="" onerror="this.src='https://placehold.co/600x800/333/FFF?text=No+Image'" class="h-full w-full object-cover" alt="상품1">
+            <!-- 왼쪽: 상품 및 프로모션 (넓은 영역) -->
+            <div class="flex-1 space-y-8">
+                <div>
+                    <h2 class="mb-2 text-xl md:text-2xl font-bold flex items-center text-white"><i data-lucide="crown" class="mr-2 text-yellow-500 w-6 h-6"></i> 프리미엄 특가 모델</h2>
+                    
+                    <div class="mb-5 text-xs md:text-sm text-zinc-400 ml-8 border-l-2 border-yellow-600/50 pl-3">
+                        <p class="text-yellow-500 font-bold mb-1 text-sm md:text-base">신한카드 프로모션</p>
+                        <p>• 월 30만원 이용조건 (2년)</p>
+                        <p>• 6개월 요금제 이용시</p>
+                        <p class="text-zinc-300">• 통신비, 관리비, 학원비, 병원비 실적 인정 가능</p>
                     </div>
-                    <div class="w-2/3 p-4 flex flex-col justify-center">
-                        <div id="badge-prod1" class="self-start mb-1 rounded bg-yellow-600/20 px-1.5 py-0.5 text-[10px] font-bold text-yellow-400 border border-yellow-600/30"></div>
-                        <div id="title-prod1" class="font-bold text-lg text-white mb-1"></div>
-                        <div class="text-sm text-zinc-400">실구매가 <span id="price-prod1" class="text-xl font-bold text-yellow-400 ml-1"></span></div>
+                    
+                    <!-- 상품 리스트 (PC에서는 더 크게) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- 상품 1 -->
+                        <div class="group relative overflow-hidden rounded-xl bg-zinc-800 border border-zinc-700 shadow-lg flex">
+                            <div class="w-1/3 relative">
+                                <img id="img-prod1" src="" onerror="this.src='https://placehold.co/600x800/333/FFF?text=No+Image'" class="h-full w-full object-cover" alt="상품1">
+                            </div>
+                            <div class="w-2/3 p-4 flex flex-col justify-center">
+                                <div id="badge-prod1" class="self-start mb-2 rounded bg-yellow-600/20 px-2 py-0.5 text-xs font-bold text-yellow-400 border border-yellow-600/30"></div>
+                                <div id="title-prod1" class="font-bold text-lg md:text-xl text-white mb-1"></div>
+                                <div class="text-sm text-zinc-400">실구매가 <span id="price-prod1" class="text-xl md:text-2xl font-bold text-yellow-400 ml-1"></span></div>
+                            </div>
+                        </div>
+
+                        <!-- 상품 2 -->
+                        <div class="group relative overflow-hidden rounded-xl bg-zinc-800 border border-zinc-700 shadow-lg flex">
+                            <div class="w-1/3 relative">
+                                <img id="img-prod2" src="" onerror="this.src='https://placehold.co/600x800/333/FFF?text=No+Image'" class="h-full w-full object-cover" alt="상품2">
+                            </div>
+                            <div class="w-2/3 p-4 flex flex-col justify-center">
+                                <div id="badge-prod2" class="self-start mb-2 rounded bg-yellow-600/20 px-2 py-0.5 text-xs font-bold text-yellow-400 border border-yellow-600/30"></div>
+                                <div id="title-prod2" class="font-bold text-lg md:text-xl text-white mb-1"></div>
+                                <div class="text-sm text-zinc-400">실구매가 <span id="price-prod2" class="text-xl md:text-2xl font-bold text-yellow-400 ml-1"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-5 rounded-xl bg-gradient-to-r from-zinc-800 to-black border border-yellow-600/30 text-center shadow-lg">
+                        <p class="text-yellow-400 font-bold text-sm md:text-base mb-1">휴대폰과 함께 인터넷+ TV 신규가입시</p>
+                        <p class="text-white text-2xl md:text-3xl font-black drop-shadow-md">현금사은품 최대 <span class="text-yellow-400">80만원</span> 증정</p>
                     </div>
                 </div>
 
-                <!-- 상품 2 -->
-                <div class="group relative overflow-hidden rounded-xl bg-zinc-800 border border-zinc-700 shadow-lg flex">
-                    <div class="w-1/3 relative">
-                        <img id="img-prod2" src="" onerror="this.src='https://placehold.co/600x800/333/FFF?text=No+Image'" class="h-full w-full object-cover" alt="상품2">
+                <!-- 블랙프라이데이 가전 -->
+                <div class="bg-zinc-800/50 border border-zinc-700 rounded-xl p-5 md:p-8 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-40 h-40 bg-yellow-500/5 rounded-full blur-3xl"></div>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 relative z-10 gap-2">
+                        <h3 class="text-lg md:text-xl font-bold text-white flex items-center">
+                            <i data-lucide="gift" class="mr-2 text-yellow-500 w-6 h-6"></i> 블랙프라이데이 가전
+                        </h3>
+                        <span class="text-xs md:text-sm text-zinc-300 border border-zinc-600 px-3 py-1 rounded-full bg-zinc-800 self-start md:self-auto">가전구독초이스 개통시 택1</span>
                     </div>
-                    <div class="w-2/3 p-4 flex flex-col justify-center">
-                        <div id="badge-prod2" class="self-start mb-1 rounded bg-yellow-600/20 px-1.5 py-0.5 text-[10px] font-bold text-yellow-400 border border-yellow-600/30"></div>
-                        <div id="title-prod2" class="font-bold text-lg text-white mb-1"></div>
-                        <div class="text-sm text-zinc-400">실구매가 <span id="price-prod2" class="text-xl font-bold text-yellow-400 ml-1"></span></div>
+                    <!-- PC에서는 4열, 모바일에서는 2열 -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+                        <div class="bg-zinc-800 rounded-xl p-3 text-center border border-zinc-700 shadow-md group hover:border-yellow-500/50 transition">
+                            <div class="h-24 md:h-32 w-full bg-white/5 rounded-lg mb-3 overflow-hidden relative">
+                                <img src="https://i.ibb.co/dsgpxXmv/samtenbyme.jpg" class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" alt="삼텐바이미">
+                            </div>
+                            <p class="text-xs md:text-sm font-bold text-white">삼성 스마트모니터</p>
+                            <p class="text-[10px] text-yellow-500">(삼텐바이미)</p>
+                        </div>
+                        <div class="bg-zinc-800 rounded-xl p-3 text-center border border-zinc-700 shadow-md group hover:border-yellow-500/50 transition">
+                            <div class="h-24 md:h-32 w-full bg-white/5 rounded-lg mb-3 overflow-hidden relative">
+                                <img src="https://i.ibb.co/BVJbmbsT/samtv.jpg" class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" alt="TV">
+                            </div>
+                            <p class="text-xs md:text-sm font-bold text-white">삼성 50인치 TV</p>
+                            <p class="text-[10px] text-yellow-500">Crystal UHD</p>
+                        </div>
+                        <div class="bg-zinc-800 rounded-xl p-3 text-center border border-zinc-700 shadow-md group hover:border-yellow-500/50 transition">
+                            <div class="h-24 md:h-32 w-full bg-white/5 rounded-lg mb-3 overflow-hidden relative">
+                                <img src="https://i.ibb.co/Tx8Gc8vc/lgcodzero.jpg" class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" alt="청소기">
+                            </div>
+                            <p class="text-xs md:text-sm font-bold text-white">LG 코드제로</p>
+                            <p class="text-[10px] text-yellow-500">무선 청소기</p>
+                        </div>
+                        <div class="bg-zinc-800 rounded-xl p-3 text-center border border-zinc-700 shadow-md group hover:border-yellow-500/50 transition">
+                            <div class="h-24 md:h-32 w-full bg-white/5 rounded-lg mb-3 overflow-hidden relative">
+                                <img src="https://i.ibb.co/n8LJ0L55/lgtongtong.jpg" class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" alt="세탁기">
+                            </div>
+                            <p class="text-xs md:text-sm font-bold text-white">LG 통돌이 세탁기</p>
+                            <p class="text-[10px] text-yellow-500">대용량 세탁</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="mt-6 p-4 rounded-xl bg-gradient-to-r from-zinc-800 to-black border border-yellow-600/30 text-center shadow-lg">
-                <p class="text-yellow-400 font-bold text-sm mb-1">휴대폰과 함께 인터넷+ TV 신규가입시</p>
-                <p class="text-white text-2xl font-black drop-shadow-md">현금사은품 최대 <span class="text-yellow-400">80만원</span> 증정</p>
-            </div>
 
-            <!-- 블랙프라이데이 가전 -->
-            <div class="mt-6 bg-zinc-800/50 border border-zinc-700 rounded-xl p-5 relative overflow-hidden">
-                <div class="absolute -right-10 -top-10 w-40 h-40 bg-yellow-500/5 rounded-full blur-3xl"></div>
-                <div class="flex items-center justify-between mb-4 relative z-10">
-                    <h3 class="text-lg font-bold text-white flex items-center">
-                        <i data-lucide="gift" class="mr-2 text-yellow-500 w-5"></i> 블랙프라이데이 가전
+            <!-- 오른쪽: 상담 신청 폼 (PC에서는 고정형 Sidebar) -->
+            <div class="lg:w-96 shrink-0">
+                <div id="consult-section" class="sticky top-6 rounded-2xl bg-zinc-800 border border-zinc-700 p-6 text-white shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+                    <h3 class="mb-4 text-xl font-bold flex items-center relative z-10 text-gold">
+                        <i data-lucide="message-circle" class="mr-2 text-yellow-400 w-5"></i> 프로모션 혜택 조회
                     </h3>
-                    <span class="text-[10px] text-zinc-300 border border-zinc-600 px-2 py-1 rounded-full bg-zinc-800">가전구독초이스 개통시 택1</span>
-                </div>
-                <div class="grid grid-cols-2 gap-3 relative z-10">
-                    <!-- 아이템 1: 삼텐바이미 -->
-                    <div class="bg-zinc-800 rounded-xl p-3 text-center border border-zinc-700 shadow-md group hover:border-yellow-500/50 transition">
-                        <div class="h-24 w-full bg-white/5 rounded-lg mb-2 overflow-hidden relative">
-                            <img src="https://i.ibb.co/dsgpxXmv/samtenbyme.jpg" class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" alt="삼텐바이미">
-                        </div>
-                        <p class="text-xs font-bold text-white">삼성 스마트모니터</p>
-                        <p class="text-[10px] text-yellow-500">(삼텐바이미)</p>
-                    </div>
-                    <!-- 아이템 2: 삼성 50인치 TV -->
-                    <div class="bg-zinc-800 rounded-xl p-3 text-center border border-zinc-700 shadow-md group hover:border-yellow-500/50 transition">
-                        <div class="h-24 w-full bg-white/5 rounded-lg mb-2 overflow-hidden relative">
-                            <img src="https://i.ibb.co/BVJbmbsT/samtv.jpg" class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" alt="TV">
-                        </div>
-                        <p class="text-xs font-bold text-white">삼성 50인치 TV</p>
-                        <p class="text-[10px] text-yellow-500">Crystal UHD</p>
-                    </div>
-                    <!-- 아이템 3: LG 코드제로 -->
-                    <div class="bg-zinc-800 rounded-xl p-3 text-center border border-zinc-700 shadow-md group hover:border-yellow-500/50 transition">
-                        <div class="h-24 w-full bg-white/5 rounded-lg mb-2 overflow-hidden relative">
-                            <img src="https://i.ibb.co/Tx8Gc8vc/lgcodzero.jpg" class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" alt="청소기">
-                        </div>
-                        <p class="text-xs font-bold text-white">LG 코드제로</p>
-                        <p class="text-[10px] text-yellow-500">무선 청소기</p>
-                    </div>
-                    <!-- 아이템 4: LG 통돌이 -->
-                    <div class="bg-zinc-800 rounded-xl p-3 text-center border border-zinc-700 shadow-md group hover:border-yellow-500/50 transition">
-                        <div class="h-24 w-full bg-white/5 rounded-lg mb-2 overflow-hidden relative">
-                            <img src="https://i.ibb.co/n8LJ0L55/lgtongtong.jpg" class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" alt="세탁기">
-                        </div>
-                        <p class="text-xs font-bold text-white">LG 통돌이 세탁기</p>
-                        <p class="text-[10px] text-yellow-500">대용량 세탁</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 상담 신청 폼 -->
-        <div id="consult-section" class="p-6 pb-10 bg-zinc-900">
-            <div class="rounded-2xl bg-zinc-800 border border-zinc-700 p-6 text-white shadow-xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-                <h3 class="mb-4 text-xl font-bold flex items-center relative z-10 text-gold">
-                    <i data-lucide="message-circle" class="mr-2 text-yellow-400 w-5"></i> 프로모션 혜택 조회
-                </h3>
-                
-                <form id="consultForm" class="space-y-4 relative z-10" onsubmit="submitForm(event)">
-                    <!-- 필수 항목 -->
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="name" name="name" placeholder="이름 (필수)" required class="p-3 rounded bg-black/50 border border-zinc-600 text-sm text-white w-full focus:outline-none focus:border-yellow-500 placeholder-zinc-500">
-                        <input type="tel" id="phone" name="phone" placeholder="연락처 (필수)" required class="p-3 rounded bg-black/50 border border-zinc-600 text-sm text-white w-full focus:outline-none focus:border-yellow-500 placeholder-zinc-500">
-                    </div>
-
-                    <select id="branch" name="branch" required class="w-full p-3 rounded bg-black/50 border border-zinc-600 text-sm text-white focus:outline-none focus:border-yellow-500">
-                        <option value="" disabled selected>상담받을 지점 선택 (필수)</option>
-                    </select>
-
-                    <div class="space-y-2 pt-2 border-t border-zinc-700">
-                        <div class="text-xs text-yellow-500 font-bold">현재 통신사 (필수)</div>
+                    
+                    <form id="consultForm" class="space-y-4 relative z-10" onsubmit="submitForm(event)">
+                        <!-- 필수 항목 -->
                         <div class="grid grid-cols-2 gap-2">
-                            <select id="mobile_carrier" name="mobile_carrier" required class="p-2 rounded bg-black/50 border border-zinc-600 text-xs text-white w-full">
-                                <option value="">휴대폰 선택</option>
-                                <option>SKT</option><option>KT</option><option>LG U+</option><option>알뜰폰</option>
+                            <input type="text" id="name" name="name" placeholder="이름 (필수)" required class="p-3 rounded bg-black/50 border border-zinc-600 text-sm text-white w-full focus:outline-none focus:border-yellow-500 placeholder-zinc-500">
+                            <input type="tel" id="phone" name="phone" placeholder="연락처 (필수)" required class="p-3 rounded bg-black/50 border border-zinc-600 text-sm text-white w-full focus:outline-none focus:border-yellow-500 placeholder-zinc-500">
+                        </div>
+
+                        <select id="branch" name="branch" required class="w-full p-3 rounded bg-black/50 border border-zinc-600 text-sm text-white focus:outline-none focus:border-yellow-500">
+                            <option value="" disabled selected>상담받을 지점 선택 (필수)</option>
+                        </select>
+
+                        <div class="space-y-2 pt-2 border-t border-zinc-700">
+                            <div class="text-xs text-yellow-500 font-bold">현재 통신사 (필수)</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <select id="mobile_carrier" name="mobile_carrier" required class="p-2 rounded bg-black/50 border border-zinc-600 text-xs text-white w-full">
+                                    <option value="">휴대폰 선택</option>
+                                    <option>SKT</option><option>KT</option><option>LG U+</option><option>알뜰폰</option>
+                                </select>
+                                <select id="internet_carrier" name="internet_carrier" required class="p-2 rounded bg-black/50 border border-zinc-600 text-xs text-white w-full">
+                                    <option value="">인터넷 선택</option>
+                                    <option>SKT</option><option>KT</option><option>LG U+</option><option>알뜰폰</option><option>없음</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 선택 사항 -->
+                        <div class="space-y-3 pt-3 border-t border-zinc-700">
+                            <div class="text-xs text-zinc-400 font-bold mb-1">추가 정보 (선택사항)</div>
+                            <select id="current_fee" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
+                                <option value="" selected>현재 월 요금 (선택)</option>
+                                <option>3만원 미만</option><option>3~5만원</option><option>5~7만원</option><option>7~10만원</option><option>10~15만원</option><option>20만원 이상</option>
                             </select>
-                            <select id="internet_carrier" name="internet_carrier" required class="p-2 rounded bg-black/50 border border-zinc-600 text-xs text-white w-full">
-                                <option value="">인터넷 선택</option>
-                                <option>SKT</option><option>KT</option><option>LG U+</option><option>알뜰폰</option><option>없음</option>
+                            <select id="desired_model" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
+                                <option value="" selected>희망 기종 (선택)</option>
+                                <option>아이폰 17 시리즈</option><option>아이폰 16 시리즈</option><option>갤럭시 S25 시리즈</option><option>갤럭시 Z 플립/폴드</option><option>효도폰/키즈폰</option><option>기타</option>
+                            </select>
+                            <select id="promo_item" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
+                                <option value="" selected>가전구독 프로모션 상품 (선택)</option>
+                                <option>삼성 스마트모니터</option><option>삼성 50인치 TV</option><option>LG 코드제로</option><option>LG 통돌이</option><option>선택 안함</option>
                             </select>
                         </div>
-                    </div>
 
-                    <!-- 선택 사항 -->
-                    <div class="space-y-3 pt-3 border-t border-zinc-700">
-                        <div class="text-xs text-zinc-400 font-bold mb-1">추가 정보 (선택사항)</div>
-                        <select id="current_fee" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
-                            <option value="" selected>현재 월 요금 (선택)</option>
-                            <option>3만원 미만</option><option>3~5만원</option><option>5~7만원</option><option>7~10만원</option><option>10~15만원</option><option>20만원 이상</option>
-                        </select>
-                        <select id="desired_model" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
-                            <option value="" selected>희망 기종 (선택)</option>
-                            <option>아이폰 17 시리즈</option><option>아이폰 16 시리즈</option><option>갤럭시 S25 시리즈</option><option>갤럭시 Z 플립/폴드</option><option>효도폰/키즈폰</option><option>기타</option>
-                        </select>
-                        <select id="promo_item" class="w-full p-2.5 rounded bg-black/50 border border-zinc-600 text-xs text-white focus:outline-none focus:border-yellow-500">
-                            <option value="" selected>가전구독 프로모션 상품 (선택)</option>
-                            <option>삼성 스마트모니터</option><option>삼성 50인치 TV</option><option>LG 코드제로</option><option>LG 통돌이</option><option>선택 안함</option>
-                        </select>
-                    </div>
+                        <div class="flex items-center text-xs text-zinc-400 mt-2">
+                            <input type="checkbox" id="agree" required class="mr-2 accent-yellow-500">
+                            <label for="agree">개인정보 수집 및 상담 활용에 동의합니다.</label>
+                        </div>
 
-                    <div class="flex items-center text-xs text-zinc-400 mt-2">
-                        <input type="checkbox" id="agree" required class="mr-2 accent-yellow-500">
-                        <label for="agree">개인정보 수집 및 상담 활용에 동의합니다.</label>
-                    </div>
-
-                    <button type="submit" id="submit-btn" class="w-full bg-gold py-4 rounded font-bold text-white mt-2 transition shadow-lg transform active:scale-95 hover:opacity-90 text-shadow-sm">상담 신청하기</button>
-                </form>
+                        <button type="submit" id="submit-btn" class="w-full bg-gold py-4 rounded font-bold text-white mt-2 transition shadow-lg transform active:scale-95 hover:opacity-90 text-shadow-sm">상담 신청하기</button>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <!-- 하단 바 (수정됨: 전화 팝업 / 스크롤 이동) -->
+        <!-- 하단 바 (모바일 전용) -->
         <div class="fixed bottom-0 left-0 right-0 z-50 flex h-16 border-t border-zinc-800 bg-zinc-900 shadow-lg md:hidden">
             <button onclick="togglePhoneModal()" class="flex-1 flex flex-col items-center justify-center text-zinc-400 bg-zinc-900 active:bg-zinc-800 focus:outline-none">
                 <i data-lucide="phone" class="w-5 mb-0.5"></i>
@@ -219,16 +228,14 @@
         </button>
     </div>
 
-    <!-- 전화 상담 모달 (팝업) -->
+    <!-- 전화 상담 모달 -->
     <div id="phone-modal" class="hidden fixed inset-0 z-[70] flex items-end justify-center bg-black/80 backdrop-blur-sm sm:items-center p-4">
         <div class="bg-zinc-800 w-full max-w-sm rounded-t-2xl sm:rounded-2xl p-5 shadow-2xl animate-in slide-in-from-bottom-5">
             <div class="flex justify-between items-center mb-4 border-b border-zinc-700 pb-3">
                 <h3 class="text-lg font-bold text-white">📞 상담하실 매장을 선택하세요</h3>
                 <button onclick="togglePhoneModal()" class="text-zinc-400 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
             </div>
-            <div id="phone-list" class="space-y-2 max-h-[60vh] overflow-y-auto">
-                <!-- 자바스크립트가 여기에 목록을 만듭니다 -->
-            </div>
+            <div id="phone-list" class="space-y-2 max-h-[60vh] overflow-y-auto"></div>
         </div>
     </div>
 
@@ -265,7 +272,6 @@
                 </div>
             </div>
 
-            <!-- 사이트 설정 탭 -->
             <div id="tab-settings" class="hidden bg-white rounded-lg shadow p-6 space-y-8 animate-in fade-in">
                 <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-6">
                     <h3 class="font-bold text-blue-800 text-sm mb-2 flex items-center">✅ 사진 무료 호스팅 (ImgBB)</h3>
@@ -286,12 +292,9 @@
                     <div><label class="block text-xs font-bold text-slate-500 mb-1">배경 이미지 URL</label><input type="text" id="conf-heroImage" class="w-full border p-2 rounded"></div>
                 </div>
 
-                <!-- 매장 연락처 관리 -->
                 <div class="space-y-4 border-t pt-4">
                     <h2 class="text-lg font-bold border-b pb-2 flex items-center text-slate-700"><i data-lucide="phone" class="mr-2 w-5"></i> 매장 연락처 & 이메일 관리</h2>
-                    <div id="branch-inputs" class="space-y-4">
-                        <!-- 자바스크립트로 생성됨 -->
-                    </div>
+                    <div id="branch-inputs" class="space-y-4"></div>
                     <div class="text-xs text-slate-500 bg-slate-50 p-2 rounded">
                         * 저장하면 [전화 상담] 버튼과 [이메일 발송]에 즉시 적용됩니다.
                     </div>
@@ -326,19 +329,16 @@
 
     <!-- 스크립트 -->
     <script>
-        // 1. EmailJS & Lucide Init
         (function(){
-            emailjs.init("oM5C3k8SXXow-GN5v"); // 공개키
+            emailjs.init("oM5C3k8SXXow-GN5v");
             lucide.createIcons();
         })();
 
-        // 2. 기본 설정
         const DEFAULT_CONFIG = {
             title: "KT 가우리엔터프라이즈",
             subtitle: "우리 동네 1등 혜택! 인터넷+TV+휴대폰 최대 지원",
             heroImage: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=2000",
             
-            // 매장 데이터 (초기값)
             branches: {
                 "세종 소담점": { phone: "010-0000-0000", email: "sodam@test.com" },
                 "세종 종촌점": { phone: "010-0000-0000", email: "jongchon@test.com" },
@@ -355,13 +355,9 @@
             prod2Img: "https://i.ibb.co/TMXQTdhJ/aip17pm.jpg"
         };
 
-        // 3. 설정 불러오기 및 화면 적용
         function loadConfig() {
-            // 데이터 보호: 기존 데이터가 깨졌거나 없을 경우 기본값 사용
             let config = JSON.parse(localStorage.getItem('kt_config'));
-            if (!config || !config.branches) {
-                config = DEFAULT_CONFIG;
-            }
+            if (!config || !config.branches) config = DEFAULT_CONFIG;
             
             safeSetHTML('main-title', config.title); 
             safeSetText('main-subtitle', config.subtitle); 
@@ -370,22 +366,16 @@
             safeSetText('title-prod1', config.prod1Name); safeSetText('badge-prod1', config.prod1Badge); safeSetText('price-prod1', config.prod1Price); safeSetSrc('img-prod1', config.prod1Img);
             safeSetText('title-prod2', config.prod2Name); safeSetText('badge-prod2', config.prod2Badge); safeSetText('price-prod2', config.prod2Price); safeSetSrc('img-prod2', config.prod2Img);
 
-            // 관리자 폼 채우기
-            safeSetValue('conf-title', config.title); 
-            safeSetValue('conf-subtitle', config.subtitle); 
-            safeSetValue('conf-heroImage', config.heroImage);
-            
+            safeSetValue('conf-title', config.title); safeSetValue('conf-subtitle', config.subtitle); safeSetValue('conf-heroImage', config.heroImage);
             safeSetValue('conf-prod1-name', config.prod1Name); safeSetValue('conf-prod1-badge', config.prod1Badge); safeSetValue('conf-prod1-price', config.prod1Price); safeSetValue('conf-prod1-img', config.prod1Img);
             safeSetValue('conf-prod2-name', config.prod2Name); safeSetValue('conf-prod2-badge', config.prod2Badge); safeSetValue('conf-prod2-price', config.prod2Price); safeSetValue('conf-prod2-img', config.prod2Img);
 
-            // 고객용 지점 선택 업데이트
             const branchSelect = document.getElementById('branch');
             if (branchSelect) {
                 branchSelect.innerHTML = '<option value="" disabled selected>상담받을 지점 선택 (필수)</option>' + 
                     Object.keys(config.branches).map(b => `<option value="${b}">${b}</option>`).join('');
             }
 
-            // 관리자용 매장 수정폼 업데이트
             const branchInputs = document.getElementById('branch-inputs');
             if (branchInputs) {
                 branchInputs.innerHTML = Object.keys(config.branches).map(b => `
@@ -400,7 +390,6 @@
             }
         }
 
-        // 4. 설정 저장하기
         window.saveConfig = function() {
             const branchGroups = document.querySelectorAll('.branch-group');
             const branches = {};
@@ -416,12 +405,10 @@
                 subtitle: document.getElementById('conf-subtitle').value,
                 heroImage: document.getElementById('conf-heroImage').value,
                 branches: branches,
-                
                 prod1Name: document.getElementById('conf-prod1-name').value,
                 prod1Badge: document.getElementById('conf-prod1-badge').value,
                 prod1Price: document.getElementById('conf-prod1-price').value,
                 prod1Img: document.getElementById('conf-prod1-img').value,
-
                 prod2Name: document.getElementById('conf-prod2-name').value,
                 prod2Badge: document.getElementById('conf-prod2-badge').value,
                 prod2Price: document.getElementById('conf-prod2-price').value,
@@ -432,17 +419,13 @@
             loadConfig();
         }
 
-        // 5. 기능 함수들 (팝업, 스크롤 등)
         window.togglePhoneModal = function() {
             const modal = document.getElementById('phone-modal');
             const list = document.getElementById('phone-list');
-            
-            // 안전하게 설정 불러오기
             let config = JSON.parse(localStorage.getItem('kt_config'));
             if (!config || !config.branches) config = DEFAULT_CONFIG;
 
             if (modal.classList.contains('hidden')) {
-                // 팝업 열릴 때 목록 생성
                 list.innerHTML = Object.keys(config.branches).map(branch => `
                     <a href="tel:${config.branches[branch].phone}" class="flex items-center justify-between p-4 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition group border border-zinc-600">
                         <span class="font-bold text-white">${branch}</span>
@@ -452,7 +435,7 @@
                         </div>
                     </a>
                 `).join('');
-                lucide.createIcons(); // 아이콘 리로드
+                lucide.createIcons();
                 modal.classList.remove('hidden');
             } else {
                 modal.classList.add('hidden');
@@ -463,14 +446,12 @@
             document.getElementById('consult-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 6. 폼 제출 (EmailJS)
         window.submitForm = function(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-btn');
             btn.innerText = "전송 중...";
             btn.disabled = true;
             
-            // 설정 안전하게 불러오기
             let config = JSON.parse(localStorage.getItem('kt_config'));
             if (!config || !config.branches) config = DEFAULT_CONFIG;
             
@@ -496,7 +477,6 @@
             emailjs.send(serviceID, templateID, formParams)
                 .then(() => {
                     alert(`[${selectedBranch}]으로 접수되었습니다!\n담당자가 확인 후 연락드리겠습니다.`);
-                    // 로컬 저장 (데모용)
                     let leads = JSON.parse(localStorage.getItem('kt_leads') || '[]');
                     leads.unshift(formParams);
                     localStorage.setItem('kt_leads', JSON.stringify(leads));
@@ -511,7 +491,6 @@
                 });
         }
 
-        // 7. 관리자 관련
         window.toggleAdmin = function() { document.getElementById('admin-modal').classList.toggle('hidden'); }
         window.switchTab = function(tabName) {
             if (tabName === 'leads') {
@@ -553,13 +532,11 @@
                 </div>`).join('');
         }
 
-        // 헬퍼 함수
         function safeSetHTML(id, val) { const el = document.getElementById(id); if(el) el.innerHTML = val; }
         function safeSetText(id, val) { const el = document.getElementById(id); if(el) el.innerText = val; }
         function safeSetSrc(id, val) { const el = document.getElementById(id); if(el) el.src = val; }
         function safeSetValue(id, val) { const el = document.getElementById(id); if(el) el.value = val; }
 
-        // 초기화
         loadConfig();
     </script>
 </body>
