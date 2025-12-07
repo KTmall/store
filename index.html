@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            // 깃허브 페이지용 설정 (충돌 방지 필요 없음)
+            // 깃허브/아임웹 호환 설정
         }
     </script>
     
@@ -21,9 +21,9 @@
     
     <script type="text/javascript">
         (function(){
-            // [중요] EmailJS Public Key 설정
-            // 이메일 주소(pbh350111@gmail.com)가 아닌, EmailJS 대시보드 Account > API Keys에 있는 'Public Key'를 넣어야 합니다.
-            // 현재는 테스트용 키가 들어있습니다. 본인 계정의 키로 교체해 주세요.
+            // [필수 확인] 여기에 EmailJS 'Public Key'를 넣으셔야 합니다.
+            // 이메일 주소(pbh...)가 아니라, EmailJS 사이트 > Account > API Keys에 있는 키입니다.
+            // 현재는 테스트 키가 들어있으니, 본인 키가 있다면 교체해주세요.
             emailjs.init("oM5C3k8SXXow-GN5v"); 
         })();
     </script>
@@ -97,7 +97,7 @@
                     <button onclick="openOrderForm('인터넷+TV')" class="bg-white text-black px-5 py-2 rounded-lg text-xs font-bold hover:bg-slate-100 transition">신청하기</button>
                 </div>
                 <!-- 초기 이미지: 지니TV (오른쪽 정렬) -->
-                <img id="banner-img" src="https://i.ibb.co/XkbkbLQp/jini.jpg" class="absolute right-4 md:right-10 top-6 w-48 md:w-60 drop-shadow-2xl transition-all duration-500 rounded-lg z-0 object-contain object-right" alt="광고상품">
+                <img id="banner-img" src="https://i.ibb.co/XkbkbLQp/jini.jpg" class="absolute right-4 md:right-24 top-6 w-48 md:w-60 drop-shadow-2xl transition-all duration-500 rounded-lg z-0 object-contain object-right" alt="광고상품">
             </div>
         </div>
 
@@ -711,7 +711,8 @@
                 current_fee: current_fee,
                 desired_model: desired_model,
                 promo_item: promo_item,
-                date: date
+                date: date,
+                manager_email: 'pbh350111@gmail.com' // 받는 사람 이메일 추가
             };
             
             // [중요] EmailJS 설정이 필요합니다.
