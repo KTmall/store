@@ -21,8 +21,9 @@
     
     <script type="text/javascript">
         (function(){
-            // [중요] 여기에 사장님의 EmailJS 'Public Key'를 넣어주세요.
-            // https://www.emailjs.com/ 에서 가입 후 키를 발급받아 교체하세요.
+            // [중요] EmailJS Public Key 설정
+            // 이메일 주소(pbh350111@gmail.com)가 아닌, EmailJS 대시보드 Account > API Keys에 있는 'Public Key'를 넣어야 합니다.
+            // 현재는 테스트용 키가 들어있습니다. 본인 계정의 키로 교체해 주세요.
             emailjs.init("oM5C3k8SXXow-GN5v"); 
         })();
     </script>
@@ -89,14 +90,14 @@
         <div id="home-top-section" class="mb-12">
             <!-- 초기 배너: 지니TV + 인터넷 통합 광고 -->
             <div id="main-banner" class="w-full bg-gradient-to-r from-purple-900 to-slate-900 rounded-2xl h-64 relative overflow-hidden text-white flex flex-col justify-center px-8 shadow-lg transition-all duration-500">
-                <div class="z-10 transition-all duration-500" id="banner-content">
+                <div class="z-10 transition-all duration-500 relative" id="banner-content">
                     <span id="banner-tag" class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-bold mb-2 inline-block">INTERNET + TV</span>
                     <h2 id="banner-title" class="text-3xl font-black mb-1">초고속 인터넷 + 지니TV 모든G</h2>
                     <p id="banner-desc" class="text-slate-300 text-sm mb-4">넷플릭스, 디즈니+까지 한 번에 즐기세요</p>
                     <button onclick="openOrderForm('인터넷+TV')" class="bg-white text-black px-5 py-2 rounded-lg text-xs font-bold hover:bg-slate-100 transition">신청하기</button>
                 </div>
-                <!-- 초기 이미지: 지니TV (평평하게, 안쪽으로 배치) -->
-                <img id="banner-img" src="https://i.ibb.co/XkbkbLQp/jini.jpg" class="absolute right-4 md:right-24 top-6 w-48 md:w-60 drop-shadow-2xl transition-all duration-500 rounded-lg" alt="광고상품">
+                <!-- 초기 이미지: 지니TV (오른쪽 정렬) -->
+                <img id="banner-img" src="https://i.ibb.co/XkbkbLQp/jini.jpg" class="absolute right-4 md:right-10 top-6 w-48 md:w-60 drop-shadow-2xl transition-all duration-500 rounded-lg z-0 object-contain object-right" alt="광고상품">
             </div>
         </div>
 
@@ -337,10 +338,9 @@
     <div class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] py-4 z-50">
         <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
             <div>
-                <p class="text-xs text-slate-500 font-medium">최대 지원금 보장</p>
-                <div class="flex items-end gap-1">
+                <div class="flex items-center gap-1">
                     <img src="https://i.ibb.co/DDRdWK7Q/ktlogo.png" alt="KT Logo" class="h-6 md:h-8 mr-1">
-                    <span class="text-xl md:text-2xl font-black text-slate-800">KT 공식인증 대리점</span>
+                    <span class="text-sm md:text-base font-bold text-slate-700">공식인증 대리점</span>
                 </div>
             </div>
             <div class="flex gap-2">
@@ -662,6 +662,16 @@
             const phone = document.getElementById('order-phone').value;
             
             let msg = `[가입신청서]\n이름: ${name}\n연락처: ${phone}\n`;
+            
+            // 수집 데이터 초기화
+            let branch = '온라인 접수';
+            let mobile_carrier = '미입력';
+            let internet_carrier = '미입력';
+            let current_fee = '상담 시 확인'; // 폼에 현재 요금 항목이 없어서 기본값 설정
+            let desired_model = '미선택';
+            let promo_item = '';
+            let date = new Date().toLocaleString();
+
             if(document.getElementById('check-mobile').checked) {
                 const model = document.getElementById('order-model').value;
                 const storage = document.getElementById('order-storage').value;
@@ -673,8 +683,12 @@
                 const welfare = document.getElementById('order-welfare').value || "선택안함";
                 const cardPromo = document.getElementById('order-card-promo').checked ? "신청" : "미신청";
                 
-                msg += `\n<무선>\n모델: ${model} (${storage})\n할부: ${installment}\n요금제: ${plan}\n할인: ${discount}\n부가서비스: ${addService}\n보험: ${insurance}\n복지할인: ${welfare}\n제휴카드: ${cardPromo}\n`;
+                // 데이터 매핑
+                mobile_carrier = document.getElementById('order-cur-mobile').value || '미선택';
+                desired_model = `${model} (${storage})`;
+                promo_item += `[무선] 할부:${installment}, 요금제:${plan}, 할인:${discount}, 부가서비스:${addService}, 보험:${insurance}, 복지:${welfare}, 카드:${cardPromo}\n`;
             }
+            
             if(document.getElementById('check-internet').checked) {
                 const speed = document.getElementById('order-net-speed').value;
                 const tv = document.getElementById('order-tv-prod').value || "미선택 (인터넷단독)";
@@ -682,10 +696,23 @@
                 const combination = document.getElementById('order-combination').value || "선택안함";
                 const familyRelation = document.getElementById('order-family-relation').value || "선택안함";
                 
-                msg += `\n<유선>\n속도: ${speed}\nTV: ${tv}\n셋탑: ${settop}\n\n[결합/명의]\n결합유형: ${combination}\n명의자: ${familyRelation}\n`;
+                // 데이터 매핑
+                internet_carrier = document.getElementById('order-cur-internet').value || '미선택';
+                promo_item += `[유선] 속도:${speed}, TV:${tv}, 셋탑:${settop}, 결합:${combination}, 명의:${familyRelation}`;
             }
 
-            const templateParams = { name: name, phone: phone, message: msg };
+            // EmailJS 템플릿 파라미터 매칭
+            const templateParams = { 
+                name: name, 
+                phone: phone, 
+                branch: branch,
+                mobile_carrier: mobile_carrier,
+                internet_carrier: internet_carrier,
+                current_fee: current_fee,
+                desired_model: desired_model,
+                promo_item: promo_item,
+                date: date
+            };
             
             // [중요] EmailJS 설정이 필요합니다.
             // 1. service_id, 2. template_id, 3. public_key(init 함수에 있음)
@@ -700,13 +727,16 @@
             });
         }
         
-        // 필터링 및 기타 함수
+        // 필터링 및 기타 함수 (기존 코드 유지)
+        // ... (productData, filterProducts, renderGrid, bannerSlides, startBanner, leads, startTicker 등은 위쪽 코드와 동일하게 포함되어야 합니다)
+        
         const productData = [
             // [삼성] S시리즈 & 플래그십
             { id: 's25u', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 울트라', desc: '최고의 성능, 압도적인 카메라', img: 'https://i.ibb.co/wNtM71DY/s938.jpg', badge: 'BEST' },
             { id: 's25p', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25+', desc: '더 넓은 화면, 강력한 배터리', img: 'https://i.ibb.co/BhsV2vM/s931.jpg', badge: 'NEW' },
             { id: 's25e', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 엣지', desc: '세련된 디자인과 그립감', img: 'https://i.ibb.co/cc9gNbQS/s936.jpg', badge: 'NEW' },
             { id: 's25fe', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 FE', desc: '팬을 위한 완벽한 에디션', img: 'https://i.ibb.co/gKcj96C/s25fe.jpg', badge: '가성비' },
+            { id: 's24u', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S24 울트라', desc: '여전히 강력한 AI 스마트폰', img: 'https://images.unsplash.com/photo-1706606992663-149b389b0243?w=500&auto=format&fit=crop&q=60', badge: '특가' },
             
             { id: 'zfold7', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 폴드 7', desc: '더 얇고 가벼워진 대화면', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', badge: '신상' },
             { id: 'zflip7', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 플립 7', desc: '스타일을 완성하는 접는 폰', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', badge: '인기' },
@@ -794,7 +824,7 @@
             `).join('');
         }
 
-        // bannerSlides 수정: 각 슬라이드별 imgClass 추가
+        // bannerSlides 수정: 각 슬라이드별 imgClass 추가 및 이미지 링크 변경
         const bannerSlides = [
             { 
                 tag: "INTERNET + TV", 
@@ -802,23 +832,23 @@
                 desc: "넷플릭스, 디즈니+까지 한 번에 즐기세요", 
                 img: "https://i.ibb.co/XkbkbLQp/jini.jpg", 
                 bg: "from-purple-900 to-slate-900",
-                imgClass: "absolute right-4 md:right-24 top-6 w-48 md:w-60 drop-shadow-2xl transition-all duration-500 rounded-lg" // 평평하게, 중앙 배치
+                imgClass: "absolute right-4 md:right-24 top-6 w-48 md:w-60 drop-shadow-2xl transition-all duration-500 rounded-lg z-0" // 기존 스타일 유지 + z-0
             },
             { 
                 tag: "HOT DEAL", 
                 title: "iPhone 17 Series", 
                 desc: "마지막 연말 특가! 지금 아니면 없는 기회", 
-                img: "https://i.ibb.co/BK6XfdZd/aip17p.jpg", 
+                img: "https://i.ibb.co/wF02R80m/adapple.jpg", // 새 링크
                 bg: "from-slate-900 to-slate-800",
-                imgClass: "absolute right-[-20px] top-10 w-48 rotate-[-15deg] drop-shadow-2xl transition-all duration-500 rounded-lg" // 회전, 사이드 배치
+                imgClass: "absolute inset-0 w-full h-full object-contain object-right z-0 transition-all duration-500" // 꽉 채우기 스타일, 비율 유지하며 오른쪽 정렬
             },
             { 
                 tag: "NEW ARRIVAL", 
                 title: "Galaxy S25 Series", 
                 desc: "압도적인 AI 성능, 지금 바로 경험하세요", 
-                img: "https://i.ibb.co/BhsV2vM/s931.jpg", 
+                img: "https://i.ibb.co/8DmwVfzf/addsam.jpg", // 새 링크
                 bg: "from-blue-900 to-slate-900",
-                imgClass: "absolute right-[-20px] top-10 w-48 rotate-[-15deg] drop-shadow-2xl transition-all duration-500 rounded-lg" // 회전, 사이드 배치
+                imgClass: "absolute inset-0 w-full h-full object-contain object-right z-0 transition-all duration-500" // 꽉 채우기 스타일, 비율 유지하며 오른쪽 정렬
             }
         ];
 
