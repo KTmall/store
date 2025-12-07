@@ -66,7 +66,7 @@
     <header class="bg-white border-b sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/KT_Logo_2009.svg" alt="KT Logo" class="h-6 md:h-8">
+                <img src="https://i.ibb.co/DDRdWK7Q/ktlogo.png" alt="KT Logo" class="h-6 md:h-8">
                 <span class="text-xl md:text-2xl font-bold text-red-600 tracking-tight">mobile store</span>
             </div>
             <nav class="hidden md:flex gap-8 text-sm font-bold text-slate-600">
@@ -85,9 +85,9 @@
     <!-- [메인 섹션] -->
     <main class="max-w-6xl mx-auto px-4 mt-6">
         
-        <!-- 1. 히어로 배너 (홈 전용) -->
-        <div id="home-top-section" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-            <div id="main-banner" class="md:col-span-2 bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl h-64 relative overflow-hidden text-white flex flex-col justify-center px-8 shadow-lg transition-all duration-500">
+        <!-- 1. 히어로 배너 (홈 전용 - 상단 단독 배치) -->
+        <div id="home-top-section" class="mb-12">
+            <div id="main-banner" class="w-full bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl h-64 relative overflow-hidden text-white flex flex-col justify-center px-8 shadow-lg transition-all duration-500">
                 <div class="z-10 transition-all duration-500" id="banner-content">
                     <span id="banner-tag" class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-bold mb-2 inline-block">HOT DEAL</span>
                     <h2 id="banner-title" class="text-3xl font-black mb-1">iPhone 17 Series</h2>
@@ -95,12 +95,6 @@
                     <button onclick="openOrderForm()" class="bg-white text-black px-5 py-2 rounded-lg text-xs font-bold hover:bg-slate-100 transition">신청하기</button>
                 </div>
                 <img id="banner-img" src="https://images.unsplash.com/photo-1696446702183-f8a552f447d2?auto=format&fit=crop&q=80&w=800" class="absolute right-[-20px] top-10 w-48 rotate-[-15deg] drop-shadow-2xl transition-all duration-500" alt="광고상품">
-            </div>
-            <div class="bg-white rounded-2xl h-64 p-5 shadow-sm border border-slate-100 flex flex-col">
-                <h3 class="font-bold text-slate-800 mb-3 flex items-center border-b pb-2">
-                    <i data-lucide="bell" class="w-4 h-4 mr-1 text-red-500"></i> 실시간 개통 현황
-                </h3>
-                <div class="flex-1 overflow-hidden relative"><div id="ticker-list" class="space-y-3"></div></div>
             </div>
         </div>
 
@@ -322,6 +316,16 @@
                 <div class="px-4 py-2 bg-white/10 rounded-full border border-white/20 text-xs md:text-sm font-bold backdrop-blur-sm">삼성 UHD TV</div>
                 <div class="px-4 py-2 bg-white/10 rounded-full border border-white/20 text-xs md:text-sm font-bold backdrop-blur-sm">LG 코드제로 청소기</div>
                 <div class="px-4 py-2 bg-white/10 rounded-full border border-white/20 text-xs md:text-sm font-bold backdrop-blur-sm">LG 통돌이 세탁기</div>
+            </div>
+        </div>
+
+        <!-- 실시간 개통 현황 (하단 이동) -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mt-6 mb-10">
+            <h3 class="font-bold text-slate-800 mb-3 flex items-center border-b pb-2">
+                <i data-lucide="bell" class="w-4 h-4 mr-1 text-red-500"></i> 실시간 개통 현황
+            </h3>
+            <div class="overflow-hidden relative h-32 md:h-12">
+                <div id="ticker-list" class="space-y-3"></div>
             </div>
         </div>
 
@@ -698,32 +702,32 @@
         
         const productData = [
             // [삼성] S시리즈 & 플래그십
-            { id: 's25u', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 울트라', desc: '최고의 성능, 압도적인 카메라', img: 'https://images.unsplash.com/photo-1706606992663-149b389b0243?w=500&auto=format&fit=crop&q=60', badge: 'BEST' },
-            { id: 's25p', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25+', desc: '더 넓은 화면, 강력한 배터리', img: 'https://images.unsplash.com/photo-1706717620131-4b71158d697e?w=500&auto=format&fit=crop&q=60', badge: 'NEW' },
-            { id: 's25e', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 엣지', desc: '세련된 디자인과 그립감', img: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500&auto=format&fit=crop&q=60', badge: 'NEW' },
-            { id: 's25fe', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 FE', desc: '팬을 위한 완벽한 에디션', img: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500&auto=format&fit=crop&q=60', badge: '가성비' },
+            { id: 's25u', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 울트라', desc: '최고의 성능, 압도적인 카메라', img: 'https://i.ibb.co/wNtM71DY/s938.jpg', badge: 'BEST' },
+            { id: 's25p', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25+', desc: '더 넓은 화면, 강력한 배터리', img: 'https://i.ibb.co/BhsV2vM/s931.jpg', badge: 'NEW' },
+            { id: 's25e', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 엣지', desc: '세련된 디자인과 그립감', img: 'https://i.ibb.co/cc9gNbQS/s936.jpg', badge: 'NEW' },
+            { id: 's25fe', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 FE', desc: '팬을 위한 완벽한 에디션', img: 'https://i.ibb.co/gKcj96C/s25fe.jpg', badge: '가성비' },
             { id: 's24u', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S24 울트라', desc: '여전히 강력한 AI 스마트폰', img: 'https://images.unsplash.com/photo-1706606992663-149b389b0243?w=500&auto=format&fit=crop&q=60', badge: '특가' },
             
-            { id: 'zfold7', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 폴드 7', desc: '더 얇고 가벼워진 대화면', img: 'https://images.unsplash.com/photo-1629125027878-3602410777fa?w=500&auto=format&fit=crop&q=60', badge: '신상' },
-            { id: 'zflip7', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 플립 7', desc: '스타일을 완성하는 접는 폰', img: 'https://images.unsplash.com/photo-1659346736630-f46337a6b306?w=500&auto=format&fit=crop&q=60', badge: '인기' },
-            { id: 'zflip7fe', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 플립 7 FE', desc: '폴더블의 대중화, 합리적 가격', img: 'https://images.unsplash.com/photo-1659346736630-f46337a6b306?w=500&auto=format&fit=crop&q=60', badge: '추천' },
-            { id: 'zfold6', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 폴드 6', desc: '완성형 폴더블의 정석', img: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500&auto=format&fit=crop&q=60', badge: '할인' },
+            { id: 'zfold7', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 폴드 7', desc: '더 얇고 가벼워진 대화면', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', badge: '신상' },
+            { id: 'zflip7', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 플립 7', desc: '스타일을 완성하는 접는 폰', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', badge: '인기' },
+            { id: 'zflip7fe', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 플립 7 FE', desc: '폴더블의 대중화, 합리적 가격', img: 'https://i.ibb.co/hhvYVdz/f766fe.jpg', badge: '추천' },
+            { id: 'zfold6', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 폴드 6', desc: '완성형 폴더블의 정석', img: 'https://images.unsplash.com/photo-1629125027878-3602410777fa?w=500&auto=format&fit=crop&q=60', badge: '할인' },
             { id: 'zflip6', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 플립 6', desc: '컴팩트한 디자인의 정수', img: 'https://images.unsplash.com/photo-1544211186-2187d9888d3c?w=500&auto=format&fit=crop&q=60', badge: '할인' },
 
-            { id: 'mom_s', category: 'samsung', brand: '효도폰 추천', brandClass: 'bg-green-100 text-green-600', name: '맘편안폰 S', desc: '큰 글씨, 쉬운 사용법', img: 'https://images.unsplash.com/photo-1598327105666-5b89351aff23?w=500&auto=format&fit=crop&q=60', badge: '효도폰' },
-            { id: 'jump4', category: 'samsung', brand: 'KT 전용', brandClass: 'bg-red-100 text-red-600', name: '갤럭시 점프 4', desc: 'KT 단독 출시 실속형 모델', img: 'https://images.unsplash.com/photo-1598327105666-5b89351aff23?w=500&auto=format&fit=crop&q=60', badge: '공짜폰' },
-            { id: 'a17', category: 'samsung', brand: '가성비 갑', brandClass: 'bg-green-100 text-green-600', name: '갤럭시 A17', desc: '학생폰/업무폰 강력 추천', img: 'https://images.unsplash.com/photo-1598327105666-5b89351aff23?w=500&auto=format&fit=crop&q=60', badge: '' },
+            { id: 'mom_s', category: 'samsung', brand: '효도폰 추천', brandClass: 'bg-green-100 text-green-600', name: '맘편안폰 S', desc: '큰 글씨, 쉬운 사용법', img: 'https://i.ibb.co/cK85Lt1r/m366mom.jpg', badge: '효도폰' },
+            { id: 'jump4', category: 'samsung', brand: 'KT 전용', brandClass: 'bg-red-100 text-red-600', name: '갤럭시 점프 4', desc: 'KT 단독 출시 실속형 모델', img: 'https://i.ibb.co/pBpr4WCm/m366.jpg', badge: '공짜폰' },
+            { id: 'a17', category: 'samsung', brand: '가성비 갑', brandClass: 'bg-green-100 text-green-600', name: '갤럭시 A17', desc: '학생폰/업무폰 강력 추천', img: 'https://i.ibb.co/1fzPxCdS/a175.jpg', badge: '' },
 
             // [애플]
-            { id: 'ip17pm', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 17 프로 맥스', desc: '역대급 대화면과 성능', img: 'https://images.unsplash.com/photo-1696446701796-da61225697cc?w=500&auto=format&fit=crop&q=60', badge: 'NEW' },
-            { id: 'ip17p', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 17 프로', desc: '티타늄의 완성', img: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&auto=format&fit=crop&q=60', badge: 'HOT' },
-            { id: 'ip17', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 17', desc: '새로운 스탠다드', img: 'https://images.unsplash.com/photo-1696446702183-f8a552f447d2?w=500&auto=format&fit=crop&q=60', badge: 'NEW' },
-            { id: 'ip_air', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 에어', desc: '놀랍도록 얇은 디자인', img: 'https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=500&auto=format&fit=crop&q=60', badge: 'SLIM' },
-            { id: 'ip16pm', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16 프로 맥스', desc: '압도적인 카메라 성능', img: 'https://images.unsplash.com/photo-1696446701796-da61225697cc?w=500&auto=format&fit=crop&q=60', badge: 'BEST' },
-            { id: 'ip16p', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16 프로', desc: '프로를 위한 선택', img: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&auto=format&fit=crop&q=60', badge: '인기' },
-            { id: 'ip16plus', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16 플러스', desc: '시원한 대화면', img: 'https://images.unsplash.com/photo-1696446702183-f8a552f447d2?w=500&auto=format&fit=crop&q=60', badge: '화면큼' }, 
-            { id: 'ip16', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16', desc: '가장 다채로운 컬러', img: 'https://images.unsplash.com/photo-1696446702183-f8a552f447d2?w=500&auto=format&fit=crop&q=60', badge: '할인' },
-            { id: 'ip16e', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16e', desc: '실속형 아이폰의 정석', img: 'https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=500&auto=format&fit=crop&q=60', badge: '가성비' }
+            { id: 'ip17pm', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 17 프로 맥스', desc: '역대급 대화면과 성능', img: 'https://i.ibb.co/TM5mcm2H/aip17pm.jpg', badge: 'NEW' },
+            { id: 'ip17p', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 17 프로', desc: '티타늄의 완성', img: 'https://i.ibb.co/BK6XfdZd/aip17p.jpg', badge: 'HOT' },
+            { id: 'ip17', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 17', desc: '새로운 스탠다드', img: 'https://i.ibb.co/60GKwz8T/aip17.jpg', badge: 'NEW' },
+            { id: 'ip_air', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 에어', desc: '놀랍도록 얇은 디자인', img: 'https://i.ibb.co/GSfGqG7/aipa.jpg', badge: 'SLIM' },
+            { id: 'ip16pm', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16 프로 맥스', desc: '압도적인 카메라 성능', img: 'https://i.ibb.co/VWdJnPLt/aip16pm.jpg', badge: 'BEST' },
+            { id: 'ip16p', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16 프로', desc: '프로를 위한 선택', img: 'https://i.ibb.co/Z6g52v9B/aip16p.jpg', badge: '인기' },
+            { id: 'ip16plus', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16 플러스', desc: '시원한 대화면', img: 'https://i.ibb.co/JwQzq4m4/aip16plus.jpg', badge: '화면큼' }, 
+            { id: 'ip16', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16', desc: '가장 다채로운 컬러', img: 'https://i.ibb.co/NgJZGMQv/aip16.jpg', badge: '할인' },
+            { id: 'ip16e', category: 'apple', brand: 'APPLE', brandClass: 'bg-slate-200 text-slate-600', name: '아이폰 16e', desc: '실속형 아이폰의 정석', img: 'https://i.ibb.co/Mxx4bzz3/aip16e.jpg', badge: '가성비' }
         ];
 
         function filterProducts(category) {
@@ -794,7 +798,7 @@
             { tag: "HOT DEAL", title: "iPhone 17 Series", desc: "마지막 연말 특가! 지금 아니면 없는 기회", img: "https://images.unsplash.com/photo-1696446702183-f8a552f447d2?auto=format&fit=crop&q=80&w=800", bg: "from-slate-900 to-slate-800" },
             { tag: "NEW ARRIVAL", title: "Galaxy S25 Series", desc: "압도적인 AI 성능, 지금 바로 경험하세요", img: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=800", bg: "from-blue-900 to-slate-900" },
             { tag: "INTERNET + TV", title: "KT 초고속 인터넷", desc: "끊김 없는 기가 인터넷 + 현금 사은품 최대", img: "https://images.unsplash.com/photo-1544197150-b99a580bbcbf?auto=format&fit=crop&q=80&w=800", bg: "from-emerald-900 to-slate-900" },
-            { tag: "GENIE TV", title: "지니TV 모든G", desc: "넷플릭스, 디즈니+까지 한 번에 즐기세요", img: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&q=80&w=800", bg: "from-purple-900 to-slate-900" }
+            { tag: "GENIE TV", title: "지니TV 모든G", desc: "넷플릭스, 디즈니+까지 한 번에 즐기세요", img: "https://i.ibb.co/XkbkbLQp/jini.jpg", bg: "from-purple-900 to-slate-900" }
         ];
 
         let currentSlide = 0;
