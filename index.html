@@ -87,14 +87,16 @@
         
         <!-- 1. 히어로 배너 (홈 전용 - 상단 단독 배치) -->
         <div id="home-top-section" class="mb-12">
-            <div id="main-banner" class="w-full bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl h-64 relative overflow-hidden text-white flex flex-col justify-center px-8 shadow-lg transition-all duration-500">
+            <!-- 초기 배너: 지니TV + 인터넷 통합 광고 -->
+            <div id="main-banner" class="w-full bg-gradient-to-r from-purple-900 to-slate-900 rounded-2xl h-64 relative overflow-hidden text-white flex flex-col justify-center px-8 shadow-lg transition-all duration-500">
                 <div class="z-10 transition-all duration-500" id="banner-content">
-                    <span id="banner-tag" class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-bold mb-2 inline-block">HOT DEAL</span>
-                    <h2 id="banner-title" class="text-3xl font-black mb-1">iPhone 17 Series</h2>
-                    <p id="banner-desc" class="text-slate-300 text-sm mb-4">마지막 연말 특가! 지금 아니면 없는 기회</p>
-                    <button onclick="openOrderForm()" class="bg-white text-black px-5 py-2 rounded-lg text-xs font-bold hover:bg-slate-100 transition">신청하기</button>
+                    <span id="banner-tag" class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-bold mb-2 inline-block">INTERNET + TV</span>
+                    <h2 id="banner-title" class="text-3xl font-black mb-1">초고속 인터넷 + 지니TV 모든G</h2>
+                    <p id="banner-desc" class="text-slate-300 text-sm mb-4">넷플릭스, 디즈니+까지 한 번에 즐기세요</p>
+                    <button onclick="openOrderForm('인터넷+TV')" class="bg-white text-black px-5 py-2 rounded-lg text-xs font-bold hover:bg-slate-100 transition">신청하기</button>
                 </div>
-                <img id="banner-img" src="https://images.unsplash.com/photo-1696446702183-f8a552f447d2?auto=format&fit=crop&q=80&w=800" class="absolute right-[-20px] top-10 w-48 rotate-[-15deg] drop-shadow-2xl transition-all duration-500" alt="광고상품">
+                <!-- 초기 이미지: 지니TV (평평하게, 안쪽으로 배치) -->
+                <img id="banner-img" src="https://i.ibb.co/XkbkbLQp/jini.jpg" class="absolute right-4 md:right-24 top-6 w-48 md:w-60 drop-shadow-2xl transition-all duration-500 rounded-lg" alt="광고상품">
             </div>
         </div>
 
@@ -337,6 +339,7 @@
             <div>
                 <p class="text-xs text-slate-500 font-medium">최대 지원금 보장</p>
                 <div class="flex items-end gap-1">
+                    <img src="https://i.ibb.co/DDRdWK7Q/ktlogo.png" alt="KT Logo" class="h-6 md:h-8 mr-1">
                     <span class="text-xl md:text-2xl font-black text-slate-800">KT 공식인증 대리점</span>
                 </div>
             </div>
@@ -697,16 +700,13 @@
             });
         }
         
-        // 필터링 및 기타 함수 (기존 코드 유지)
-        // ... (productData, filterProducts, renderGrid, bannerSlides, startBanner, leads, startTicker 등은 위쪽 코드와 동일하게 포함되어야 합니다)
-        
+        // 필터링 및 기타 함수
         const productData = [
             // [삼성] S시리즈 & 플래그십
             { id: 's25u', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 울트라', desc: '최고의 성능, 압도적인 카메라', img: 'https://i.ibb.co/wNtM71DY/s938.jpg', badge: 'BEST' },
             { id: 's25p', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25+', desc: '더 넓은 화면, 강력한 배터리', img: 'https://i.ibb.co/BhsV2vM/s931.jpg', badge: 'NEW' },
             { id: 's25e', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 엣지', desc: '세련된 디자인과 그립감', img: 'https://i.ibb.co/cc9gNbQS/s936.jpg', badge: 'NEW' },
             { id: 's25fe', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S25 FE', desc: '팬을 위한 완벽한 에디션', img: 'https://i.ibb.co/gKcj96C/s25fe.jpg', badge: '가성비' },
-            { id: 's24u', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 S24 울트라', desc: '여전히 강력한 AI 스마트폰', img: 'https://images.unsplash.com/photo-1706606992663-149b389b0243?w=500&auto=format&fit=crop&q=60', badge: '특가' },
             
             { id: 'zfold7', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 폴드 7', desc: '더 얇고 가벼워진 대화면', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', badge: '신상' },
             { id: 'zflip7', category: 'samsung', brand: 'SAMSUNG', brandClass: 'bg-blue-100 text-blue-600', name: '갤럭시 Z 플립 7', desc: '스타일을 완성하는 접는 폰', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', badge: '인기' },
@@ -794,11 +794,32 @@
             `).join('');
         }
 
+        // bannerSlides 수정: 각 슬라이드별 imgClass 추가
         const bannerSlides = [
-            { tag: "HOT DEAL", title: "iPhone 17 Series", desc: "마지막 연말 특가! 지금 아니면 없는 기회", img: "https://images.unsplash.com/photo-1696446702183-f8a552f447d2?auto=format&fit=crop&q=80&w=800", bg: "from-slate-900 to-slate-800" },
-            { tag: "NEW ARRIVAL", title: "Galaxy S25 Series", desc: "압도적인 AI 성능, 지금 바로 경험하세요", img: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&q=80&w=800", bg: "from-blue-900 to-slate-900" },
-            { tag: "INTERNET + TV", title: "KT 초고속 인터넷", desc: "끊김 없는 기가 인터넷 + 현금 사은품 최대", img: "https://images.unsplash.com/photo-1544197150-b99a580bbcbf?auto=format&fit=crop&q=80&w=800", bg: "from-emerald-900 to-slate-900" },
-            { tag: "GENIE TV", title: "지니TV 모든G", desc: "넷플릭스, 디즈니+까지 한 번에 즐기세요", img: "https://i.ibb.co/XkbkbLQp/jini.jpg", bg: "from-purple-900 to-slate-900" }
+            { 
+                tag: "INTERNET + TV", 
+                title: "초고속 인터넷 + 지니TV 모든G", 
+                desc: "넷플릭스, 디즈니+까지 한 번에 즐기세요", 
+                img: "https://i.ibb.co/XkbkbLQp/jini.jpg", 
+                bg: "from-purple-900 to-slate-900",
+                imgClass: "absolute right-4 md:right-24 top-6 w-48 md:w-60 drop-shadow-2xl transition-all duration-500 rounded-lg" // 평평하게, 중앙 배치
+            },
+            { 
+                tag: "HOT DEAL", 
+                title: "iPhone 17 Series", 
+                desc: "마지막 연말 특가! 지금 아니면 없는 기회", 
+                img: "https://i.ibb.co/BK6XfdZd/aip17p.jpg", 
+                bg: "from-slate-900 to-slate-800",
+                imgClass: "absolute right-[-20px] top-10 w-48 rotate-[-15deg] drop-shadow-2xl transition-all duration-500 rounded-lg" // 회전, 사이드 배치
+            },
+            { 
+                tag: "NEW ARRIVAL", 
+                title: "Galaxy S25 Series", 
+                desc: "압도적인 AI 성능, 지금 바로 경험하세요", 
+                img: "https://i.ibb.co/BhsV2vM/s931.jpg", 
+                bg: "from-blue-900 to-slate-900",
+                imgClass: "absolute right-[-20px] top-10 w-48 rotate-[-15deg] drop-shadow-2xl transition-all duration-500 rounded-lg" // 회전, 사이드 배치
+            }
         ];
 
         let currentSlide = 0;
@@ -820,7 +841,8 @@
                     bTitle.innerText = slide.title;
                     bDesc.innerText = slide.desc;
                     bImg.src = slide.img;
-                    bannerEl.className = `md:col-span-2 bg-gradient-to-r ${slide.bg} rounded-2xl h-64 relative overflow-hidden text-white flex flex-col justify-center px-8 shadow-lg transition-colors duration-500`;
+                    bImg.className = slide.imgClass; // 이미지 클래스(위치/회전) 업데이트
+                    bannerEl.className = `w-full bg-gradient-to-r ${slide.bg} rounded-2xl h-64 relative overflow-hidden text-white flex flex-col justify-center px-8 shadow-lg transition-colors duration-500`;
                     bContent.style.opacity = '1';
                     bImg.style.opacity = '1';
                 }, 200);
