@@ -107,25 +107,34 @@
                 emailJsKey: "oM5C3k8SXXow-GN5v" // EmailJS Public Key
             },
 
-            // 2. 메인 배너 설정 (이미지 + 링크)
+            // 2. 메인 배너 설정 (PC/Mobile 이미지 분리)
+            // ==========================================================================
+            // [💡 최적 이미지 사이즈 추천]
+            // - PC/태블릿(가로형): 1920 x 800 px 권장 (pcImg)
+            // - 모바일(세로형): 1080 x 1350 px 또는 1080 x 1500 px 권장 (mobileImg)
+            // ==========================================================================
             banner: {
                 // 슬라이드 이미지 리스트 (img: 이미지주소, url: 클릭시 이동할 주소)
-                // url을 비워두면 클릭되지 않습니다 ("").
                 images: [
                     { 
-                        img: "https://i.ibb.co/0yK1hmbS/IMG-9758.jpg", 
+                        // 예시 이미지 (가로/세로 분리)
+                        pcImg: "https://i.ibb.co/HTLZfCtM/IMG-9763.jpg",     
+                        mobileImg: "https://i.ibb.co/p68jTr3t/IMG-9764.jpg", 
                         url: "" 
                     },
                     { 
-                        img: "https://i.ibb.co/CKYG7jJC/jini.jpg", 
+                        pcImg: "https://i.ibb.co/wFY4fsv2/IMG-9766.jpg", 
+                        mobileImg: "https://i.ibb.co/215DCjfn/IMG-9765.jpg",
                         url: "" 
                     },
                     { 
-                        img: "https://i.ibb.co/mrfjF7yv/IMG-8999.jpg", 
+                        pcImg: "https://i.ibb.co/8LDrXX7N/IMG-9767.jpg", 
+                        mobileImg: "https://i.ibb.co/hx30cRsN/IMG-9768.jpg",
                         url: "" 
                     },
                     { 
-                        img: "https://i.ibb.co/F4SJ60t7/IMG-9757.jpg", 
+                        pcImg: "https://i.ibb.co/Qvj1mHzR/IMG-9770.jpg", 
+                        mobileImg: "https://i.ibb.co/WpfQX3t0/IMG-9769.jpg",
                         url: "" 
                     }
                 ]
@@ -247,12 +256,11 @@
         </nav>
     </header>
 
-    <!-- 2. 메인 배너 (미러/블러 효과 적용) -->
-    <!-- h-80(모바일), h-96(PC) -->
-    <section id="main-banner-section" class="relative w-full h-80 md:h-96 flex items-center justify-center overflow-hidden transition-colors duration-500 bg-gray-100">
-        <!-- 슬라이드 이미지 컨테이너 -->
+    <!-- 2. 메인 배너 (반응형 아트 디렉션) -->
+    <!-- 모바일은 세로로 길게(h-[500px]), PC는 가로로 적당하게(h-[400px]) -->
+    <section id="main-banner-section" class="relative w-full h-[500px] md:h-[400px] flex items-center justify-center overflow-hidden transition-colors duration-500 bg-gray-100">
         <div id="banner-slider" class="absolute inset-0 w-full h-full">
-            <!-- JS로 이미지(링크 포함) 삽입됨 -->
+            <!-- JS로 이미지 삽입됨 -->
         </div>
     </section>
 
@@ -489,7 +497,11 @@
                                 <input type="text" id="val-name" required class="custom-input bg-gray-800 border-gray-700 text-white focus:border-red-500 placeholder-gray-500 p-3" placeholder="성함">
                                 <input type="tel" id="val-phone" required class="custom-input bg-gray-800 border-gray-700 text-white focus:border-red-500 placeholder-gray-500 p-3" placeholder="연락처 (-없이 입력)">
                             </div>
-                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-bold text-lg transition shadow-lg flex items-center justify-center transform active:scale-95">무료 상담 예약하기 <i data-lucide="chevron-right" class="w-5 h-5 ml-1"></i></button>
+                            <div class="flex gap-2">
+                                <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-bold text-lg transition shadow-lg">신청하기 (이메일)</button>
+                                <button type="button" onclick="sendToKakao()" class="flex-1 bg-[#FAE100] text-[#3B1E1E] hover:bg-yellow-400 py-4 rounded-2xl font-bold text-lg transition shadow-lg"><i class="fas fa-comment mr-1"></i> 카톡 전송</button>
+                            </div>
+                             <p class="text-center text-xs text-slate-400 mt-2">* '카톡 전송' 클릭 시 신청 내용이 복사되며 상담 채팅방이 열립니다.</p>
                         </div>
                     </form>
                 </div>
@@ -519,41 +531,33 @@
             document.getElementById('kakao-btn').href = SITE_CONFIG.info.kakaoUrl;
         }
 
-        // 메인 배너 슬라이드 로직 (NEW: 미러/블러 효과 적용됨)
+        // 메인 배너 슬라이드 로직 (NEW)
         function startMainBannerSlider() {
             const container = document.getElementById('banner-slider');
             const images = SITE_CONFIG.banner.images;
             if (!container || !images || images.length === 0) return;
-
-            // 기존 내용 초기화 (혹시 모를 중복 방지)
-            container.innerHTML = '';
 
             // 이미지 요소 생성
             images.forEach((item, index) => {
                 const a = document.createElement('a');
                 a.href = item.url ? item.url : 'javascript:void(0)';
                 if(!item.url) a.style.cursor = 'default';
-                // overflow-hidden 추가하여 블러 이미지가 삐져나가지 않게 함
                 a.className = `absolute inset-0 w-full h-full slide-item ${index === 0 ? 'slide-active' : 'slide-hidden'} overflow-hidden`;
-                
-                // 1. 배경 (미러/블러 효과)
-                const bgDiv = document.createElement('div');
-                bgDiv.className = "absolute inset-0 w-full h-full bg-cover bg-center blur-2xl scale-110 opacity-60"; 
-                bgDiv.style.backgroundImage = `url('${item.img}')`;
-                
-                // 2. 전경 (메인 이미지)
-                const img = document.createElement('img');
-                img.src = item.img;
-                // object-contain으로 비율 유지, z-10으로 배경 위에 표시
-                img.className = "relative w-full h-full object-contain z-10"; 
-                
-                a.appendChild(bgDiv);
-                a.appendChild(img);
+
+                // 모바일 이미지 (세로) - md(768px) 이상에서는 숨김
+                const mobileImg = document.createElement('div');
+                mobileImg.className = "absolute inset-0 w-full h-full bg-cover bg-center md:hidden";
+                mobileImg.style.backgroundImage = `url('${item.mobileImg}')`; // 배경 이미지로 설정하여 꽉 채움
+
+                // PC 이미지 (가로) - md(768px) 이상에서만 보임
+                const pcImg = document.createElement('div');
+                pcImg.className = "absolute inset-0 w-full h-full bg-cover bg-center hidden md:block";
+                pcImg.style.backgroundImage = `url('${item.pcImg}')`; // 배경 이미지로 설정
+
+                a.appendChild(mobileImg);
+                a.appendChild(pcImg);
                 container.appendChild(a);
             });
-            
-            // 배너 배경색 설정 (이미지 로딩 전 잠깐 보일 색상)
-            // document.getElementById('main-banner-section').style.backgroundColor = SITE_CONFIG.banner.bgColor;
 
             // 1장 이상일 경우 슬라이드 시작
             if (images.length > 1) {
