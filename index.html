@@ -61,7 +61,7 @@
             @apply bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-70 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-400 transform-none shadow-none;
         }
 
-        /* 가격표 테이블 스타일 */
+        /* 가격표 테이블 스타일 (특가 전용) */
         .price-row { @apply flex justify-between items-center py-2 text-sm text-slate-600; }
         .price-row.total { @apply border-t-2 border-slate-900 pt-4 mt-2 text-lg md:text-xl font-black text-slate-900; }
         .discount-text { @apply text-red-600 font-bold; }
@@ -83,26 +83,66 @@
     <!-- ========================================== -->
     <script>
         const SITE_CONFIG = {
-            // 1. 기본 정보
+            // 1. 기본 정보 (로고, 연락처, 링크)
             info: {
-                logoImg: "https://i.ibb.co/cXVFKzLj/ktlogo.png",
-                logoText: "MALL",
-                phone: "010-2141-0137",
-                kakaoUrl: "http://pf.kakao.com/_XRxaan/chat",
-                emailJsKey: "oM5C3k8SXXow-GN5v"
+                logoImg: "https://i.ibb.co/cXVFKzLj/ktlogo.png", // KT 로고 이미지 주소
+                logoText: "MALL",         // 로고 옆 텍스트 내용
+                logoTextSize: "text-3xl", // 로고 옆 텍스트 크기 (text-xl, text-2xl, text-3xl, text-4xl 등)
+                logoTextColor: "text-[#DC000C]", // 로고 옆 텍스트 색상 (KT 레드: #DC000C, 검정: text-black 등)
+                phone: "010-2141-0137",   // 상담 전화번호
+                kakaoUrl: "http://pf.kakao.com/_XRxaan/chat", // 카카오톡 채널 링크
+                emailJsKey: "oM5C3k8SXXow-GN5v" // EmailJS Public Key
             },
 
             // 2. 이달의 특가 상품 목록
+            // (id: 고유영문명, brand: 브랜드, name: 모델명, img: 이미지주소) -> badge 속성은 삭제됨(사용안함)
+            // (mandatoryPlan: 필수요금제, price: 출고가, publicSupport: 공통지원금, addSupport: 추가지원금)
             specialProducts: [
-                { id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/SDt72p2v/z-7.png', badge: '특가', mandatoryPlan: '초이스 베이직(9만)', price: 1485000, publicSupport: 500000, addSupport: 350000 },
-                { id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/Z1GfT3p2/z-7.png', badge: '프리미엄', mandatoryPlan: '초이스 베이직(9만)', price: 2379300, publicSupport: 500000, addSupport: 350000 },
-                { id: 's25', brand: 'SAMSUNG', name: '갤럭시 S25', img: 'https://i.ibb.co/kgh0hHrd/s25.png', badge: '최신상', mandatoryPlan: '초이스 베이직(9만)', price: 1155000, publicSupport: 500000, addSupport: 350000 },
-                { id: 'ip17', brand: 'APPLE', name: '아이폰 17', img: 'https://i.ibb.co/Z18ssP9y/17.png', badge: '사전예약', mandatoryPlan: '초이스 베이직(9만)', price: 1287000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip17p', brand: 'APPLE', name: '아이폰 17 Pro', img: 'https://i.ibb.co/Y7ZpFhjJ/17.png', badge: '티타늄', mandatoryPlan: '초이스 베이직(9만)', price: 1782000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip17pm', brand: 'APPLE', name: '아이폰 17 Pro Max', img: 'https://i.ibb.co/fzj6nqvF/17.png', badge: '최고성능', mandatoryPlan: '초이스 베이직(9만)', price: 1980000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip_air', brand: 'APPLE', name: '아이폰 에어', img: 'https://i.ibb.co/mVNTdCrZ/image.png', badge: 'SLIM', mandatoryPlan: '초이스 베이직(9만)', price: 1584000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/TMBdMD7T/4.png', badge: '공짜폰', mandatoryPlan: '심플 30GB(6.1만)', price: 449900, publicSupport: 363000, addSupport: 86900 },
-                { id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/bgLNScBz/a17.png', badge: '효도폰', mandatoryPlan: '37,000원 요금제', price: 319000, publicSupport: 211000, addSupport: 108000 }
+                { 
+                    id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/SDt72p2v/z-7.png', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1485000, publicSupport: 500000, addSupport: 350000
+                },
+                { 
+                    id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/Z1GfT3p2/z-7.png', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 2379300, publicSupport: 500000, addSupport: 350000
+                },
+                { 
+                    id: 's25', brand: 'SAMSUNG', name: '갤럭시 S25', img: 'https://i.ibb.co/kgh0hHrd/s25.png', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1155000, publicSupport: 500000, addSupport: 350000 
+                },
+                { 
+                    id: 'ip17', brand: 'APPLE', name: '아이폰 17', img: 'https://i.ibb.co/Z18ssP9y/17.png', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1287000, publicSupport: 450000, addSupport: 200000 
+                },
+                { 
+                    id: 'ip17p', brand: 'APPLE', name: '아이폰 17 Pro', img: 'https://i.ibb.co/Y7ZpFhjJ/17.png', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1782000, publicSupport: 450000, addSupport: 200000 
+                },
+                { 
+                    id: 'ip17pm', brand: 'APPLE', name: '아이폰 17 Pro Max', img: 'https://i.ibb.co/fzj6nqvF/17.png', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1980000, publicSupport: 450000, addSupport: 200000 
+                },
+                { 
+                    id: 'ip_air', brand: 'APPLE', name: '아이폰 에어', img: 'https://i.ibb.co/mVNTdCrZ/image.png', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1584000, publicSupport: 450000, addSupport: 200000 
+                },
+                { 
+                    id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/TMBdMD7T/4.png', 
+                    mandatoryPlan: '심플 30GB(6.1만)', 
+                    price: 449900, publicSupport: 363000, addSupport: 86900 
+                },
+                { 
+                    id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/bgLNScBz/a17.png', 
+                    mandatoryPlan: '37,000원 요금제', 
+                    price: 319000, publicSupport: 211000, addSupport: 108000 
+                }
             ],
 
             // 3. 인터넷+TV 요금 및 정보 설정
@@ -153,12 +193,13 @@
     </script>
     <!-- ========================================== -->
 
-    <!-- 1. 헤더 -->
+    <!-- 1. 헤더 (수정됨) -->
     <header class="bg-white sticky top-0 z-50 shadow-sm">
         <div class="flex justify-between items-center px-4 py-3">
             <div class="flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
                 <img src="" id="header-logo-img" alt="KT Logo" class="h-10 mr-2 object-contain">
-                <span class="text-3xl font-black kt-text-red tracking-tighter" id="header-logo-text">MALL</span>
+                <!-- 로고 텍스트 (설정값 적용 대상) -->
+                <span class="font-black tracking-tighter" id="header-logo-text">MALL</span>
             </div>
             <div class="flex gap-4 text-gray-600">
                 <a href="#" id="header-phone-link"><i class="fas fa-phone-alt text-xl"></i></a>
@@ -191,13 +232,14 @@
                 <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-2">🔥 이달의 특가 폰</h2>
                 <p class="text-slate-500 text-sm">공시지원금 + 추가지원금 MAX 적용 모델</p>
             </div>
+
             <div id="special-product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- JS 로드 -->
+                <!-- 자바스크립트로 특가 상품 로드 -->
             </div>
         </div>
     </section>
 
-    <!-- 4. 인터넷 요금표 섹션 (업데이트: 자동 렌더링) -->
+    <!-- 4. 인터넷 요금표 섹션 -->
     <section id="section-internet" class="bg-white py-12 px-2 md:px-4 border-t-8 border-slate-100">
         <div id="kt-rate-calculator" class="w-full max-w-6xl mx-auto p-4 section-container">
             <div class="flex flex-col items-center mb-10">
@@ -235,9 +277,8 @@
                     </div>
                 </div>
 
-                <!-- 인터넷 상품 카드 그리드 (JS로 자동 생성됨) -->
-                <div id="internet-plan-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Cards will be injected here -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div id="internet-plan-grid" class="contents"></div>
                 </div>
             </div>
         </div>
@@ -260,7 +301,6 @@
                         <input type="tel" id="fast-phone" required placeholder="1234-5678" class="w-2/3 bg-gray-100 border border-gray-300 rounded-xl p-3">
                     </div>
                 </div>
-                <!-- 상품 선택 -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">관심 상품 선택 (중복 가능)</label>
                     <div class="flex gap-2 mb-3">
@@ -273,7 +313,6 @@
                             <div class="absolute inset-0 border-2 border-red-500 rounded-xl hidden" id="border-mobile"></div>
                         </label>
                     </div>
-                    <!-- 인터넷 상세 옵션 -->
                     <div id="consult-opt-internet" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <p class="text-xs font-bold text-slate-600 mb-1"><i class="fas fa-wifi text-red-500 mr-1"></i> 인터넷 속도 & TV 선택</p>
                         <select id="fast-net-speed" class="custom-select bg-white">
@@ -289,7 +328,6 @@
                             <option value="디즈니+">지니 TV 디즈니+</option>
                         </select>
                     </div>
-                    <!-- 휴대폰 상세 옵션 -->
                     <div id="consult-opt-mobile" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200 hidden">
                         <p class="text-xs font-bold text-slate-600 mb-1"><i class="fas fa-mobile-alt text-red-500 mr-1"></i> 희망 기종 입력 (선택)</p>
                         <input type="text" id="fast-mobile-model" placeholder="예: 갤럭시 S25, 아이폰 16" class="custom-input bg-white">
@@ -313,7 +351,7 @@
 
     <!-- 7. 하단 고정 바 -->
     <div class="fixed bottom-0 left-0 w-full flex text-center z-50 h-14 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <a href="#" target="_blank" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg" id="kakao-btn">
+        <a href="http://pf.kakao.com/_XRxaan/chat" target="_blank" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg" id="kakao-btn">
             <i class="fas fa-comment"></i> 카카오톡 상담
         </a>
         <button onclick="toggleConsultMenu()" class="w-1/2 bg-[#222] text-white flex items-center justify-center gap-2 font-bold text-lg">
@@ -327,7 +365,7 @@
         <div class="bg-white w-full md:w-80 md:rounded-3xl rounded-t-3xl p-6 relative z-10 transform transition-transform duration-300 translate-y-0 shadow-2xl">
             <h3 class="text-lg font-bold text-slate-900 mb-6 text-center">상담 방식을 선택해주세요</h3>
             <div class="flex flex-col gap-3">
-                <a href="#" class="flex items-center justify-center gap-3 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-4 rounded-xl font-bold text-lg transition border border-slate-200" id="consult-phone-link">
+                <a href="tel:010-2141-0137" class="flex items-center justify-center gap-3 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-4 rounded-xl font-bold text-lg transition border border-slate-200" id="consult-phone-link">
                     <i class="fas fa-phone-alt text-red-600"></i> 전화 상담
                 </a>
                 <button onclick="scrollToSection('section-consult-form'); toggleConsultMenu();" class="flex items-center justify-center gap-3 w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg">
@@ -357,6 +395,7 @@
                         <h3 id="dt-title" class="text-2xl font-black text-slate-900 mb-1">상품명</h3>
                         <p class="text-slate-500 font-medium text-sm">선택하신 모델로 전문 상담이 접수됩니다.</p>
                     </div>
+                    <!-- 가격 명세서 -->
                     <div id="special-price-box" class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-inner mb-4">
                         <h4 class="text-sm font-bold text-slate-500 mb-3 border-b border-slate-200 pb-2">지원금 및 할부원금 상세</h4>
                         <div class="space-y-1.5">
@@ -411,7 +450,11 @@
                                 <input type="text" id="val-name" required class="custom-input bg-gray-800 border-gray-700 text-white focus:border-red-500 placeholder-gray-500 p-3" placeholder="성함">
                                 <input type="tel" id="val-phone" required class="custom-input bg-gray-800 border-gray-700 text-white focus:border-red-500 placeholder-gray-500 p-3" placeholder="연락처 (-없이 입력)">
                             </div>
-                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-bold text-lg transition shadow-lg flex items-center justify-center transform active:scale-95">무료 상담 예약하기 <i data-lucide="chevron-right" class="w-5 h-5 ml-1"></i></button>
+                            <div class="flex gap-2">
+                                <button type="submit" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-bold text-lg transition shadow-lg">신청하기 (이메일)</button>
+                                <button type="button" onclick="sendToKakao()" class="flex-1 bg-[#FAE100] text-[#3B1E1E] hover:bg-yellow-400 py-4 rounded-2xl font-bold text-lg transition shadow-lg"><i class="fas fa-comment mr-1"></i> 카톡 전송</button>
+                            </div>
+                             <p class="text-center text-xs text-slate-400 mt-2">* '카톡 전송' 클릭 시 신청 내용이 복사되며 상담 채팅방이 열립니다.</p>
                         </div>
                     </form>
                 </div>
@@ -424,7 +467,12 @@
         // 전역 변수 설정 (설정값을 DOM에 적용)
         function applyConfig() {
             document.getElementById('header-logo-img').src = SITE_CONFIG.info.logoImg;
-            document.getElementById('header-logo-text').innerText = SITE_CONFIG.info.logoText;
+            
+            const logoTextEl = document.getElementById('header-logo-text');
+            logoTextEl.innerText = SITE_CONFIG.info.logoText;
+            // 로고 텍스트 스타일 적용
+            logoTextEl.className = `font-black tracking-tighter ${SITE_CONFIG.info.logoTextSize} ${SITE_CONFIG.info.logoTextColor}`;
+
             document.getElementById('footer-company').innerText = SITE_CONFIG.footer.companyName;
             document.getElementById('footer-owner').innerText = SITE_CONFIG.footer.owner;
             document.getElementById('footer-license').innerText = SITE_CONFIG.footer.license;
@@ -494,9 +542,10 @@
             // 특가 그리드 렌더링
             const grid = document.getElementById('special-product-grid');
             if(grid) {
+                // [수정됨] 뱃지(badge) HTML 제거됨
                 grid.innerHTML = SPECIAL_PRODUCTS.map(p => `
                     <div class="group bg-white rounded-2xl p-6 shadow-lg border-2 border-red-100 hover:border-red-500 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center relative overflow-hidden cursor-pointer" onclick="openMobileModal('${p.id}')">
-                        <div class="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl z-10">${p.badge}</div>
+                        
                         <div class="mb-4 w-full aspect-[4/3] flex items-center justify-center bg-slate-50 rounded-xl overflow-hidden">
                             <span class="absolute top-2 left-2 bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-1 rounded">${p.brand}</span>
                             <img src="${p.img}" class="w-3/4 object-contain drop-shadow-lg group-hover:scale-105 transition-transform" alt="${p.name}">
@@ -707,10 +756,6 @@
                 if (!PRICING_DATA[curSpeed] || !PRICING_DATA[curSpeed][curStb]) return;
                 const data = PRICING_DATA[curSpeed][curStb];
                 
-                // plan1, plan2, plan3에 대한 가격 매핑
-                const mapping = { 'plan1': 'basic', 'plan2': 'all', 'plan3': 'ott' }; // config key -> pricing key mapping (if different, but let's assume direct mapping in CONFIG)
-                // Actually, SITE_CONFIG structure matches keys directly: plan1, plan2, plan3
-                
                 ['plan1', 'plan2', 'plan3'].forEach(key => {
                     const prices = data[key]; // [org, sale]
                     if(prices) {
@@ -762,4 +807,3 @@
     </script>
 </body>
 </html>
-
