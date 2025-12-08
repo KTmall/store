@@ -378,20 +378,26 @@
                                 <div>
                                     <label class="text-xs font-bold text-slate-600 mb-1 block pl-1">보험 가입 여부</label>
                                     <div class="grid grid-cols-2 gap-2">
-                                        <label class="cursor-pointer"><input type="radio" name="special_ins" value="가입" class="peer sr-only" checked><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-red-500 peer-checked:text-white peer-checked:border-red-500 transition shadow-sm text-sm">가입</div></label>
-                                        <label class="cursor-pointer"><input type="radio" name="special_ins" value="미가입" class="peer sr-only"><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-slate-700 peer-checked:text-white peer-checked:border-slate-700 transition shadow-sm text-sm">미가입</div></label>
+                                        <label class="cursor-pointer block w-full">
+                                            <input type="radio" name="special_ins" value="가입" class="peer hidden" checked>
+                                            <div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-red-500 peer-checked:text-white peer-checked:border-red-500 transition shadow-sm text-sm">가입</div>
+                                        </label>
+                                        <label class="cursor-pointer block w-full">
+                                            <input type="radio" name="special_ins" value="미가입" class="peer hidden">
+                                            <div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-slate-700 peer-checked:text-white peer-checked:border-slate-700 transition shadow-sm text-sm">미가입</div>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- [NEW] 제휴카드 항목 추가 -->
                                 <div>
                                     <label class="text-xs font-bold text-slate-600 mb-1 block pl-1">제휴카드 할인 (안내)</label>
                                     <div class="grid grid-cols-2 gap-2">
-                                        <label class="cursor-pointer">
-                                            <input type="radio" name="special_card" value="상담신청" class="peer sr-only" checked>
+                                        <label class="cursor-pointer block w-full">
+                                            <input type="radio" name="special_card" value="상담신청" class="peer hidden" checked>
                                             <div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-blue-500 peer-checked:text-white peer-checked:border-blue-500 transition shadow-sm text-sm">상담신청</div>
                                         </label>
-                                        <label class="cursor-pointer">
-                                            <input type="radio" name="special_card" value="미신청" class="peer sr-only">
+                                        <label class="cursor-pointer block w-full">
+                                            <input type="radio" name="special_card" value="미신청" class="peer hidden">
                                             <div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-slate-700 peer-checked:text-white peer-checked:border-slate-700 transition shadow-sm text-sm">미신청</div>
                                         </label>
                                     </div>
