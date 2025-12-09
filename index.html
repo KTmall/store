@@ -90,7 +90,6 @@
     <!-- ========================================== -->
     <script>
         const SITE_CONFIG = {
-            // 1. 기본 정보
             info: {
                 logoImg: "https://i.ibb.co/cXVFKzLj/ktlogo.png", 
                 logoText: "MALL",
@@ -100,8 +99,6 @@
                 kakaoUrl: "http://pf.kakao.com/_XRxaan/chat",
                 emailJsKey: "oM5C3k8SXXow-GN5v"
             },
-
-            // 2. 메인 배너 (이미지 슬라이드)
             banner: {
                 images: [
                     { pcImg: "https://i.ibb.co/DfFFb7KF/IMG-9783.jpg", mobileImg: "https://i.ibb.co/7dr7KSqR/IMG-9776.jpg", url: "" },
@@ -110,8 +107,6 @@
                     { pcImg: "https://i.ibb.co/7tD19Fxj/IMG-9780.jpg", mobileImg: "https://i.ibb.co/dJMTVWTk/IMG-9779.jpg", url: "" }
                 ]
             },
-
-            // 3. 이달의 특가 상품 목록
             specialProducts: [
                 { id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 1485000, publicSupport: 500000, addSupport: 350000 },
                 { id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 2379300, publicSupport: 500000, addSupport: 350000 },
@@ -123,8 +118,6 @@
                 { id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/pBpr4WCm/m366.jpg', mandatoryPlan: '심플 30GB(6.1만)', price: 449900, publicSupport: 363000, addSupport: 86900 },
                 { id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/1fzPxCdS/a175.jpg', mandatoryPlan: '37,000원 요금제', price: 319000, publicSupport: 211000, addSupport: 108000 }
             ],
-
-            // 4. 인터넷+TV 요금 및 정보
             internet: {
                 cards: {
                     plan1: { name: "지니 TV 베이직", desc: "230여개 채널", badge: "" },
@@ -152,8 +145,6 @@
                     }
                 }
             },
-
-            // 5. 하단 사업자 정보
             footer: {
                 companyName: "(주)kt 가우리엔터프라이즈",
                 owner: "홍길동",
@@ -167,7 +158,6 @@
         // 초기화
         (function(){ if(window.emailjs) emailjs.init(SITE_CONFIG.info.emailJsKey); })();
     </script>
-    <!-- ========================================== -->
 
     <!-- 헤더 -->
     <header class="bg-white sticky top-0 z-50 shadow-sm">
@@ -206,14 +196,13 @@
         </div>
     </section>
 
-    <!-- 인터넷 요금표 (수정됨: 탭 기능 복구) -->
+    <!-- 인터넷 요금표 -->
     <section id="section-internet" class="bg-white py-12 px-2 md:px-4 border-t-8 border-slate-100">
         <div id="kt-rate-calculator" class="w-full max-w-6xl mx-auto p-4 section-container">
             <div class="flex flex-col items-center mb-10">
                 <span class="text-red-600 font-bold text-sm tracking-widest mb-2">INTERNET & TV</span>
                 <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-4">KT 인터넷 + TV 요금제</h2>
                 <div class="bg-slate-100 p-1 rounded-full flex">
-                    <!-- 탭 버튼 복구 -->
                     <button onclick="toggleView('bundle')" id="tab-bundle" class="px-6 py-2 rounded-full text-sm font-bold bg-white shadow text-black transition-all">TV 결합상품</button>
                     <button onclick="toggleView('single')" id="tab-single" class="px-6 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-black transition-all">인터넷 단독</button>
                 </div>
@@ -244,7 +233,7 @@
                 <div id="internet-plan-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
             </div>
 
-            <!-- VIEW 2: 단독상품 (복구됨) -->
+            <!-- VIEW 2: 단독상품 -->
             <div id="view-single" class="hidden bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-slate-200">
                 <h3 class="text-2xl font-black text-slate-900 mb-6 border-b pb-4">KT 인터넷 단독</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -256,14 +245,13 @@
                         </ul>
                     </div>
                     <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- 단독 상품 카드 -->
                         <div class="rate-card hover:border-red-500 group">
                             <h4 class="text-lg font-bold mb-1 text-slate-900">인터넷 슬림 (100M)</h4>
                             <div class="mb-6 space-y-2">
                                 <div class="flex justify-between text-xs text-slate-500"><span>3년 약정</span><span>22,000원</span></div>
                                 <div class="flex justify-between items-end border-t border-slate-100 pt-2"><span class="font-bold text-slate-700 text-sm">결합 시</span><span class="text-xl font-black text-red-600">16,500원</span></div>
                             </div>
-                            <button onclick="requestConsult('인터넷 단독 슬림')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm hover:bg-slate-50 transition">신청하기</button>
+                            <button onclick="requestConsultFromPlan('인터넷 단독 슬림')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm hover:bg-slate-50 transition">신청하기</button>
                         </div>
                         <div class="rate-card hover:border-red-500 group border-red-200 bg-red-50/10">
                             <div class="absolute top-0 right-0 bg-red-100 text-red-600 text-[10px] px-2 py-0.5 rounded-bl-lg font-bold">인기</div>
@@ -272,7 +260,7 @@
                                 <div class="flex justify-between text-xs text-slate-500"><span>3년 약정</span><span>33,000원</span></div>
                                 <div class="flex justify-between items-end border-t border-slate-100 pt-2"><span class="font-bold text-slate-700 text-sm">결합 시</span><span class="text-xl font-black text-red-600">22,000원</span></div>
                             </div>
-                            <button onclick="requestConsult('인터넷 단독 베이직')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-600 transition">신청하기</button>
+                            <button onclick="requestConsultFromPlan('인터넷 단독 베이직')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-600 transition">신청하기</button>
                         </div>
                         <div class="rate-card hover:border-red-500 group">
                             <h4 class="text-lg font-bold mb-1 text-slate-900">인터넷 에센스 (1G)</h4>
@@ -280,7 +268,7 @@
                                 <div class="flex justify-between text-xs text-slate-500"><span>3년 약정</span><span>38,500원</span></div>
                                 <div class="flex justify-between items-end border-t border-slate-100 pt-2"><span class="font-bold text-slate-700 text-sm">결합 시</span><span class="text-xl font-black text-red-600">27,500원</span></div>
                             </div>
-                            <button onclick="requestConsult('인터넷 단독 에센스')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm hover:bg-slate-50 transition">신청하기</button>
+                            <button onclick="requestConsultFromPlan('인터넷 단독 에센스')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm hover:bg-slate-50 transition">신청하기</button>
                         </div>
                     </div>
                 </div>
@@ -310,7 +298,7 @@
         </div>
     </section>
 
-    <!-- 푸터 -->
+    <!-- 푸터, 하단바, 모달 등 (이전과 동일) -->
     <footer class="bg-gray-900 text-gray-500 py-10 px-6 text-xs leading-relaxed mt-12 pb-24">
         <div class="max-w-6xl mx-auto">
             <p class="font-bold text-white mb-2 text-lg" id="footer-company">(주)kt 가우리엔터프라이즈</p>
@@ -320,27 +308,22 @@
             <p class="pt-4 border-t border-gray-800">COPYRIGHT © KT GAURI. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
-
-    <!-- 하단바 -->
     <div class="fixed bottom-0 left-0 w-full flex text-center z-50 h-14 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-        <a href="#" target="_blank" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg" id="kakao-btn"><i class="fas fa-comment"></i> 카카오톡 상담</a>
+        <a href="http://pf.kakao.com/_XRxaan/chat" target="_blank" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg" id="kakao-btn"><i class="fas fa-comment"></i> 카카오톡 상담</a>
         <button onclick="toggleConsultMenu()" class="w-1/2 bg-[#222] text-white flex items-center justify-center gap-2 font-bold text-lg"><i class="fas fa-headset"></i> 상담접수</button>
     </div>
-
-    <!-- 상담 모달 -->
     <div id="consult-menu-modal" class="hidden fixed inset-0 z-[10001] bg-black/60 backdrop-blur-sm flex items-end md:items-center justify-center transition-opacity duration-300">
         <div class="absolute inset-0" onclick="toggleConsultMenu()"></div>
         <div class="bg-white w-full md:w-80 md:rounded-3xl rounded-t-3xl p-6 relative z-10 transform transition-transform duration-300 translate-y-0 shadow-2xl">
             <h3 class="text-lg font-bold text-slate-900 mb-6 text-center">상담 방식을 선택해주세요</h3>
             <div class="flex flex-col gap-3">
-                <a href="#" class="flex items-center justify-center gap-3 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-4 rounded-xl font-bold text-lg transition border border-slate-200" id="consult-phone-link"><i class="fas fa-phone-alt text-red-600"></i> 전화 상담</a>
+                <a href="tel:010-2141-0137" class="flex items-center justify-center gap-3 w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-4 rounded-xl font-bold text-lg transition border border-slate-200" id="consult-phone-link"><i class="fas fa-phone-alt text-red-600"></i> 전화 상담</a>
                 <button onclick="scrollToSection('section-consult-form'); toggleConsultMenu();" class="flex items-center justify-center gap-3 w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg"><i class="fas fa-file-signature"></i> 상담 신청서 작성</button>
             </div>
             <button onclick="toggleConsultMenu()" class="mt-4 w-full py-3 text-slate-400 text-sm hover:text-slate-600">닫기</button>
         </div>
     </div>
-
-    <!-- 상세 모달 -->
+    <!-- 모바일 상세 모달 (특가 로직용) -->
     <div id="mobile-detail-modal" class="hidden fixed inset-0 z-[9990] bg-white md:bg-black/60 md:backdrop-blur-sm overflow-hidden w-full h-full flex items-center justify-center p-0 md:p-4">
         <div class="bg-slate-50 w-full h-full md:h-auto md:max-h-[90vh] md:rounded-[2.5rem] shadow-2xl relative flex flex-col">
             <div class="sticky top-0 bg-white z-30 px-4 py-4 border-b border-slate-200 flex justify-between items-center shadow-sm shrink-0">
@@ -353,10 +336,7 @@
                         <div id="modal-special-badge" class="hidden absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">특가모델</div>
                         <img id="dt-img" src="" class="h-full w-auto object-contain drop-shadow-2xl relative z-0" alt="상품이미지">
                     </div>
-                    <div class="text-center mb-4">
-                        <h3 id="dt-title" class="text-2xl font-black text-slate-900 mb-1">상품명</h3>
-                        <p class="text-slate-500 font-medium text-sm">선택하신 모델로 전문 상담이 접수됩니다.</p>
-                    </div>
+                    <div class="text-center mb-4"><h3 id="dt-title" class="text-2xl font-black text-slate-900 mb-1">상품명</h3><p class="text-slate-500 font-medium text-sm">선택하신 모델로 전문 상담이 접수됩니다.</p></div>
                     <div id="special-price-box" class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-inner mb-4">
                         <h4 class="text-sm font-bold text-slate-500 mb-3 border-b border-slate-200 pb-2">지원금 및 할부원금 상세</h4>
                         <div class="space-y-1.5">
@@ -393,7 +373,13 @@
         </div>
     </div>
 
+    <!-- 스크립트 -->
     <script>
+        // 전역 변수 노출 (상태 관리용)
+        window.selectedProducts = { internet: true, mobile: false };
+        window.curSpeed = '100M';
+        window.curStb = 'genieA';
+
         function applyConfig() {
             document.getElementById('header-logo-img').src = SITE_CONFIG.info.logoImg;
             const logoTextEl = document.getElementById('header-logo-text');
@@ -463,38 +449,26 @@
         }
         function toggleConsultMenu() { document.getElementById('consult-menu-modal').classList.toggle('hidden'); }
 
-        // 빠른 상담 로직 (수정됨)
-        // 전역 변수 대신 함수 내부에서 상태 관리하지 않고, 직접 DOM 요소 상태를 확인
-        // 하지만 편의를 위해 전역 객체 사용
-        window.selectedProducts = { internet: true, mobile: false };
-
-        function toggleProductSelection(type) {
+        // [빠른 상담 로직] - 전역 함수로 변경
+        window.toggleProductSelection = function(type) {
             const checkbox = document.getElementById(`chk-${type}`);
-            // 체크박스 상태가 변경된 후에 호출되므로 checked 값을 그대로 사용
             window.selectedProducts[type] = checkbox.checked;
             updateConsultUI(type);
         }
 
-        function updateConsultUI(type) {
+        window.updateConsultUI = function(type) {
             const label = document.getElementById(`label-${type}`);
             const border = document.getElementById(`border-${type}`);
             const optDiv = document.getElementById(`consult-opt-${type}`);
             const isChecked = window.selectedProducts[type];
-
             if (isChecked) {
-                label.classList.add('bg-red-50', 'text-red-600');
-                label.classList.remove('bg-gray-100', 'text-gray-500');
-                border.classList.remove('hidden');
-                optDiv.classList.remove('hidden');
+                label.classList.add('bg-red-50', 'text-red-600'); label.classList.remove('bg-gray-100', 'text-gray-500'); border.classList.remove('hidden'); optDiv.classList.remove('hidden');
             } else {
-                label.classList.remove('bg-red-50', 'text-red-600');
-                label.classList.add('bg-gray-100', 'text-gray-500');
-                border.classList.add('hidden');
-                optDiv.classList.add('hidden');
+                label.classList.remove('bg-red-50', 'text-red-600'); label.classList.add('bg-gray-100', 'text-gray-500'); border.classList.add('hidden'); optDiv.classList.add('hidden');
             }
         }
 
-        function getFormData(isSpecial) {
+        window.getFormData = function(isSpecial) {
             const name = document.getElementById('val-name').value;
             const phone = document.getElementById('val-phone').value;
             if(!name || !phone) { alert('이름과 연락처를 입력해주세요.'); return null; }
@@ -512,7 +486,7 @@
             return text;
         }
 
-        function sendToKakao() {
+        window.sendToKakao = function() {
             const isSpecial = !document.getElementById('special-condition-alert').classList.contains('hidden');
             const text = getFormData(isSpecial);
             if(!text) return;
@@ -525,7 +499,7 @@
             });
         }
 
-        function submitFastConsult(e) {
+        window.submitFastConsult = function(e) {
             e.preventDefault();
             const name = document.getElementById('fast-name').value;
             const phone = document.getElementById('fast-phone').value;
@@ -549,12 +523,83 @@
             .catch((err) => { alert("오류: " + JSON.stringify(err)); });
         }
 
-        // [모바일 & 특가 로직]
+        // [인터넷 요금표 로직] - 전역 함수로 변경
+        window.changeSpeed = function(s) { window.curSpeed = s; renderInternetTable(); };
+        window.changeSettop = function(s) { window.curStb = s; renderInternetTable(); };
+        
+        window.toggleView = function(type) {
+            const bundle = document.getElementById('view-bundle');
+            const single = document.getElementById('view-single');
+            const btnBundle = document.getElementById('tab-bundle');
+            const btnSingle = document.getElementById('tab-single');
+            
+            if(type === 'bundle') {
+                bundle.classList.remove('hidden'); single.classList.add('hidden');
+                btnBundle.classList.replace('text-slate-500', 'bg-white'); btnBundle.classList.add('shadow', 'text-black');
+                btnSingle.classList.remove('bg-white', 'shadow', 'text-black'); btnSingle.classList.add('text-slate-500');
+            } else {
+                bundle.classList.add('hidden'); single.classList.remove('hidden');
+                btnSingle.classList.replace('text-slate-500', 'bg-white'); btnSingle.classList.add('shadow', 'text-black');
+                btnBundle.classList.remove('bg-white', 'shadow', 'text-black'); btnBundle.classList.add('text-slate-500');
+            }
+        };
+
+        // [간편 상담 연결]
+        window.requestConsultFromPlan = function(planName) {
+            const formSection = document.getElementById('section-consult-form');
+            if(formSection) {
+                const headerOffset = 60;
+                window.scrollTo({ top: formSection.getBoundingClientRect().top + window.pageYOffset - headerOffset, behavior: "smooth" });
+                
+                // 인터넷+TV 체크
+                if(!window.selectedProducts.internet) {
+                    document.getElementById('chk-internet').checked = true;
+                    toggleProductSelection('internet');
+                }
+                
+                // 모바일 체크 해제
+                if(window.selectedProducts.mobile) {
+                    document.getElementById('chk-mobile').checked = false;
+                    toggleProductSelection('mobile');
+                }
+                
+                setTimeout(() => document.getElementById('fast-name').focus(), 500);
+            }
+        };
+
+        function renderInternetTable() {
+            const PRICING_DATA = SITE_CONFIG.internet.prices;
+            const speedBtnIds = { '100M': 'btn-100m', '500M': 'btn-500m', '1G': 'btn-1g' };
+            
+            for (const speed in speedBtnIds) {
+                const btn = document.getElementById(speedBtnIds[speed]);
+                if (speed === window.curSpeed) btn.classList.add('active'); else btn.classList.remove('active');
+            }
+            
+            const stbNames = {'genieA':0, 'genie3A':1, 'genie4':2, 'sound':3};
+            document.querySelectorAll('.stb-btn').forEach((el, idx) => { if(idx === stbNames[window.curStb]) el.classList.add('active'); else el.classList.remove('active'); });
+            
+            if (!PRICING_DATA[window.curSpeed] || !PRICING_DATA[window.curSpeed][window.curStb]) return;
+            const data = PRICING_DATA[window.curSpeed][window.curStb];
+            
+            ['plan1', 'plan2', 'plan3'].forEach(key => {
+                const prices = data[key];
+                if(prices) {
+                    const elOrg = document.getElementById(`price-${key}-org`);
+                    const elSale = document.getElementById(`price-${key}-sale`);
+                    if(elOrg) elOrg.innerText = prices[0];
+                    if(elSale) elSale.innerText = prices[1];
+                }
+            });
+        }
+
+        // [초기화 로직]
         (function(){
             if (window.lucide) { lucide.createIcons(); }
             const SPECIAL_PRODUCTS = SITE_CONFIG.specialProducts;
-            window.selectedItem = null;
+            const CARD_INFO = SITE_CONFIG.internet.cards;
 
+            // 특가폰 렌더링
             const grid = document.getElementById('special-product-grid');
             if(grid) {
                 grid.innerHTML = SPECIAL_PRODUCTS.map(p => `
@@ -570,68 +615,11 @@
                 `).join('');
             }
 
-            window.openMobileModal = function(id) {
-                window.selectedItem = SPECIAL_PRODUCTS.find(p => p.id === id);
-                if(!window.selectedItem) return;
-
-                document.getElementById('dt-img').src = window.selectedItem.img;
-                document.getElementById('dt-title').innerText = window.selectedItem.name;
-                document.getElementById('mobile-form').reset();
-                
-                document.getElementById('modal-special-badge').classList.remove('hidden');
-                document.getElementById('special-price-box').classList.remove('hidden');
-                document.getElementById('special-condition-alert').classList.remove('hidden');
-                document.getElementById('sec-special-options').classList.remove('hidden');
-
-                document.getElementById('price-factory').innerText = window.selectedItem.price.toLocaleString() + '원';
-                document.getElementById('price-public').innerText = '-' + window.selectedItem.publicSupport.toLocaleString() + '원';
-                document.getElementById('price-add').innerText = '-' + window.selectedItem.addSupport.toLocaleString() + '원';
-                
-                const finalPrice = window.selectedItem.price - window.selectedItem.publicSupport - window.selectedItem.addSupport;
-                document.getElementById('price-final').innerText = finalPrice <= 0 ? '0원 (전액지원)' : finalPrice.toLocaleString() + '원';
-                document.getElementById('txt-mandatory-plan').innerText = window.selectedItem.mandatoryPlan;
-
-                document.getElementById('mobile-detail-modal').classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-
-            window.closeMobileModal = function() {
-                document.getElementById('mobile-detail-modal').classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }
-
-            window.submitMobileOrder = function(e) {
-                e.preventDefault();
-                const text = getFormData(true);
-                const params = {
-                    name: document.getElementById('val-name').value,
-                    phone: document.getElementById('val-phone').value,
-                    branch: '모바일위젯접수',
-                    mobile_carrier: '특가전용',
-                    desired_model: window.selectedItem.name,
-                    promo_item: text,
-                    date: new Date().toLocaleString(),
-                    manager_email: 'pbh350111@gmail.com'
-                };
-                emailjs.send('service_tje5nks', 'template_g02rutc', params)
-                .then(() => { closeMobileModal(); alert('신청이 완료되었습니다.'); })
-                .catch((err) => { alert("오류 발생: " + JSON.stringify(err)); });
-            }
-        })();
-
-        // [인터넷 요금표 로직]
-        (function(){
-            const INTERNET_CONFIG = SITE_CONFIG.internet;
-            const PRICING_DATA = INTERNET_CONFIG.prices;
-            const CARD_INFO = INTERNET_CONFIG.cards;
-            let curSpeed = '100M', curStb = 'genieA';
-            const speedBtnIds = { '100M': 'btn-100m', '500M': 'btn-500m', '1G': 'btn-1g' };
-
-            function renderInternetCards() {
-                const grid = document.getElementById('internet-plan-grid');
-                if(!grid) return;
+            // 인터넷 요금표 렌더링
+            const intGrid = document.getElementById('internet-plan-grid');
+            if(intGrid) {
                 const cardKeys = ['plan1', 'plan2', 'plan3'];
-                grid.innerHTML = cardKeys.map(key => {
+                intGrid.innerHTML = cardKeys.map(key => {
                     const info = CARD_INFO[key];
                     const badgeHtml = info.badge ? `<div class="absolute top-0 right-0 bg-red-600 text-white text-[10px] px-2 py-1 rounded-bl-xl font-bold">${info.badge}</div>` : '';
                     const borderClass = info.badge ? 'border-2 border-red-500 bg-red-50/10' : '';
@@ -640,60 +628,67 @@
                             ${badgeHtml}
                             <div class="mb-4"><h3 class="text-lg font-bold text-slate-900">${info.name}</h3><p class="text-xs text-slate-500 mt-1">${info.desc}</p></div>
                             <div class="space-y-2 mb-6"><div class="flex justify-between text-xs text-slate-500"><span>3년 약정</span><span class="line-through decoration-slate-400" id="price-${key}-org">0원</span></div><div class="flex justify-between items-end border-t border-slate-100 pt-2"><span class="font-bold text-slate-700 text-sm">결합 시</span><span class="text-xl md:text-2xl font-black text-red-600" id="price-${key}-sale">0원</span></div></div>
-                            <button onclick="requestConsult('인터넷')" class="w-full ${info.badge ? 'bg-red-600 text-white hover:bg-red-700' : 'border border-slate-300 text-slate-700 hover:bg-slate-50'} py-3 rounded-xl font-bold text-sm transition shadow">간편 상담 신청</button>
+                            <button onclick="requestConsultFromPlan('${info.name}')" class="w-full ${info.badge ? 'bg-red-600 text-white hover:bg-red-700' : 'border border-slate-300 text-slate-700 hover:bg-slate-50'} py-3 rounded-xl font-bold text-sm transition shadow">간편 상담 신청</button>
                         </div>
                     `;
                 }).join('');
             }
 
-            function render() {
-                for (const speed in speedBtnIds) {
-                    const btn = document.getElementById(speedBtnIds[speed]);
-                    if (speed === curSpeed) btn.classList.add('active'); else btn.classList.remove('active');
-                }
-                const stbNames = {'genieA':0, 'genie3A':1, 'genie4':2, 'sound':3};
-                document.querySelectorAll('.stb-btn').forEach((el, idx) => { if(idx === stbNames[curStb]) el.classList.add('active'); else el.classList.remove('active'); });
-                if (!PRICING_DATA[curSpeed] || !PRICING_DATA[curSpeed][curStb]) return;
-                const data = PRICING_DATA[curSpeed][curStb];
-                ['plan1', 'plan2', 'plan3'].forEach(key => {
-                    const prices = data[key];
-                    if(prices) {
-                        const elOrg = document.getElementById(`price-${key}-org`);
-                        const elSale = document.getElementById(`price-${key}-sale`);
-                        if(elOrg) elOrg.innerText = prices[0];
-                        if(elSale) elSale.innerText = prices[1];
-                    }
-                });
-            }
+            // 모달 열기/닫기/제출 로직은 기존과 동일 (전역 함수 사용)
+            // ... (submitMobileOrder 등)
 
-            renderInternetCards();
-            render();
-
-            window.changeSpeed = function(s) { curSpeed = s; render(); };
-            window.changeSettop = function(s) { curStb = s; render(); };
-            window.toggleView = function(type) {
-                const bundle = document.getElementById('view-bundle');
-                const single = document.getElementById('view-single');
-                const btnBundle = document.getElementById('tab-bundle');
-                const btnSingle = document.getElementById('tab-single');
-                
-                if(type === 'bundle') {
-                    bundle.classList.remove('hidden');
-                    single.classList.add('hidden');
-                    btnBundle.classList.replace('text-slate-500', 'bg-white');
-                    btnBundle.classList.add('shadow', 'text-black');
-                    btnSingle.classList.remove('bg-white', 'shadow', 'text-black');
-                    btnSingle.classList.add('text-slate-500');
-                } else {
-                    bundle.classList.add('hidden');
-                    single.classList.remove('hidden');
-                    btnSingle.classList.replace('text-slate-500', 'bg-white');
-                    btnSingle.classList.add('shadow', 'text-black');
-                    btnBundle.classList.remove('bg-white', 'shadow', 'text-black');
-                    btnBundle.classList.add('text-slate-500');
-                }
-            }
+            // 초기 렌더링 실행
+            renderInternetTable();
         })();
+
+        // 모달 관련 함수 (전역)
+        window.openMobileModal = function(id) {
+            window.selectedItem = SITE_CONFIG.specialProducts.find(p => p.id === id);
+            if(!window.selectedItem) return;
+
+            document.getElementById('dt-img').src = window.selectedItem.img;
+            document.getElementById('dt-title').innerText = window.selectedItem.name;
+            document.getElementById('mobile-form').reset();
+            
+            document.getElementById('modal-special-badge').classList.remove('hidden');
+            document.getElementById('special-price-box').classList.remove('hidden');
+            document.getElementById('special-condition-alert').classList.remove('hidden');
+            document.getElementById('sec-special-options').classList.remove('hidden');
+
+            document.getElementById('price-factory').innerText = window.selectedItem.price.toLocaleString() + '원';
+            document.getElementById('price-public').innerText = '-' + window.selectedItem.publicSupport.toLocaleString() + '원';
+            document.getElementById('price-add').innerText = '-' + window.selectedItem.addSupport.toLocaleString() + '원';
+            
+            const finalPrice = window.selectedItem.price - window.selectedItem.publicSupport - window.selectedItem.addSupport;
+            document.getElementById('price-final').innerText = finalPrice <= 0 ? '0원 (전액지원)' : finalPrice.toLocaleString() + '원';
+            document.getElementById('txt-mandatory-plan').innerText = window.selectedItem.mandatoryPlan;
+
+            document.getElementById('mobile-detail-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        window.closeMobileModal = function() {
+            document.getElementById('mobile-detail-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.submitMobileOrder = function(e) {
+            e.preventDefault();
+            const text = getFormData(true);
+            const params = {
+                name: document.getElementById('val-name').value,
+                phone: document.getElementById('val-phone').value,
+                branch: '모바일위젯접수',
+                mobile_carrier: '특가전용',
+                desired_model: window.selectedItem.name,
+                promo_item: text,
+                date: new Date().toLocaleString(),
+                manager_email: 'pbh350111@gmail.com'
+            };
+            emailjs.send('service_tje5nks', 'template_g02rutc', params)
+            .then(() => { closeMobileModal(); alert('신청이 완료되었습니다.'); })
+            .catch((err) => { alert("오류 발생: " + JSON.stringify(err)); });
+        }
 
         applyConfig();
         startMainBannerSlider();
