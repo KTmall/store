@@ -86,58 +86,129 @@
 <body class="bg-slate-50 pb-24">
 
     <!-- ========================================== -->
-    <!-- [관리자 설정 영역] -->
+    <!-- [관리자 설정 영역] 여기서 내용을 수정하세요 -->
     <!-- ========================================== -->
     <script>
         const SITE_CONFIG = {
+            // 1. 기본 정보 (로고, 연락처, 링크)
             info: {
-                logoImg: "https://i.ibb.co/cXVFKzLj/ktlogo.png", 
-                logoText: "MALL",
-                logoTextSize: "text-3xl",
-                logoTextColor: "text-[#DC000C]",
-                phone: "010-2141-0137",
-                kakaoUrl: "http://pf.kakao.com/_XRxaan/chat",
-                emailJsKey: "oM5C3k8SXXow-GN5v"
+                logoImg: "https://i.ibb.co/cXVFKzLj/ktlogo.png", // KT 로고 이미지 주소
+                logoText: "MALL",         // 로고 옆 텍스트 내용
+                logoTextSize: "text-3xl", // 로고 옆 텍스트 크기
+                logoTextColor: "text-[#DC000C]", // 로고 옆 텍스트 색상
+                phone: "010-2141-0137",   // 상담 전화번호
+                kakaoUrl: "http://pf.kakao.com/_XRxaan/chat", // 카카오톡 채널 링크
+                
+                // [보안 설정 필독] 
+                // EmailJS 관리자 페이지 -> Account -> Security -> Whitelisted Domains에
+                // 이 사이트의 도메인(예: your-id.github.io)을 반드시 추가하세요.
+                // 그래야 타인이 이 키를 도용해도 메일이 발송되지 않습니다.
+                emailJsKey: "oM5C3k8SXXow-GN5v" 
             },
+
+            // 2. 메인 배너 설정 (이미지 + 링크)
             banner: {
+                // 슬라이드 이미지 리스트 (img: 이미지주소, url: 클릭시 이동할 주소)
                 images: [
-                    { pcImg: "https://i.ibb.co/DfFFb7KF/IMG-9783.jpg", mobileImg: "https://i.ibb.co/7dr7KSqR/IMG-9776.jpg", url: "" },
-                    { pcImg: "https://i.ibb.co/kVH858jQ/IMG-9782.jpg", mobileImg: "https://i.ibb.co/8L8V6Zm2/IMG-9777.jpg", url: "" },
-                    { pcImg: "https://i.ibb.co/dwDwWGrN/IMG-9781.jpg", mobileImg: "https://i.ibb.co/7NRvztDk/IMG-9778.jpg", url: "" },
-                    { pcImg: "https://i.ibb.co/7tD19Fxj/IMG-9780.jpg", mobileImg: "https://i.ibb.co/dJMTVWTk/IMG-9779.jpg", url: "" }
+                    { 
+                        // 01번 이미지 세트
+                        pcImg: "https://i.ibb.co/DfFFb7KF/IMG-9783.jpg",     
+                        mobileImg: "https://i.ibb.co/7dr7KSqR/IMG-9776.jpg", 
+                        url: "" 
+                    },
+                    { 
+                        // 02번 이미지 세트
+                        pcImg: "https://i.ibb.co/kVH858jQ/IMG-9782.jpg", 
+                        mobileImg: "https://i.ibb.co/8L8V6Zm2/IMG-9777.jpg",
+                        url: "" 
+                    },
+                    { 
+                        // 03번 이미지 세트
+                        pcImg: "https://i.ibb.co/dwDwWGrN/IMG-9781.jpg", 
+                        mobileImg: "https://i.ibb.co/7NRvztDk/IMG-9778.jpg",
+                        url: "" 
+                    },
+                    { 
+                        // 04번 이미지 세트
+                        pcImg: "https://i.ibb.co/7tD19Fxj/IMG-9780.jpg", 
+                        mobileImg: "https://i.ibb.co/dJMTVWTk/IMG-9779.jpg",
+                        url: "" 
+                    }
                 ]
             },
+
+            // 3. 이달의 특가 상품 목록
             specialProducts: [
-                { id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 1485000, publicSupport: 500000, addSupport: 350000 },
-                { id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 2379300, publicSupport: 500000, addSupport: 350000 },
-                { id: 's25', brand: 'SAMSUNG', name: '갤럭시 S25', img: 'https://i.ibb.co/BhsV2vM/s931.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 1155000, publicSupport: 500000, addSupport: 350000 },
-                { id: 'ip17', brand: 'APPLE', name: '아이폰 17', img: 'https://i.ibb.co/60GKwz8T/aip17.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 1287000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip17p', brand: 'APPLE', name: '아이폰 17 Pro', img: 'https://i.ibb.co/BK6XfdZd/aip17p.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 1782000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip17pm', brand: 'APPLE', name: '아이폰 17 Pro Max', img: 'https://i.ibb.co/TM5mcm2H/aip17pm.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 1980000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'ip_air', brand: 'APPLE', name: '아이폰 에어', img: 'https://i.ibb.co/GSfGqG7/aipa.jpg', mandatoryPlan: '초이스 베이직(9만)', price: 1584000, publicSupport: 450000, addSupport: 200000 },
-                { id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/pBpr4WCm/m366.jpg', mandatoryPlan: '심플 30GB(6.1만)', price: 449900, publicSupport: 363000, addSupport: 86900 },
-                { id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/1fzPxCdS/a175.jpg', mandatoryPlan: '37,000원 요금제', price: 319000, publicSupport: 211000, addSupport: 108000 }
+                { 
+                    id: 'zflip7', brand: 'SAMSUNG', name: '갤럭시 Z 플립 7', img: 'https://i.ibb.co/yFPsLH8C/f766.jpg', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1485000, publicSupport: 500000, addSupport: 350000
+                },
+                { 
+                    id: 'zfold7', brand: 'SAMSUNG', name: '갤럭시 Z 폴드 7', img: 'https://i.ibb.co/gbLrGSQv/f966.jpg', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 2379300, publicSupport: 500000, addSupport: 350000
+                },
+                { 
+                    id: 's25', brand: 'SAMSUNG', name: '갤럭시 S25', img: 'https://i.ibb.co/BhsV2vM/s931.jpg', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1155000, publicSupport: 500000, addSupport: 350000 
+                },
+                { 
+                    id: 'ip17', brand: 'APPLE', name: '아이폰 17', img: 'https://i.ibb.co/60GKwz8T/aip17.jpg', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1287000, publicSupport: 450000, addSupport: 200000 
+                },
+                { 
+                    id: 'ip17p', brand: 'APPLE', name: '아이폰 17 Pro', img: 'https://i.ibb.co/BK6XfdZd/aip17p.jpg', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1782000, publicSupport: 450000, addSupport: 200000 
+                },
+                { 
+                    id: 'ip17pm', brand: 'APPLE', name: '아이폰 17 Pro Max', img: 'https://i.ibb.co/TM5mcm2H/aip17pm.jpg', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1980000, publicSupport: 450000, addSupport: 200000 
+                },
+                { 
+                    id: 'ip_air', brand: 'APPLE', name: '아이폰 에어', img: 'https://i.ibb.co/GSfGqG7/aipa.jpg', 
+                    mandatoryPlan: '초이스 베이직(9만)', 
+                    price: 1584000, publicSupport: 450000, addSupport: 200000 
+                },
+                { 
+                    id: 'jump4', brand: 'SAMSUNG', name: '갤럭시 점프 4', img: 'https://i.ibb.co/pBpr4WCm/m366.jpg', 
+                    mandatoryPlan: '심플 30GB(6.1만)', 
+                    price: 449900, publicSupport: 363000, addSupport: 86900 
+                },
+                { 
+                    id: 'a17', brand: 'SAMSUNG', name: '갤럭시 A17', img: 'https://i.ibb.co/1fzPxCdS/a175.jpg', 
+                    mandatoryPlan: '37,000원 요금제', 
+                    price: 319000, publicSupport: 211000, addSupport: 108000 
+                }
             ],
+
+            // 4. 인터넷+TV 요금 및 정보 설정
             internet: {
+                // (1) 상품 카드 정보
                 cards: {
                     plan1: { name: "지니 TV 베이직", desc: "230여개 채널", badge: "" },
                     plan2: { name: "지니 TV 모든G", desc: "250여개 채널+VOD", badge: "강력추천" },
                     plan3: { name: "지니 TV 디즈니+", desc: "디즈니+ OTT 결합", badge: "" }
                 },
+                // (2) 요금 데이터 [월 요금(약정), 결합 할인가]
                 prices: {
-                    '100M': { 
+                    '100M': { // 슬림
                         'genieA': { plan1: ['37,400원','31,900원'], plan2: ['42,900원','37,400원'], plan3: ['45,200원','39,700원'] },
                         'genie3A': { plan1: ['38,500원','33,000원'], plan2: ['44,000원','38,500원'], plan3: ['46,300원','40,800원'] },
                         'genie4': { plan1: ['40,700원','35,200원'], plan2: ['46,200원','40,700원'], plan3: ['48,500원','43,000원'] },
                         'sound': { plan1: ['42,900원','37,400원'], plan2: ['46,200원','40,700원'], plan3: ['48,500원','43,000원'] }
                     },
-                    '500M': { 
+                    '500M': { // 베이직
                         'genieA': { plan1: ['42,900원','37,400원'], plan2: ['48,400원','42,900원'], plan3: ['50,700원','45,200원'] },
                         'genie3A': { plan1: ['44,000원','38,500원'], plan2: ['49,500원','44,000원'], plan3: ['51,800원','46,300원'] },
                         'genie4': { plan1: ['46,200원','40,700원'], plan2: ['51,700원','46,200원'], plan3: ['54,000원','48,500원'] },
                         'sound': { plan1: ['48,400원','42,900원'], plan2: ['51,700원','46,200원'], plan3: ['54,000원','48,500원'] }
                     },
-                    '1G': { 
+                    '1G': { // 에센스
                         'genieA': { plan1: ['48,400원','42,900원'], plan2: ['53,900원','48,400원'], plan3: ['56,200원','50,700원'] },
                         'genie3A': { plan1: ['49,500원','44,000원'], plan2: ['55,000원','49,500원'], plan3: ['57,300원','51,800원'] },
                         'genie4': { plan1: ['51,700원','46,200원'], plan2: ['57,200원','51,700원'], plan3: ['59,500원','54,000원'] },
@@ -145,6 +216,8 @@
                     }
                 }
             },
+
+            // 5. 하단 사업자 정보
             footer: {
                 companyName: "(주)kt 가우리엔터프라이즈",
                 owner: "홍길동",
@@ -158,8 +231,9 @@
         // 초기화
         (function(){ if(window.emailjs) emailjs.init(SITE_CONFIG.info.emailJsKey); })();
     </script>
+    <!-- ========================================== -->
 
-    <!-- 헤더 -->
+    <!-- 1. 헤더 -->
     <header class="bg-white sticky top-0 z-50 shadow-sm">
         <div class="flex justify-between items-center px-4 py-3">
             <div class="flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
@@ -179,12 +253,12 @@
         </nav>
     </header>
 
-    <!-- 메인 배너 -->
+    <!-- 2. 메인 배너 (반응형 미러/블러 효과) -->
     <section id="main-banner-section" class="relative w-full h-80 md:h-[450px] flex items-center justify-center overflow-hidden transition-colors duration-500 bg-gray-100">
         <div id="banner-slider" class="absolute inset-0 w-full h-full"></div>
     </section>
 
-    <!-- 이달의 특가 -->
+    <!-- 3. 이달의 특가 섹션 -->
     <section id="section-special" class="bg-red-50 py-12 px-4 border-b-8 border-slate-100">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col items-center mb-8">
@@ -196,7 +270,7 @@
         </div>
     </section>
 
-    <!-- 인터넷 요금표 -->
+    <!-- 4. 인터넷 요금표 섹션 -->
     <section id="section-internet" class="bg-white py-12 px-2 md:px-4 border-t-8 border-slate-100">
         <div id="kt-rate-calculator" class="w-full max-w-6xl mx-auto p-4 section-container">
             <div class="flex flex-col items-center mb-10">
@@ -208,20 +282,24 @@
                 </div>
             </div>
 
-            <!-- VIEW 1: 결합상품 -->
             <div id="view-bundle" class="bg-white rounded-3xl p-6 md:p-10 shadow-xl border border-slate-200">
                 <div class="flex justify-center mb-8 gap-2">
                     <button onclick="changeSpeed('100M')" id="btn-100m" class="internet-tab active">100M (슬림)</button>
                     <button onclick="changeSpeed('500M')" id="btn-500m" class="internet-tab">500M (베이직)</button>
                     <button onclick="changeSpeed('1G')" id="btn-1g" class="internet-tab">1G (에센스)</button>
                 </div>
+
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4 border-b border-slate-100 pb-6">
                     <div>
-                        <h2 class="text-xl md:text-3xl font-black text-slate-900 mb-1">KT 인터넷 <span id="ui-speed-title" class="text-red-600">슬림</span> + 지니 TV</h2>
+                        <h2 class="text-xl md:text-3xl font-black text-slate-900 mb-1">
+                            KT 인터넷 <span id="ui-speed-title" class="text-red-600">슬림</span> + 지니 TV
+                        </h2>
                         <p class="text-slate-500 text-xs md:text-sm">약정 3년 기준, 부가세 포함 금액입니다.</p>
                     </div>
                     <div class="w-full md:w-auto">
-                        <p class="text-xs font-bold text-slate-800 mb-2 flex items-center"><i data-lucide="monitor-speaker" class="w-3 h-3 md:w-4 md:h-4 mr-1"></i> TV 셋탑박스 선택</p>
+                        <p class="text-xs font-bold text-slate-800 mb-2 flex items-center">
+                            <i data-lucide="monitor-speaker" class="w-3 h-3 md:w-4 md:h-4 mr-1"></i> TV 셋탑박스 선택
+                        </p>
                         <div class="grid grid-cols-4 gap-1 bg-slate-100 p-1 rounded-lg w-full md:w-[320px]">
                             <button onclick="changeSettop('genieA')" class="stb-btn active">기가지니A</button>
                             <button onclick="changeSettop('genie3A')" class="stb-btn">기가지니3</button>
@@ -230,10 +308,10 @@
                         </div>
                     </div>
                 </div>
+
                 <div id="internet-plan-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
             </div>
 
-            <!-- VIEW 2: 단독상품 -->
             <div id="view-single" class="hidden bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-slate-200">
                 <h3 class="text-2xl font-black text-slate-900 mb-6 border-b pb-4">KT 인터넷 단독</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -276,7 +354,7 @@
         </div>
     </section>
 
-    <!-- 빠른 상담 -->
+    <!-- 5. 빠른 상담 신청 폼 -->
     <section id="section-consult-form" class="bg-white py-12 px-5 mb-2 border-t-8 border-slate-100">
         <div class="max-w-md mx-auto">
             <h2 class="text-2xl font-bold text-center mb-2">🚀 빠른 상담 신청</h2>
@@ -287,8 +365,8 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">관심 상품 선택 (중복 가능)</label>
                     <div class="flex gap-2 mb-3">
-                        <label onclick="toggleProductSelection('internet')" class="flex-1 border-2 border-transparent bg-red-50 text-red-600 font-bold py-3 rounded-xl text-center cursor-pointer hover:bg-gray-100 transition relative overflow-hidden select-none" id="label-internet"><input type="checkbox" id="chk-internet" class="hidden" checked onchange="toggleProductSelection('internet')"> 인터넷+TV<div class="absolute inset-0 border-2 border-red-500 rounded-xl" id="border-internet"></div></label>
-                        <label onclick="toggleProductSelection('mobile')" class="flex-1 border-2 border-transparent bg-gray-100 text-gray-500 font-bold py-3 rounded-xl text-center cursor-pointer hover:bg-gray-100 transition relative overflow-hidden select-none" id="label-mobile"><input type="checkbox" id="chk-mobile" class="hidden" onchange="toggleProductSelection('mobile')"> 휴대폰<div class="absolute inset-0 border-2 border-red-500 rounded-xl hidden" id="border-mobile"></div></label>
+                        <label class="flex-1 border-2 border-transparent bg-red-50 text-red-600 font-bold py-3 rounded-xl text-center cursor-pointer hover:bg-gray-100 transition relative overflow-hidden select-none" id="label-internet"><input type="checkbox" id="chk-internet" class="hidden" checked onchange="toggleProductSelection('internet')"> 인터넷+TV<div class="absolute inset-0 border-2 border-red-500 rounded-xl" id="border-internet"></div></label>
+                        <label class="flex-1 border-2 border-transparent bg-gray-100 text-gray-500 font-bold py-3 rounded-xl text-center cursor-pointer hover:bg-gray-100 transition relative overflow-hidden select-none" id="label-mobile"><input type="checkbox" id="chk-mobile" class="hidden" onchange="toggleProductSelection('mobile')"> 휴대폰<div class="absolute inset-0 border-2 border-red-500 rounded-xl hidden" id="border-mobile"></div></label>
                     </div>
                     <div id="consult-opt-internet" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200"><p class="text-xs font-bold text-slate-600 mb-1"><i class="fas fa-wifi text-red-500 mr-1"></i> 인터넷 속도 & TV 선택</p><select id="fast-net-speed" class="custom-select bg-white"><option value="">인터넷 속도 선택</option><option value="100M">100M (슬림)</option><option value="500M">500M (베이직)</option><option value="1G">1G (에센스)</option></select><select id="fast-tv-plan" class="custom-select bg-white"><option value="">TV 요금제 선택</option><option value="베이직">지니 TV 베이직</option><option value="모든G">지니 TV 모든G</option><option value="디즈니+">지니 TV 디즈니+</option></select></div>
                     <div id="consult-opt-mobile" class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200 hidden"><p class="text-xs font-bold text-slate-600 mb-1"><i class="fas fa-mobile-alt text-red-500 mr-1"></i> 희망 기종 입력 (선택)</p><input type="text" id="fast-mobile-model" placeholder="예: 갤럭시 S25, 아이폰 16" class="custom-input bg-white"></div>
@@ -298,7 +376,7 @@
         </div>
     </section>
 
-    <!-- 푸터, 하단바, 모달 등 (이전과 동일) -->
+    <!-- 푸터 -->
     <footer class="bg-gray-900 text-gray-500 py-10 px-6 text-xs leading-relaxed mt-12 pb-24">
         <div class="max-w-6xl mx-auto">
             <p class="font-bold text-white mb-2 text-lg" id="footer-company">(주)kt 가우리엔터프라이즈</p>
@@ -308,10 +386,14 @@
             <p class="pt-4 border-t border-gray-800">COPYRIGHT © KT GAURI. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
+
+    <!-- 하단바 -->
     <div class="fixed bottom-0 left-0 w-full flex text-center z-50 h-14 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
         <a href="http://pf.kakao.com/_XRxaan/chat" target="_blank" class="w-1/2 bg-[#FAE100] text-[#3B1E1E] flex items-center justify-center gap-2 font-bold text-lg" id="kakao-btn"><i class="fas fa-comment"></i> 카카오톡 상담</a>
         <button onclick="toggleConsultMenu()" class="w-1/2 bg-[#222] text-white flex items-center justify-center gap-2 font-bold text-lg"><i class="fas fa-headset"></i> 상담접수</button>
     </div>
+
+    <!-- 상담 모달 -->
     <div id="consult-menu-modal" class="hidden fixed inset-0 z-[10001] bg-black/60 backdrop-blur-sm flex items-end md:items-center justify-center transition-opacity duration-300">
         <div class="absolute inset-0" onclick="toggleConsultMenu()"></div>
         <div class="bg-white w-full md:w-80 md:rounded-3xl rounded-t-3xl p-6 relative z-10 transform transition-transform duration-300 translate-y-0 shadow-2xl">
@@ -323,6 +405,7 @@
             <button onclick="toggleConsultMenu()" class="mt-4 w-full py-3 text-slate-400 text-sm hover:text-slate-600">닫기</button>
         </div>
     </div>
+
     <!-- 모바일 상세 모달 (특가 로직용) -->
     <div id="mobile-detail-modal" class="hidden fixed inset-0 z-[9990] bg-white md:bg-black/60 md:backdrop-blur-sm overflow-hidden w-full h-full flex items-center justify-center p-0 md:p-4">
         <div class="bg-slate-50 w-full h-full md:h-auto md:max-h-[90vh] md:rounded-[2.5rem] shadow-2xl relative flex flex-col">
@@ -373,7 +456,6 @@
         </div>
     </div>
 
-    <!-- 스크립트 -->
     <script>
         // 전역 변수 노출 (상태 관리용)
         window.selectedProducts = { internet: true, mobile: false };
