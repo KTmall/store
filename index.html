@@ -62,8 +62,36 @@
 
         /* 인터넷 요금표 스타일 */
         .section-container { font-family: 'Pretendard', sans-serif; letter-spacing: -0.02em; }
-        .internet-tab { @apply px-3 py-2 md:px-6 md:py-3 rounded-full border border-slate-200 text-slate-500 font-bold transition text-xs md:text-sm cursor-pointer; }
-        .internet-tab.active { @apply bg-black text-white border-black; }
+        
+        /* [수정] 3D 블록 스타일 탭 버튼 */
+        .internet-tab { 
+            @apply flex-1 md:flex-none px-2 py-3 md:px-10 md:py-4 rounded-xl border-2 border-slate-200 bg-white text-slate-400 font-bold transition-all duration-150 text-xs md:text-lg cursor-pointer text-center select-none;
+            box-shadow: 0 4px 0 #e2e8f0; 
+            transform: translateY(0);
+        }
+        .internet-tab:hover {
+            @apply text-slate-600 border-slate-300;
+            box-shadow: 0 4px 0 #cbd5e1;
+            transform: translateY(-2px);
+        }
+        .internet-tab:active {
+            box-shadow: 0 0 0 transparent;
+            transform: translateY(4px);
+        }
+        .internet-tab.active { 
+            @apply bg-red-600 text-white border-red-600; 
+            box-shadow: 0 4px 0 #991b1b;
+        }
+        .internet-tab.active:hover {
+            @apply bg-red-500 border-red-500;
+            box-shadow: 0 4px 0 #991b1b;
+            transform: translateY(-2px);
+        }
+        .internet-tab.active:active {
+            box-shadow: 0 0 0 transparent;
+            transform: translateY(4px);
+        }
+
         .stb-btn { @apply flex-1 px-2 py-2 rounded-md text-[10px] md:text-xs transition border border-transparent whitespace-nowrap cursor-pointer text-slate-600; }
         .stb-btn.active { @apply bg-black text-white font-bold; }
         .rate-card { @apply border border-slate-200 rounded-2xl p-5 md:p-6 transition shadow-sm bg-white relative overflow-hidden; }
@@ -93,8 +121,8 @@
             // 1. 기본 정보 (로고, 연락처, 링크, 프로모션 문구)
             info: {
                 logoImg: "https://i.ibb.co/wFhfvmTv/KTLOGO03.jpg", // KT 로고 이미지 주소
-                logoImgSize: "h-16",      // 로고 이미지 높이 (h-8, h-10, h-12, h-16 등)
-                logoText: "",         // 로고 옆 텍스트 내용
+                logoImgSize: "h-16",       // 로고 이미지 높이 (h-8, h-10, h-12, h-16 등)
+                logoText: "",             // 로고 옆 텍스트 내용
                 logoTextSize: "text-1xl", // 로고 옆 텍스트 크기
                 logoTextColor: "text-[#000080]", // 로고 옆 텍스트 색상
                 phone: "010-2141-0137",   // 상담 전화번호
@@ -119,7 +147,7 @@
                 images: [
                     { 
                         // 01번 이미지 세트
-                        pcImg: "https://i.ibb.co/N2KdFZNR/m1-1.jpg",     
+                        pcImg: "https://i.ibb.co/N2KdFZNR/m1-1.jpg",      
                         mobileImg: "https://i.ibb.co/R4JrGC72/m1.jpg", 
                         url: "" 
                     },
@@ -304,7 +332,7 @@
             </div>
 
             <div id="view-bundle" class="bg-white rounded-3xl p-6 md:p-10 shadow-xl border border-slate-200">
-                <div class="flex justify-center mb-8 gap-2">
+                <div class="flex justify-center mb-8 gap-3 md:gap-4">
                     <button onclick="changeSpeed('100M')" id="btn-100m" class="internet-tab active">100M (슬림)</button>
                     <button onclick="changeSpeed('500M')" id="btn-500m" class="internet-tab">500M (베이직)</button>
                     <button onclick="changeSpeed('1G')" id="btn-1g" class="internet-tab">1G (에센스)</button>
@@ -928,9 +956,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
