@@ -28,14 +28,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-        body { font-family: 'Noto Sans KR', sans-serif; }
+        body { font-family: 'Pretendard', 'Noto Sans KR', sans-serif; letter-spacing: -0.02em; }
         
         .kt-red { background-color: #DC000C; }
         .kt-text-red { color: #DC000C; }
         .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
 
-        #kt-mobile-widget { font-family: 'Pretendard', sans-serif; letter-spacing: -0.02em; }
-        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -289,7 +287,7 @@
                                 <div class="flex justify-between text-xs text-slate-500"><span>3년 약정</span><span>22,000원</span></div>
                                 <div class="flex justify-between items-end border-t border-slate-100 pt-2"><span class="font-bold text-slate-700 text-sm">결합 시</span><span class="text-xl font-black text-red-600">16,500원</span></div>
                             </div>
-                            <button onclick="requestConsultFromPlan('인터넷 단독 슬림')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm hover:bg-slate-50 transition">신청하기</button>
+                            <button onclick="requestConsultFromPlan('인터넷 단독 슬림')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600 transition">신청하기</button>
                         </div>
                         <div class="rate-card hover:border-red-500 group border-red-200 bg-red-50/10">
                             <div class="absolute top-0 right-0 bg-red-100 text-red-600 text-[10px] px-2 py-0.5 rounded-bl-lg font-bold">인기</div>
@@ -306,7 +304,7 @@
                                 <div class="flex justify-between text-xs text-slate-500"><span>3년 약정</span><span>38,500원</span></div>
                                 <div class="flex justify-between items-end border-t border-slate-100 pt-2"><span class="font-bold text-slate-700 text-sm">결합 시</span><span class="text-xl font-black text-red-600">27,500원</span></div>
                             </div>
-                            <button onclick="requestConsultFromPlan('인터넷 단독 에센스')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm hover:bg-slate-50 transition">신청하기</button>
+                            <button onclick="requestConsultFromPlan('인터넷 단독 에센스')" class="w-full border border-slate-300 text-slate-700 py-3 rounded-xl font-bold text-sm group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600 transition">신청하기</button>
                         </div>
                     </div>
                 </div>
@@ -387,7 +385,7 @@
             <p class="font-bold text-white mb-2 text-lg" id="footer-company">(주)kt 가우리엔터프라이즈</p>
             <p>대표자: <span id="footer-owner">홍길동</span> | 사업자등록번호: <span id="footer-license">000-00-00000</span></p>
             <p>주소: <span id="footer-address">서울시 강남구...</span></p>
-            <p>통신판매업신고: <span id="footer-report">2024-...</span></p>
+            <p>통신판매업신고: <span id="footer-report">2024-...</span> | 개인정보관리책임자: <span id="footer-manager"></span></p>
             <p class="pt-4 border-t border-gray-800">COPYRIGHT © KT GAURI. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
@@ -507,6 +505,16 @@
             </div>
         </div>
     </div>
+    
+    <!-- 완료 모달 -->
+    <div id="m-success-modal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white p-8 rounded-3xl text-center shadow-2xl w-80">
+            <div class="w-16 h-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="check" class="w-8 h-8"></i></div>
+            <h3 class="font-bold text-xl mb-2 text-slate-900">신청 완료!</h3>
+            <p class="text-sm text-slate-500 mb-6">담당자가 확인 후 빠르게 연락드리겠습니다.</p>
+            <button onclick="document.getElementById('m-success-modal').classList.add('hidden')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold">확인</button>
+        </div>
+    </div>
 
     <script>
         function applyConfig() {
@@ -519,6 +527,7 @@
             document.getElementById('footer-license').innerText = SITE_CONFIG.footer.license;
             document.getElementById('footer-address').innerText = SITE_CONFIG.footer.address;
             document.getElementById('footer-report').innerText = SITE_CONFIG.footer.report;
+            document.getElementById('footer-manager').innerText = SITE_CONFIG.footer.manager;
             document.getElementById('header-phone-link').href = `tel:${SITE_CONFIG.info.phone}`;
             document.getElementById('consult-phone-link').href = `tel:${SITE_CONFIG.info.phone}`;
             document.getElementById('kakao-btn').href = SITE_CONFIG.info.kakaoUrl;
@@ -793,4 +802,3 @@
     </script>
 </body>
 </html>
-
