@@ -123,9 +123,9 @@
         const SITE_CONFIG = {
             // [중요] EmailJS 설정 (계정 변경 시 이 부분만 수정하면 됩니다)
             email: {
-                publicKey: "8xONgUdC9c0JycduK",      // 공개키
-                serviceId: "service_paxmkkl",      // 서비스 ID
-                templateId: "template_x37d4fg",    // 템플릿 ID (새 계정의 템플릿 ID로 꼭 확인해주세요!)
+                publicKey: "8xONgUdC9c0JycduK",       // 공개키
+                serviceId: "service_paxmkkl",       // 서비스 ID
+                templateId: "template_x37d4fg",     // 템플릿 ID (새 계정의 템플릿 ID로 꼭 확인해주세요!)
                 managerEmail: "ktgaurient@gmail.com" // 수신 이메일
             },
             info: {
@@ -135,7 +135,7 @@
                 logoTextSize: "text-1xl",
                 logoTextColor: "text-[#000080]",
                 phone: "010-2141-0137",
-                kakaoUrl: "http://pf.kakao.com/_xjVcQn/chat",
+                kakaoUrl: "http://pf.kakao.com/_XRxaan/chat",
                 promotionText: "가전구독 프로모션 혜택상담 (선택사항)"
             },
             banner: {
@@ -480,7 +480,7 @@
                                 <div>
                                     <label class="text-xs font-bold text-slate-600 mb-1 block pl-1">제휴카드 할인 (안내)</label>
                                     <div class="grid grid-cols-2 gap-2">
-                                        <label class="cursor-pointer block w-full"><input type="radio" name="special_card" value="상담신청" class="peer hidden" checked><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-blue-500 peer-checked:text-white peer-checked:border-blue-500 transition shadow-sm text-sm">상담신청</div></label>
+                                        <label class="cursor-pointer block w-full"><input type="radio" name="special_card" value="카드상담요청" class="peer hidden" checked><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-blue-500 peer-checked:text-white peer-checked:border-blue-500 transition shadow-sm text-sm">상담신청</div></label>
                                         <label class="cursor-pointer block w-full"><input type="radio" name="special_card" value="미신청" class="peer hidden"><div class="w-full py-3 text-center bg-white border border-slate-200 rounded-xl text-slate-500 font-bold peer-checked:bg-slate-700 peer-checked:text-white peer-checked:border-slate-700 transition shadow-sm text-sm">미신청</div></label>
                                     </div>
                                 </div>
@@ -622,10 +622,10 @@
                  const vas = document.getElementById('val-special-vas').value;
                  const price = document.getElementById('price-final').innerText;
                  promo = document.getElementById('modal-promo').checked ? '동의' : '미동의';
-                 text = `[특가신청]\n성함: ${name}\n연락처: ${phone}\n모델: ${window.selectedItem.name}\n요금제: ${window.selectedItem.mandatoryPlan}\n기기값: ${price}\n조건: ${install}, 보험${insurance}, ${card}, ${vas}\n마케팅수신: ${promo}`;
+                 text = `[특가신청]\n성함: ${name}\n연락처: ${phone}\n모델: ${window.selectedItem.name}\n요금제: ${window.selectedItem.mandatoryPlan}\n기기값: ${price}\n조건: ${install}, 보험${insurance}, ${card}, ${vas}\n프로모션 동의: ${promo}`;
             } else {
                  promo = document.getElementById('fast-promo').checked ? '동의' : '미동의';
-                 text = `[상담신청]\n성함: ${name}\n연락처: ${phone}\n마케팅수신: ${promo}\n(상세 내용은 상담 시 확인)`;
+                 text = `[상담신청]\n성함: ${name}\n연락처: ${phone}\n프로모션 동의: ${promo}\n(상세 내용은 상담 시 확인)`;
             }
             return text;
         }
@@ -659,7 +659,7 @@
                 details.push(`[휴대폰] 희망기종:${model}`);
             }
             const promo = document.getElementById('fast-promo').checked ? '동의' : '미동의';
-            details.push(`[마케팅수신] ${promo}`);
+            details.push(`[프로모션 동의] ${promo}`);
 
             const params = {
                 name: name, phone: phone, branch: '빠른상담신청',
@@ -810,6 +810,3 @@
     </script>
 </body>
 </html>
-
-
-
