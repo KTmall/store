@@ -130,7 +130,7 @@
                 phone: "010-2141-0137",
                 kakaoUrl: "http://pf.kakao.com/_XRxaan/chat",
                 promotionText: "가전구독 프로모션 혜택상담 (선택사항)",
-                emailJsKey: "oM5C3k8SXXow-GN5v" 
+                emailJsKey: "8xONgUdC9c0JycduK" // [수정됨] 새로운 공개키
             },
             banner: {
                 images: [
@@ -183,7 +183,7 @@
                 companyName: "(주)KT 가우리엔터프라이즈",
                 owner: "현재훈",
                 license: "876-88-01684",
-                address: "대전광역시 동구 동서대로 1679, 106호",
+                address: "대전광역시 서구 복수동로 52, 1층 102호(복수동)",
                 report: "2025-대전동구-0571",
                 manager: "박범훈"
             }
@@ -657,9 +657,9 @@
 
             const params = {
                 name: name, phone: phone, branch: '빠른상담신청',
-                promo_item: details.join('\n'), date: new Date().toLocaleString(), manager_email: 'pbh350111@gmail.com'
+                promo_item: details.join('\n'), date: new Date().toLocaleString(), manager_email: 'ktgaurient@gmail.com' // [수정됨] 새로운 수신 이메일
             };
-            emailjs.send('service_tje5nks', 'template_g02rutc', params)
+            emailjs.send('service_paxmkkl', 'template_g02rutc', params) // [수정됨] 새로운 서비스 ID
             .then(() => { alert('신청이 완료되었습니다! 담당자가 확인 후 빠르게 연락드리겠습니다.'); })
             .catch((err) => { alert("오류: " + JSON.stringify(err)); });
         }
@@ -790,9 +790,9 @@
                 desired_model: window.selectedItem.name,
                 promo_item: text,
                 date: new Date().toLocaleString(),
-                manager_email: 'pbh350111@gmail.com'
+                manager_email: 'ktgaurient@gmail.com' // [수정됨] 새로운 수신 이메일
             };
-            emailjs.send('service_tje5nks', 'template_g02rutc', params)
+            emailjs.send('service_paxmkkl', 'template_g02rutc', params) // [수정됨] 새로운 서비스 ID
             .then(() => { closeMobileModal(); alert('신청이 완료되었습니다.'); })
             .catch((err) => { alert("오류 발생: " + JSON.stringify(err)); });
         }
@@ -802,4 +802,3 @@
     </script>
 </body>
 </html>
-
