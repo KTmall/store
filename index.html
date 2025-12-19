@@ -121,6 +121,13 @@
     <!-- ========================================== -->
     <script>
         const SITE_CONFIG = {
+            // [중요] EmailJS 설정 (계정 변경 시 이 부분만 수정하면 됩니다)
+            email: {
+                publicKey: "8xONgUdC9c0JycduK",      // 공개키
+                serviceId: "service_paxmkkl",      // 서비스 ID
+                templateId: "template_g02rutc",    // 템플릿 ID (새 계정의 템플릿 ID로 꼭 확인해주세요!)
+                managerEmail: "ktgaurient@gmail.com" // 수신 이메일
+            },
             info: {
                 logoImg: "https://i.ibb.co/wFhfvmTv/KTLOGO03.jpg",
                 logoImgSize: "h-16",
@@ -129,8 +136,7 @@
                 logoTextColor: "text-[#000080]",
                 phone: "010-2141-0137",
                 kakaoUrl: "http://pf.kakao.com/_XRxaan/chat",
-                promotionText: "가전구독 프로모션 혜택상담 (선택사항)",
-                emailJsKey: "8xONgUdC9c0JycduK" // [수정됨] 새로운 공개키
+                promotionText: "가전구독 프로모션 혜택상담 (선택사항)"
             },
             banner: {
                 images: [
@@ -188,7 +194,7 @@
                 manager: "박범훈"
             }
         };
-        (function(){ if(window.emailjs) emailjs.init(SITE_CONFIG.info.emailJsKey); })();
+        (function(){ if(window.emailjs) emailjs.init(SITE_CONFIG.email.publicKey); })();
     </script>
 
     <!-- 1. 헤더 -->
@@ -657,11 +663,13 @@
 
             const params = {
                 name: name, phone: phone, branch: '빠른상담신청',
-                promo_item: details.join('\n'), date: new Date().toLocaleString(), manager_email: 'ktgaurient@gmail.com' // [수정됨] 새로운 수신 이메일
+                promo_item: details.join('\n'), date: new Date().toLocaleString(), manager_email: SITE_CONFIG.email.managerEmail
             };
-            emailjs.send('service_paxmkkl', 'template_g02rutc', params) // [수정됨] 새로운 서비스 ID
+            emailjs.send(SITE_CONFIG.email.serviceId, SITE_CONFIG.email.templateId, params)
             .then(() => { alert('신청이 완료되었습니다! 담당자가 확인 후 빠르게 연락드리겠습니다.'); })
-            .catch((err) => { alert("오류: " + JSON.stringify(err)); });
+            .catch((err) => { 
+                alert("전송 실패: 템플릿 ID나 설정을 확인해주세요.\n(" + JSON.stringify(err) + ")"); 
+            });
         }
 
         window.changeSpeed = function(s) { window.curSpeed = s; renderInternetTable(); };
@@ -790,9 +798,9 @@
                 desired_model: window.selectedItem.name,
                 promo_item: text,
                 date: new Date().toLocaleString(),
-                manager_email: 'ktgaurient@gmail.com' // [수정됨] 새로운 수신 이메일
+                manager_email: SITE_CONFIG.email.managerEmail
             };
-            emailjs.send('service_paxmkkl', 'template_g02rutc', params) // [수정됨] 새로운 서비스 ID
+            emailjs.send(SITE_CONFIG.email.serviceId, SITE_CONFIG.email.templateId, params)
             .then(() => { closeMobileModal(); alert('신청이 완료되었습니다.'); })
             .catch((err) => { alert("오류 발생: " + JSON.stringify(err)); });
         }
