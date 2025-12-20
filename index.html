@@ -98,7 +98,8 @@
             phone: "010-2141-0137", // 우측 하단 전화 상담 버튼에 연결될 번호
             kakaoUrl: "http://pf.kakao.com/_xjVcQn/chat", // 카카오톡 상담 버튼 클릭 시 이동할 링크
             promotionText: "가전구독 프로모션 혜택상담 (선택사항)", // 상담폼 하단 체크박스 문구
-            topBannerText: "공식 온라인 대리점 인증 판매점" // [NEW] 사이트 최상단 회색 띠에 들어갈 인증 문구
+            topBannerText: "공식 온라인 대리점 인증 판매점", // [NEW] 사이트 최상단 회색 띠에 들어갈 인증 문구
+            mainPriceLabel: "실구매가" // [NEW] 메인화면 상품 카드에 표시될 가격 문구 (예: 실구매가, 할부원금 등)
           },
           
           // 2. 메인 배너 이미지 목록 (PC용 / 모바일용 구분)
@@ -438,6 +439,13 @@
             return `${finalPrice.toLocaleString()}원`;
           };
 
+          // [추가] 모델별 기준 요금제 텍스트 반환 함수
+          const getPlanLabel = (id) => {
+            if (id === 'jump4') return '(61요금제 기준)';
+            if (id === 'a17') return '(37요금제 기준)';
+            return '(90요금제 기준)';
+          };
+
           return (
             <div className="pb-20 bg-gray-50 relative">
               
@@ -511,7 +519,8 @@
                         <h4 className="text-lg font-bold mb-4 text-gray-900 truncate">{product.name}</h4>
                         <div className="border-t border-dashed border-gray-200 my-4"></div>
                         <div className="flex justify-between items-end">
-                          <span className="text-gray-500 text-sm">실구매가 <span className='text-[10px]'>(90요금제 기준)</span></span>
+                          {/* [수정] 관리자 설정 문구(mainPriceLabel) 적용 */}
+                          <span className="text-gray-500 text-sm">{siteConfig.info.mainPriceLabel} <span className='text-[10px]'>{getPlanLabel(product.id)}</span></span>
                           <div className="text-right"><span className="text-xl font-extrabold text-red-600">{calcRealPrice(product)}</span></div>
                         </div>
                       </div>
