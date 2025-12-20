@@ -731,7 +731,23 @@
             }
 
             const finalDevicePrice = Math.max(0, devicePrice - appliedSubsidy);
-            const monthlyDeviceCost = Math.floor(finalDevicePrice / installmentPeriod);
+            
+            // [수정] 원리금균등상환방식 (연 5.9% 수수료 적용)
+            let monthlyDeviceCost = 0;
+            if (finalDevicePrice > 0 && installmentPeriod > 0) {
+                const annualRate = 0.059; // 연 5.9%
+                const monthlyRate = annualRate / 12;
+                
+                // 원리금 균등상환 공식: 월납입액 = 원금 * 이자율 * (1+이자율)^기간 / ((1+이자율)^기간 - 1)
+                monthlyDeviceCost = Math.floor(
+                    (finalDevicePrice * monthlyRate * Math.pow(1 + monthlyRate, installmentPeriod)) / 
+                    (Math.pow(1 + monthlyRate, installmentPeriod) - 1)
+                );
+                
+                // 10원 단위 절사 처리 (선택사항, 보통 10원 단위 청구)
+                monthlyDeviceCost = Math.floor(monthlyDeviceCost / 10) * 10;
+            }
+
             const total = monthlyDeviceCost + monthlyPlanFee;
 
             setCalcResult({
@@ -748,7 +764,7 @@
                     name: '상세페이지접수', 
                     phone: '010-0000-0000', 
                     branch: '모바일주문',
-                    promo_item: `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}\n[요금제] ${selectedPlan.name}\n[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원' : '선택약정'}\n[추가] 보험:${insurance}, 카드:${cardApply}, 필수팩:${packApply}\n[월납부] ${calcResult.totalMonthly.toLocaleString()}원`,
+                    promo_item: `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}\n[요금제] ${selectedPlan.name}\n[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원' : '선택약정'}\n[추가] 보험:${insurance}, 카드:${cardApply}, 필수팩:${packApply}\n[월납부] ${calcResult.totalMonthly.toLocaleString()}원 (5.9% 이자포함)`,
                     date: new Date().toLocaleString(),
                     manager_email: siteConfig.email.managerEmail
                 };
@@ -767,7 +783,7 @@
 - 요금제: ${selectedPlan ? selectedPlan.name : '선택없음'}
 - 약정조건: ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원금' : '선택약정'}
 - 추가옵션: 보험(${insurance}) / 제휴카드(${cardApply}) / 필수팩(${packApply})
-- 월 예상 납부금: ${calcResult.totalMonthly.toLocaleString()}원
+- 월 예상 납부금: ${calcResult.totalMonthly.toLocaleString()}원 (할부이자 5.9% 포함)
 
 위 내용으로 상담 신청합니다.`;
 
@@ -921,7 +937,7 @@
                               <div className="text-right">
                                   <span className="text-3xl font-extrabold text-red-600">{calcResult.totalMonthly.toLocaleString()}</span>
                                   <span className="text-lg font-bold text-gray-900">원</span>
-                                  <p className="text-xs text-gray-400 mt-1">VAT 포함 / 할부수수료 별도</p>
+                                  <p className="text-xs text-gray-400 mt-1">VAT 및 할부수수료(연 5.9%) 포함</p>
                               </div>
                             </div>
                         </div>
