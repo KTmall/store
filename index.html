@@ -442,8 +442,8 @@
             <div className="pb-20 bg-gray-50 relative">
               
               {/* 메인 슬라이더 */}
-              {/* [수정] 모바일 높이 h-[380px]로 축소, md(데스크탑) 높이는 600px 유지 */}
-              <section className="relative w-full md:h-[600px] h-[380px] bg-gray-900 overflow-hidden">
+              {/* [수정] 모바일 높이 h-[300px], md(데스크탑) 높이는 500px로 축소하여 여백 최소화 */}
+              <section className="relative w-full md:h-[500px] h-[300px] bg-gray-900 overflow-hidden">
                 {siteConfig.banner.images.map((img, idx) => (
                   <div key={idx} className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${currentBanner === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                       
@@ -462,7 +462,7 @@
                       </div>
 
                       {/* 메인 이미지 */}
-                      {/* [수정] 배너 여백 완전 제거: p-0 md:pb-0 */}
+                      {/* [수정] 배너 여백 완전 제거 및 object-cover 시도 (단, 잘릴 수 있으니 contain 유지하되 컨테이너 크기 최적화) */}
                       <div className="absolute inset-0 flex items-center justify-center p-0">
                         <img 
                           src={img.pcImg} 
@@ -993,12 +993,28 @@
                 </div>
                 
                 {/* 2단: 메뉴 네비게이션 (로고 바로 밑, 가로 스크롤 가능) */}
-                <div className="border-t border-gray-100">
-                    <nav className="max-w-7xl mx-auto px-4 flex space-x-6 overflow-x-auto whitespace-nowrap scrollbar-hide py-3 text-sm md:text-base font-bold text-gray-800 md:justify-start">
-                        <button onClick={() => document.getElementById('products')?.scrollIntoView({behavior:'smooth'})} className="hover:text-red-600 transition">이달의 특가폰</button>
-                        <button onClick={() => document.getElementById('internet')?.scrollIntoView({behavior:'smooth'})} className="hover:text-red-600 transition">초고속 인터넷/지니TV</button>
+                <div className="border-t border-gray-100 bg-white">
+                    <nav className="max-w-7xl mx-auto px-4 flex space-x-3 overflow-x-auto whitespace-nowrap scrollbar-hide py-3 md:justify-start">
+                        {/* [수정] 이모티콘 삭제 및 심플/세련된 버튼 스타일 적용 */}
+                        <button 
+                            onClick={() => document.getElementById('products')?.scrollIntoView({behavior:'smooth'})} 
+                            className="px-6 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 font-bold text-sm md:text-base hover:border-red-600 hover:text-red-600 hover:shadow-sm transition-all duration-200"
+                        >
+                            이달의 특가폰
+                        </button>
+                        <button 
+                            onClick={() => document.getElementById('internet')?.scrollIntoView({behavior:'smooth'})} 
+                            className="px-6 py-2.5 rounded-full border border-gray-200 bg-white text-gray-600 font-bold text-sm md:text-base hover:border-red-600 hover:text-red-600 hover:shadow-sm transition-all duration-200"
+                        >
+                            초고속 인터넷/지니TV
+                        </button>
                         {SITE_CONFIG.preOrder.isActive && (
-                            <button onClick={() => setShowPreOrderModal(true)} className="hover:text-red-600 transition">사전예약</button>
+                            <button 
+                                onClick={() => setShowPreOrderModal(true)} 
+                                className="px-6 py-2.5 rounded-full border border-red-100 bg-red-50 text-red-600 font-bold text-sm md:text-base hover:bg-red-600 hover:text-white hover:shadow-sm transition-all duration-200"
+                            >
+                                사전예약
+                            </button>
                         )}
                     </nav>
                 </div>
