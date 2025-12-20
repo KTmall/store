@@ -90,7 +90,7 @@
             phone: "010-2141-0137", // 우측 하단 전화 상담 버튼에 연결될 번호
             kakaoUrl: "http://pf.kakao.com/_xjVcQn/chat", // 카카오톡 상담 버튼 클릭 시 이동할 링크
             promotionText: "가전구독 프로모션 혜택상담 (선택사항)", // 상담폼 하단 체크박스 문구
-            topBannerText: "공식 온라인 대리점 인증" // [NEW] 사이트 최상단 회색 띠에 들어갈 인증 문구
+            topBannerText: "공식 온라인 대리점 인증 판매점" // [NEW] 사이트 최상단 회색 띠에 들어갈 인증 문구
           },
           
           // 2. 메인 배너 이미지 목록 (PC용 / 모바일용 구분)
@@ -434,7 +434,8 @@
             <div className="pb-20 bg-gray-50 relative">
               
               {/* 메인 슬라이더 */}
-              <section className="relative w-full md:h-[600px] h-[500px] bg-gray-900 overflow-hidden">
+              {/* [수정] 모바일 높이 h-[380px]로 축소, md(데스크탑) 높이는 600px 유지 */}
+              <section className="relative w-full md:h-[600px] h-[380px] bg-gray-900 overflow-hidden">
                 {siteConfig.banner.images.map((img, idx) => (
                   <div key={idx} className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${currentBanner === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                       
@@ -453,7 +454,8 @@
                       </div>
 
                       {/* 메인 이미지 */}
-                      <div className="absolute inset-0 flex items-center justify-center p-4 pb-20 md:pb-4">
+                      {/* [수정] 모바일 padding-bottom 제거 (pb-20 -> pb-0) */}
+                      <div className="absolute inset-0 flex items-center justify-center p-4 md:pb-4">
                         <img 
                           src={img.pcImg} 
                           className="hidden md:block w-full h-full object-contain drop-shadow-2xl" 
@@ -936,6 +938,8 @@
           const [selectedProduct, setSelectedProduct] = useState(null);
           const [showConsult, setShowConsult] = useState(true);
           const [showPreOrderModal, setShowPreOrderModal] = useState(false);
+          // [추가] 모바일 메뉴 토글 상태
+          const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
           // 이메일 서비스 초기화
           useEffect(() => {
@@ -985,9 +989,25 @@
                   </nav>
                   <div className="flex items-center space-x-4">
                     <IconSearch className="w-6 h-6 text-gray-600 cursor-pointer hover:text-red-600" />
-                    <IconMenu className="w-6 h-6 text-gray-600 md:hidden cursor-pointer" />
+                    {/* [수정] 모바일 메뉴 버튼에 토글 이벤트 연결 */}
+                    <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 -mr-2 text-gray-600 hover:text-gray-900">
+                      {mobileMenuOpen ? <IconX className="w-6 h-6" /> : <IconMenu className="w-6 h-6" />}
+                    </button>
                   </div>
                 </div>
+
+                {/* [추가] 모바일 메뉴 드롭다운 */}
+                {mobileMenuOpen && (
+                  <nav className="md:hidden bg-white border-t border-gray-100 absolute w-full left-0 z-50 shadow-lg">
+                    <div className="flex flex-col px-4 py-4 space-y-4 font-bold text-gray-800">
+                        <button onClick={() => { setMobileMenuOpen(false); document.getElementById('products')?.scrollIntoView({behavior:'smooth'}); }} className="text-left py-2 hover:text-red-600 border-b border-gray-50">이달의 특가폰</button>
+                        <button onClick={() => { setMobileMenuOpen(false); document.getElementById('internet')?.scrollIntoView({behavior:'smooth'}); }} className="text-left py-2 hover:text-red-600 border-b border-gray-50">초고속 인터넷/지니TV</button>
+                        {SITE_CONFIG.preOrder.isActive && (
+                            <button onClick={() => { setMobileMenuOpen(false); setShowPreOrderModal(true); }} className="text-left py-2 hover:text-red-600 text-red-500">사전예약</button>
+                        )}
+                    </div>
+                  </nav>
+                )}
               </header>
 
               {currentView === 'home' ? (
