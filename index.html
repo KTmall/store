@@ -109,7 +109,7 @@
             phone: "010-2141-0137", // 우측 하단 전화 상담 버튼에 연결될 번호
             kakaoUrl: "http://pf.kakao.com/_xjVcQn/chat", // 카카오톡 상담 버튼 클릭 시 이동할 링크
             promotionText: "가전구독 프로모션 혜택상담 (선택사항)", // 상담폼 하단 체크박스 문구
-            topBannerText: "공식 온라인 대리점 인증 판매점", // [NEW] 사이트 최상단 회색 띠에 들어갈 인증 문구
+            topBannerText: "공식 온라인 대리점 인증", // [NEW] 사이트 최상단 회색 띠에 들어갈 인증 문구
             mainPriceLabel: "실구매가" // [NEW] 메인화면 상품 카드에 표시될 가격 문구 (예: 실구매가, 할부원금 등)
           },
           
@@ -1029,6 +1029,12 @@
           const [selectedProduct, setSelectedProduct] = useState(null);
           const [showConsult, setShowConsult] = useState(true);
           const [showPreOrderModal, setShowPreOrderModal] = useState(false);
+          // [추가] 사전예약 폼 상태 (이름 추가)
+          const [preOrderForm, setPreOrderForm] = useState({
+              model: SITE_CONFIG.preOrder.models[0],
+              name: '',
+              phone: ''
+          });
 
           // 이메일 서비스 초기화
           useEffect(() => {
@@ -1053,6 +1059,29 @@
             window.scrollTo(0, 0);
           };
 
+          // [추가] 사전예약 이메일 전송 핸들러
+          const handlePreOrderSubmit = (e) => {
+              e.preventDefault();
+              if (!window.emailjs) { alert('메일 서버 연결 중입니다. 잠시 후 다시 시도해주세요.'); return; }
+              
+              const params = {
+                  name: preOrderForm.name, // 입력받은 이름 사용
+                  phone: preOrderForm.phone,
+                  branch: '사전예약',
+                  promo_item: `[사전예약 알림신청]\n이름: ${preOrderForm.name}\n관심모델: ${preOrderForm.model}\n연락처: ${preOrderForm.phone}`,
+                  date: new Date().toLocaleString(),
+                  manager_email: SITE_CONFIG.email.managerEmail
+              };
+
+              window.emailjs.send(SITE_CONFIG.email.serviceId, SITE_CONFIG.email.templateId, params)
+                .then(() => { 
+                    alert('사전예약 알림 신청이 완료되었습니다.'); 
+                    setShowPreOrderModal(false); 
+                    setPreOrderForm({ ...preOrderForm, name: '', phone: '' });
+                })
+                .catch(err => alert('전송 실패: ' + JSON.stringify(err)));
+          };
+
           return (
             <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-red-100 selection:text-red-900">
               
@@ -1074,9 +1103,7 @@
                         <img src={SITE_CONFIG.info.logoImg} alt="KT Store Logo" className="h-9 md:h-11 object-contain mr-2 transition-transform duration-300 group-hover:scale-105" />
                       </div>
                       <div className="flex items-center space-x-2">
-                        <button className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200">
-                            <IconSearch className="w-6 h-6 text-gray-600" />
-                        </button>
+                        {/* 검색 아이콘 삭제됨 */}
                       </div>
                     </div>
                 </div>
@@ -1149,21 +1176,44 @@
                       <p className="text-gray-500 text-sm" dangerouslySetInnerHTML={{ __html: SITE_CONFIG.preOrder.description }}></p>
                     </div>
 
-                    <form onSubmit={(e) => { e.preventDefault(); alert('신청되었습니다.'); setShowPreOrderModal(false); }} className="space-y-4 relative z-10">
+                    <form onSubmit={handlePreOrderSubmit} className="space-y-4 relative z-10">
                       <div className="space-y-2">
                         <p className="text-sm font-bold text-gray-700">관심 모델 선택</p>
                         <div className="grid grid-cols-2 gap-2">
                           {SITE_CONFIG.preOrder.models.map((model) => (
                             <label key={model} className="border rounded-xl p-3 text-center cursor-pointer text-sm font-medium transition border-gray-200 hover:bg-gray-50">
-                              <input type="radio" name="preOrderModel" value={model} className="mr-2" />
+                              <input 
+                                type="radio" 
+                                name="preOrderModel" 
+                                value={model} 
+                                className="mr-2" 
+                                checked={preOrderForm.model === model}
+                                onChange={(e) => setPreOrderForm({...preOrderForm, model: e.target.value})}
+                              />
                               {model}
                             </label>
                           ))}
                         </div>
                       </div>
 
-                      <div className="pt-2">
-                        <input type="tel" placeholder="알림 받을 연락처 (010-0000-0000)" className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-red-500 outline-none" required />
+                      <div className="pt-2 space-y-3">
+                        {/* [추가] 이름 입력 필드 */}
+                        <input 
+                            type="text" 
+                            placeholder="이름" 
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-red-500 outline-none transition-colors" 
+                            required 
+                            value={preOrderForm.name}
+                            onChange={(e) => setPreOrderForm({...preOrderForm, name: e.target.value})}
+                        />
+                        <input 
+                            type="tel" 
+                            placeholder="알림 받을 연락처 (010-0000-0000)" 
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-red-500 outline-none transition-colors" 
+                            required 
+                            value={preOrderForm.phone}
+                            onChange={(e) => setPreOrderForm({...preOrderForm, phone: e.target.value})}
+                        />
                       </div>
 
                       <button type="submit" className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition shadow-lg">
@@ -1179,7 +1229,7 @@
                    <div className="bg-white p-4 rounded-xl shadow-2xl border border-gray-100 w-64 animate-fade-in-up mb-2 relative">
                       <button onClick={() => setShowConsult(false)} className="absolute top-2 right-2 text-gray-300 hover:text-gray-500"><IconX size={16}/></button>
                       <div className="font-bold text-gray-900 mb-1">무엇을 도와드릴까요?</div>
-                      <p className="text-xs text-gray-500 mb-3">전문 상담사가 최적의 요금제를 찾아드립니다.</p>
+                      <p className="text-xs text-gray-500 mb-3">전문 상담사가 상담해드립니다.</p>
                       <a href={SITE_CONFIG.info.kakaoUrl} target="_blank" rel="noreferrer" className="w-full bg-yellow-300 text-black text-sm font-bold py-2 rounded flex items-center justify-center gap-1 hover:bg-yellow-400 cursor-pointer">
                          <IconMessage size={16}/> 카카오톡 상담
                       </a>
@@ -1195,9 +1245,9 @@
 
               <footer className="bg-gray-100 border-t border-gray-200 pt-12 pb-8">
                 <div className="max-w-7xl mx-auto px-4">
-                  <div className="flex flex-col items-center text-center mb-8 text-sm text-gray-600">
-                      <div className="md:w-2/3">
-                         <h5 className="font-bold text-gray-900 mb-4">사업자 정보</h5>
+                  <div className="flex flex-col items-start text-left mb-8 text-xs text-gray-600">
+                      <div className="w-full">
+                         <h5 className="font-bold text-gray-900 mb-4 text-sm">사업자 정보</h5>
                          <p className="font-bold mb-1">(주)KT 가우리엔터프라이즈</p>
                          <p className="mb-1">대표자: 현재훈 | 사업자등록번호: 876-88-01684</p>
                          <p className="mb-1">주소: 대전광역시 동구 동서대로 1679, 106호</p>
