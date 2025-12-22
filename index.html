@@ -128,8 +128,37 @@
             kaitLogoHtml: '' 
           },
           
-          // 2. 메인 배너 이미지 목록 (PC용 / 모바일용 구분)
-          // * 이미지는 3~5장 정도가 적당합니다.
+          // [NEW] 2. 상세페이지 추가 옵션 설정 (가격 및 할인율 관리)
+          options: {
+             insurance: [
+                { name: '미가입', price: 0 },
+                { name: '파손형 가입', price: 5900 }, 
+                { name: '일반(분실포함) 가입', price: 6500 } 
+             ],
+             cards: [
+                { name: '미신청', discount: 0 },
+                { name: '우리카드 (전월 40만원 / 25,000원 할인) - 6개월 무실적', discount: 25000 },
+                { name: '신한카드 (전월 30만원 / 21,000원 할인) - 6개월 무실적', discount: 21000 },
+                { name: '국민카드 (전월 30만원 / 21,000원 할인) - 6개월 무실적', discount: 21000 },
+                { name: '삼성카드 (전월 30만원 / 20,000원 할인) - 6개월 무실적', discount: 20000 },
+                { name: '현대카드 (전월 50만원 / 26,000원 할인) - 6개월 무실적', discount: 26000 },
+                { name: '롯데카드 (전월 30만원 / 22,000원 할인) - 6개월 무실적', discount: 22000 }
+             ],
+             packs: [
+                { name: '미가입', price: 0 },
+                { name: '가입', price: 0 } 
+             ],
+             // [수정] 결합할인 항목 재구성 (뭉치면올레 삭제, 9만원 기준 혜택 강조)
+             combinations: [
+                { name: '미결합', discount: 0, type: 'fixed' },
+                { name: '프리미엄 싱글결합 (25% 요금할인)', discount: 0.25, type: 'percent' }, // 9만원 기준 -22,500원
+                { name: '프리미엄 가족결합 (25% 요금할인)', discount: 0.25, type: 'percent' }, // 9만원 기준 -22,500원
+                { name: '총액 결합할인 (기여도별 상이)', discount: 3300, type: 'fixed' }, // 통상 최소 구간
+                { name: '우리가족 무선결합', discount: 3300, type: 'fixed' } 
+             ]
+          },
+
+          // 3. 메인 배너 이미지 목록 (PC용 / 모바일용 구분)
           banner: {
             images: [
               { pcImg: "https://i.ibb.co/N2KdFZNR/m1-1.jpg", mobileImg: "https://i.ibb.co/R4JrGC72/m1.jpg" },
@@ -140,17 +169,16 @@
             ]
           },
 
-          // [NEW] 3. 사전예약 팝업 설정
+          // [NEW] 4. 사전예약 팝업 설정
           preOrder: {
             isActive: true, // 사전예약 기능 사용 여부 (true: 사용, false: 숨김)
             badge: "COMING SOON", // 상단 뱃지 텍스트
             title: "사전예약 준비중", // 팝업 제목
             description: "출시 예정인 최신 모델을 가장 먼저 만나보세요.<br/>알림 신청을 하시면 오픈 즉시 문자로 알려드립니다.", // 설명 문구 (<br/>로 줄바꿈)
-            models: ['Galaxy S26 Ultra', 'Galaxy S26', 'Z Fold 8', 'Z Flip 8'] // 선택 가능한 사전예약 모델 리스트
+            models: ['Galaxy S26 Ultra', 'iPhone 18 Pro', 'Z Fold 8', 'Z Flip 8'] // 선택 가능한 사전예약 모델 리스트
           },
 
-          // 4. 추천 상품 목록 (메인 화면 'MD PICK' 및 상세페이지 데이터)
-          // * id: 고유 식별자 (영문), prices: 용량별 출고가, publicSupport: 공시지원금, addSupport: 추가지원금
+          // 5. 추천 상품 목록 (메인 화면 'MD PICK' 및 상세페이지 데이터)
           specialProducts: [
             { 
               id: 'ip17', 
@@ -262,14 +290,13 @@
             }
           ],
 
-          // 4. 인터넷 요금제 카드 및 가격 정보
+          // 6. 인터넷 요금제 카드 및 가격 정보
           internet: {
             cards: [
               { id: 'plan1', name: "지니 TV 베이직", desc: "230여개 채널", badge: "" },
               { id: 'plan2', name: "지니 TV 모든G", desc: "250여개 채널+VOD", badge: "강력추천" },
               { id: 'plan3', name: "지니 TV 디즈니+", desc: "디즈니+ OTT 결합", badge: "" }
             ],
-            // 속도별 / 셋탑박스별 가격표 [기본료, 결합할인가]
             prices: {
               '100M': { 
                   'genieA': { plan1: ['37,400원','31,900원'], plan2: ['42,900원','37,400원'], plan3: ['45,200원','39,700원'] },
@@ -293,7 +320,7 @@
           }
         };
 
-        // 5. 휴대폰 요금제 목록 (월 정액 및 데이터 정보)
+        // 7. 휴대폰 요금제 목록 (월 정액 및 데이터 정보)
         const PLANS = [
           { id: 1, name: '초이스 스페셜', price: 110000, data: '완전무제한+VVIP' },
           { id: 2, name: '초이스 베이직', price: 90000, data: '완전무제한' },
@@ -303,7 +330,7 @@
           { id: 6, name: 'LTE 베이직', price: 37000, data: '2GB' },
         ];
 
-        // 6. 실시간 개통 후기 데이터
+        // 8. 실시간 개통 후기 데이터
         const REVIEWS = [
           { id: 1, user: '김*수', device: '갤럭시 S25', rating: 5, content: '신제품 사전예약으로 빠르게 받았습니다. 상담도 친절하고 사은품도 챙겨주셔서 감사합니다!', date: '2024.03.15' },
           { id: 2, user: '이*영', device: '아이폰 17 PRO', rating: 5, content: '다른 곳보다 지원금이 확실히 많네요. 티타늄 컬러 너무 예쁩니다.', date: '2024.03.14' },
@@ -725,6 +752,12 @@
           const [customerName, setCustomerName] = useState('');
           const [customerPhone, setCustomerPhone] = useState('');
 
+          // [NEW] 추가 옵션 상태 관리 (객체 전체 저장)
+          const [insurance, setInsurance] = useState(siteConfig.options.insurance[0]);
+          const [cardApply, setCardApply] = useState(siteConfig.options.cards[0]);
+          const [packApply, setPackApply] = useState(siteConfig.options.packs[0]);
+          const [combination, setCombination] = useState(siteConfig.options.combinations[0]);
+
           const availablePlans = useMemo(() => {
             if (product.id === 'jump4') {
               return plans.filter(p => p.price === 61000);
@@ -736,14 +769,29 @@
           }, [product.id, plans]);
 
           const [selectedPlan, setSelectedPlan] = useState(availablePlans[0]); 
-          const [calcResult, setCalcResult] = useState({ deviceCost: 0, monthlyDevice: 0, monthlyPlan: 0, totalMonthly: 0 });
-          
-          const [insurance, setInsurance] = useState('미가입');
-          const [cardApply, setCardApply] = useState('미신청');
-          const [packApply, setPackApply] = useState('미가입');
+          // [수정] 상세 할인 내역을 담기 위해 calcResult 상태 확장
+          const [calcResult, setCalcResult] = useState({ 
+              deviceCost: 0, 
+              monthlyDevice: 0, 
+              basePlanFee: 0,
+              contractDiscount: 0,
+              comboDiscount: 0,
+              cardDiscount: 0,
+              insuranceDiscount: 0,
+              totalMonthly: 0 
+          });
 
           useEffect(() => {
             if(availablePlans.length > 0) setSelectedPlan(availablePlans[0]);
+          }, [product, availablePlans]);
+          
+          // [수정] 9만원 요금제 기본 선택 로직 추가
+          useEffect(() => {
+            if(availablePlans.length > 0) {
+                // 9만원 요금제를 우선적으로 찾아서 기본값으로 설정
+                const defaultPlan = availablePlans.find(p => p.price === 90000) || availablePlans[0];
+                setSelectedPlan(defaultPlan);
+            }
           }, [product, availablePlans]);
 
           useEffect(() => {
@@ -752,8 +800,11 @@
             let devicePrice = prices[selectedCapacity] || Object.values(prices)[0] || 0;
 
             let appliedSubsidy = 0;
-            let monthlyPlanFee = selectedPlan.price;
+            // 기본 요금 (할인 전)
+            const basePlanFee = selectedPlan.price;
+            let contractDiscount = 0;
 
+            // 1. 공시/선약 할인 계산
             if (discountType === 'subsidy') {
               const isHighPlan = selectedPlan.price >= 90000;
               const isJumpCondition = product.id === 'jump4' && selectedPlan.price >= 61000;
@@ -765,40 +816,64 @@
                   appliedSubsidy = product.publicSupport;
               }
             } else {
-              monthlyPlanFee = monthlyPlanFee * 0.75;
+              contractDiscount = Math.floor(basePlanFee * 0.25); // 25% 선택약정 할인
               appliedSubsidy = 0; 
             }
 
+            // 2. 기기값 및 월 할부금 계산 (5.9% 이자 포함)
             const finalDevicePrice = Math.max(0, devicePrice - appliedSubsidy);
-            
-            // [수정] 원리금균등상환방식 (연 5.9% 수수료 적용)
             let monthlyDeviceCost = 0;
             if (finalDevicePrice > 0 && installmentPeriod > 0) {
                 const annualRate = 0.059; // 연 5.9%
                 const monthlyRate = annualRate / 12;
-                
-                // 원리금 균등상환 공식: 월납입액 = 원금 * 이자율 * (1+이자율)^기간 / ((1+이자율)^기간 - 1)
                 monthlyDeviceCost = Math.floor(
                     (finalDevicePrice * monthlyRate * Math.pow(1 + monthlyRate, installmentPeriod)) / 
                     (Math.pow(1 + monthlyRate, installmentPeriod) - 1)
                 );
-                
-                // 10원 단위 절사 처리 (선택사항, 보통 10원 단위 청구)
                 monthlyDeviceCost = Math.floor(monthlyDeviceCost / 10) * 10;
             }
 
-            const total = monthlyDeviceCost + monthlyPlanFee;
+            // 3. 결합 할인 계산
+            let comboDiscount = 0;
+            if (combination.type === 'percent') {
+                comboDiscount = Math.floor(basePlanFee * combination.discount); // 원금 기준 할인
+            } else {
+                comboDiscount = combination.discount;
+            }
+
+            // 4. 보험료 할인 로직 (11만원 이상 요금제 시 4,500원 할인)
+            const baseInsuranceFee = insurance.price || 0;
+            let insuranceDiscount = 0;
+            let insuranceDiscountMsg = "";
+            if (selectedPlan.price >= 110000 && baseInsuranceFee > 0) {
+                const discountAmount = 4500; // 멤버십 차감 할인액
+                // 최대 할인액은 보험료를 넘지 않음
+                insuranceDiscount = Math.min(baseInsuranceFee, discountAmount); 
+                insuranceDiscountMsg = "(VIP할인 적용)";
+            }
+            const finalInsuranceFee = Math.max(0, baseInsuranceFee - insuranceDiscount);
+
+            // 5. 최종 월 납부액 계산
+            // 통신료 = (기본료 - 약정할인 - 결합할인 - 제휴카드할인)
+            let finalPlanFee = basePlanFee - contractDiscount - comboDiscount - cardApply.discount;
+            finalPlanFee = Math.max(0, finalPlanFee); // 0원 밑으로 내려가지 않게
+
+            const total = monthlyDeviceCost + finalPlanFee + finalInsuranceFee + (packApply.price || 0);
 
             setCalcResult({
               deviceCost: finalDevicePrice,
               monthlyDevice: monthlyDeviceCost,
-              monthlyPlan: monthlyPlanFee,
-              totalMonthly: total
+              basePlanFee: basePlanFee,
+              contractDiscount: contractDiscount,
+              comboDiscount: comboDiscount,
+              cardDiscount: cardApply.discount,
+              insuranceDiscount: insuranceDiscount,
+              totalMonthly: total,
+              insuranceDiscountMsg: insuranceDiscountMsg // 할인 메시지 저장
             });
-          }, [selectedCapacity, installmentPeriod, discountType, selectedPlan, product]);
+          }, [selectedCapacity, installmentPeriod, discountType, selectedPlan, product, insurance, cardApply, packApply, combination]);
 
           const handleOrder = () => {
-            // [추가] 유효성 검사
             if (!customerName || !customerPhone) {
                 alert("상담 접수를 위해 이름과 연락처를 입력해주세요.");
                 return;
@@ -806,10 +881,23 @@
 
             if(window.emailjs) {
                 const params = {
-                    name: customerName, // [수정] 입력된 이름 사용
-                    phone: customerPhone, // [수정] 입력된 연락처 사용
+                    name: customerName, 
+                    phone: customerPhone, 
                     branch: '모바일주문',
-                    promo_item: `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}\n[요금제] ${selectedPlan.name}\n[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원' : '선택약정'}\n[추가] 보험:${insurance}, 카드:${cardApply}, 필수팩:${packApply}\n[월납부] ${calcResult.totalMonthly.toLocaleString()}원 (5.9% 이자포함)`,
+                    promo_item: `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}
+[요금제] ${selectedPlan.name} (월 ${selectedPlan.price.toLocaleString()}원)
+[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원' : '선택약정'}
+[추가옵션] 
+- 보험: ${insurance.name}
+- 카드: ${cardApply.name}
+- 팩: ${packApply.name}
+- 결합: ${combination.name}
+[할인내역]
+- 약정할인: ${calcResult.contractDiscount}원
+- 결합할인: ${calcResult.comboDiscount}원
+- 카드할인: ${calcResult.cardDiscount}원
+- 보험할인: ${calcResult.insuranceDiscount}원
+[월납부] ${calcResult.totalMonthly.toLocaleString()}원 (5.9% 이자포함)`,
                     date: new Date().toLocaleString(),
                     manager_email: siteConfig.email.managerEmail
                 };
@@ -821,7 +909,6 @@
           }
 
           const handleKakaoConsult = () => {
-             // [추가] 유효성 검사
              if (!customerName || !customerPhone) {
                 alert("원활한 상담을 위해 이름과 연락처를 입력해주세요.");
                 return;
@@ -835,7 +922,11 @@
 - 색상: ${selectedColor.name}
 - 요금제: ${selectedPlan ? selectedPlan.name : '선택없음'}
 - 약정조건: ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원금' : '선택약정'}
-- 추가옵션: 보험(${insurance}) / 제휴카드(${cardApply}) / 필수팩(${packApply})
+- 추가옵션: 
+  보험(${insurance.name}) 
+  제휴카드(${cardApply.name}) 
+  필수팩(${packApply.name})
+  결합할인(${combination.name})
 - 월 예상 납부금: ${calcResult.totalMonthly.toLocaleString()}원 (할부이자 5.9% 포함)
 
 위 내용으로 상담 신청합니다.`;
@@ -899,12 +990,19 @@
                             </div>
                             <div>
                               <label className="block text-sm font-bold mb-2 text-gray-800">색상</label>
-                              <div className="flex gap-2 overflow-x-auto pb-2">
+                              {/* [수정] 색상 선택 버튼 크기 축소 (w-8 -> w-6) */}
+                              <div className="flex gap-2 overflow-x-auto pb-2 items-center">
                                 {product.colors.map(c => (
-                                  <button key={c.name} onClick={() => setSelectedColor(c)} className={`w-10 h-10 rounded-full border shadow-sm flex-shrink-0 ${selectedColor.name === c.name ? 'ring-2 ring-red-500 ring-offset-2' : 'border-gray-200'}`} style={{ backgroundColor: c.code }} title={c.name} />
+                                  <button 
+                                    key={c.name} 
+                                    onClick={() => setSelectedColor(c)} 
+                                    className={`w-6 h-6 rounded-full border flex-shrink-0 transition-all duration-200 ${selectedColor.name === c.name ? 'ring-2 ring-red-500 ring-offset-2 scale-110 shadow-md border-transparent' : 'border-gray-300 hover:scale-110 hover:border-gray-400'}`} 
+                                    style={{ backgroundColor: c.code }} 
+                                    title={c.name} 
+                                  />
                                 ))}
                               </div>
-                              <div className="text-xs text-gray-500 mt-1">{selectedColor.name}</div>
+                              <div className="text-xs text-gray-500 mt-1 font-medium">{selectedColor.name}</div>
                             </div>
                         </div>
 
@@ -925,23 +1023,29 @@
                             <div className="flex items-center gap-2 mb-2">
                               <IconSettings size={18} className="text-gray-500"/> <span className="font-bold text-gray-800">추가 옵션 선택</span>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div>
                                   <label className="block text-xs font-bold mb-1 text-gray-600">보험 가입</label>
-                                  <select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={insurance} onChange={e => setInsurance(e.target.value)}>
-                                    <option value="가입">가입</option><option value="미가입">미가입</option>
+                                  <select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={JSON.stringify(insurance)} onChange={e => setInsurance(JSON.parse(e.target.value))}>
+                                    {siteConfig.options.insurance.map((opt, i) => <option key={i} value={JSON.stringify(opt)}>{opt.name} {opt.price > 0 ? `(+${opt.price.toLocaleString()}원)` : ''}</option>)}
                                   </select>
                               </div>
                               <div>
                                   <label className="block text-xs font-bold mb-1 text-gray-600">제휴카드</label>
-                                  <select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={cardApply} onChange={e => setCardApply(e.target.value)}>
-                                    <option value="신청">신청</option><option value="미신청">미신청</option>
+                                  <select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={JSON.stringify(cardApply)} onChange={e => setCardApply(JSON.parse(e.target.value))}>
+                                    {siteConfig.options.cards.map((opt, i) => <option key={i} value={JSON.stringify(opt)}>{opt.name}</option>)}
                                   </select>
                               </div>
                               <div>
                                   <label className="block text-xs font-bold mb-1 text-gray-600">필수팩</label>
-                                  <select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={packApply} onChange={e => setPackApply(e.target.value)}>
-                                    <option value="가입">가입</option><option value="미가입">미가입</option>
+                                  <select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={JSON.stringify(packApply)} onChange={e => setPackApply(JSON.parse(e.target.value))}>
+                                    {siteConfig.options.packs.map((opt, i) => <option key={i} value={JSON.stringify(opt)}>{opt.name}</option>)}
+                                  </select>
+                              </div>
+                              <div>
+                                  <label className="block text-xs font-bold mb-1 text-gray-600">결합할인</label>
+                                  <select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={JSON.stringify(combination)} onChange={e => setCombination(JSON.parse(e.target.value))}>
+                                     {siteConfig.options.combinations.map((opt, i) => <option key={i} value={JSON.stringify(opt)}>{opt.name}</option>)}
                                   </select>
                               </div>
                             </div>
@@ -974,7 +1078,7 @@
                           </div>
                         </div>
 
-                        {/* [추가] 신청자 정보 입력 섹션 */}
+                        {/* 신청자 정보 입력 섹션 */}
                         <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm mt-6">
                           <div className="flex items-center gap-2 mb-3">
                              <span className="font-bold text-gray-800 text-lg">신청자 정보</span>
@@ -1006,19 +1110,57 @@
                             <div className="space-y-3 mb-6">
                               <div className="flex justify-between text-gray-500"><span>출고가</span><span>{(product.prices && product.prices[selectedCapacity] ? product.prices[selectedCapacity] : 0).toLocaleString()}원</span></div>
                               <div className="flex justify-between text-gray-500 font-bold text-red-500">
-                                  <span>총 지원금</span>
+                                  <span>총 지원금 (기기값 할인)</span>
                                   <span>-{((product.prices && product.prices[selectedCapacity] ? product.prices[selectedCapacity] : 0) - calcResult.deviceCost).toLocaleString()}원</span>
                               </div>
                               <div className="border-t border-dashed border-gray-200 my-2"></div>
-                              <div className="flex justify-between text-gray-500"><span>월 할부금 (단말기)</span><span>{calcResult.monthlyDevice.toLocaleString()}원</span></div>
-                              <div className="flex justify-between text-gray-500"><span>월 통신료 (요금제)</span><span>{calcResult.monthlyPlan.toLocaleString()}원</span></div>
+                              
+                              <div className="flex justify-between text-gray-800 font-bold">
+                                <span>월 할부금 (단말기)</span>
+                                <span>{calcResult.monthlyDevice.toLocaleString()}원</span>
+                              </div>
+                              <div className="flex justify-between text-gray-800 font-bold mt-2">
+                                <span>월 통신료 (요금제)</span>
+                                <span>{calcResult.basePlanFee.toLocaleString()}원</span>
+                              </div>
+                              
+                              {/* [추가] 월 요금 할인 내역 표시 섹션 */}
+                              <div className="bg-red-50 p-4 rounded-lg text-sm space-y-1 mt-2">
+                                   <div className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">▼ 월 요금 할인 내역</div>
+                                   {calcResult.contractDiscount > 0 && (
+                                      <div className="flex justify-between text-gray-600"><span>선택약정 할인</span><span>-{calcResult.contractDiscount.toLocaleString()}원</span></div>
+                                   )}
+                                   {calcResult.comboDiscount > 0 && (
+                                      <div className="flex justify-between text-gray-600"><span>결합 할인</span><span>-{calcResult.comboDiscount.toLocaleString()}원</span></div>
+                                   )}
+                                   {calcResult.cardDiscount > 0 && (
+                                      <div className="flex justify-between text-gray-600"><span>제휴카드 할인</span><span>-{calcResult.cardDiscount.toLocaleString()}원</span></div>
+                                   )}
+                                   {calcResult.insuranceDiscount > 0 && (
+                                      <div className="flex justify-between text-gray-600"><span>멤버십 보험 할인</span><span>-{calcResult.insuranceDiscount.toLocaleString()}원</span></div>
+                                   )}
+                                   {(calcResult.contractDiscount === 0 && calcResult.comboDiscount === 0 && calcResult.cardDiscount === 0 && calcResult.insuranceDiscount === 0) && (
+                                       <div className="text-gray-400 text-center text-xs">적용된 추가 할인이 없습니다.</div>
+                                   )}
+                              </div>
+
+                              {(insurance.price > 0 || packApply.price > 0) && (
+                                  <div className="flex justify-between text-gray-500 mt-2 text-sm">
+                                      <span>부가서비스(보험/팩)</span>
+                                      <span>+{((insurance.price || 0) + (packApply.price || 0)).toLocaleString()}원</span>
+                                  </div>
+                              )}
                             </div>
+                            
                             <div className="flex justify-between items-center bg-gray-50 p-6 rounded-xl">
                               <span className="font-bold text-xl text-gray-900">월 예상 납부금액</span>
                               <div className="text-right">
                                   <span className="text-3xl font-extrabold text-red-600">{calcResult.totalMonthly.toLocaleString()}</span>
                                   <span className="text-lg font-bold text-gray-900">원</span>
-                                  <p className="text-xs text-gray-400 mt-1">VAT 및 할부수수료(연 5.9%) 포함</p>
+                                  <p className="text-xs text-gray-400 mt-1">
+                                      VAT 및 할부수수료(5.9%) 포함
+                                      {calcResult.insuranceDiscountMsg && <span className="text-blue-500 ml-1">{calcResult.insuranceDiscountMsg}</span>}
+                                  </p>
                               </div>
                             </div>
                         </div>
