@@ -125,7 +125,7 @@
 
             // [NEW] KAIT 로고 HTML 코드 (추후 발급받으면 따옴표 안에 코드를 넣으세요)
             // 예: kaitLogoHtml: '<a href="..."><img src="..." /></a>'
-            kaitLogoHtml: '' 
+            kaitLogoHtml: `<img src="https://ictmarket.or.kr:8443/getCertIcon.do?cert_icon=AGT0000225826FA00331" style="cursor: pointer; height: 48px;" onclick="window.open('https://ictmarket.or.kr:8443/agent/pop_AgentCertIcon.do?AGENT_REQ_ID=AGT0000225826&AGENT_CD=FA00331','_blank','width=600, height=400, toolbar=no, menubar=no, scrollbars=no, resizable=no' )"/>` 
           },
           
           // [NEW] 2. 상세페이지 추가 옵션 설정 (가격 및 할인율 관리)
@@ -175,7 +175,7 @@
             badge: "COMING SOON", // 상단 뱃지 텍스트
             title: "사전예약 준비중", // 팝업 제목
             description: "출시 예정인 최신 모델을 가장 먼저 만나보세요.<br/>알림 신청을 하시면 오픈 즉시 문자로 알려드립니다.", // 설명 문구 (<br/>로 줄바꿈)
-            models: ['Galaxy S26 Ultra', 'iPhone 18 Pro', 'Z Fold 8', 'Z Flip 8'] // 선택 가능한 사전예약 모델 리스트
+            models: ['Galaxy S26 Ultra', 'Galaxy S26', 'Z Fold 8', 'Z Flip 8'] // 선택 가능한 사전예약 모델 리스트
           },
 
           // 5. 추천 상품 목록 (메인 화면 'MD PICK' 및 상세페이지 데이터)
@@ -1128,19 +1128,19 @@
                               <div className="bg-red-50 p-4 rounded-lg text-sm space-y-1 mt-2">
                                    <div className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">▼ 월 요금 할인 내역</div>
                                    {calcResult.contractDiscount > 0 && (
-                                      <div className="flex justify-between text-gray-600"><span>선택약정 할인</span><span>-{calcResult.contractDiscount.toLocaleString()}원</span></div>
+                                     <div className="flex justify-between text-gray-600"><span>선택약정 할인</span><span>-{calcResult.contractDiscount.toLocaleString()}원</span></div>
                                    )}
                                    {calcResult.comboDiscount > 0 && (
-                                      <div className="flex justify-between text-gray-600"><span>결합 할인</span><span>-{calcResult.comboDiscount.toLocaleString()}원</span></div>
+                                     <div className="flex justify-between text-gray-600"><span>결합 할인</span><span>-{calcResult.comboDiscount.toLocaleString()}원</span></div>
                                    )}
                                    {calcResult.cardDiscount > 0 && (
-                                      <div className="flex justify-between text-gray-600"><span>제휴카드 할인</span><span>-{calcResult.cardDiscount.toLocaleString()}원</span></div>
+                                     <div className="flex justify-between text-gray-600"><span>제휴카드 할인</span><span>-{calcResult.cardDiscount.toLocaleString()}원</span></div>
                                    )}
                                    {calcResult.insuranceDiscount > 0 && (
-                                      <div className="flex justify-between text-gray-600"><span>멤버십 보험 할인</span><span>-{calcResult.insuranceDiscount.toLocaleString()}원</span></div>
+                                     <div className="flex justify-between text-gray-600"><span>멤버십 보험 할인</span><span>-{calcResult.insuranceDiscount.toLocaleString()}원</span></div>
                                    )}
                                    {(calcResult.contractDiscount === 0 && calcResult.comboDiscount === 0 && calcResult.cardDiscount === 0 && calcResult.insuranceDiscount === 0) && (
-                                       <div className="text-gray-400 text-center text-xs">적용된 추가 할인이 없습니다.</div>
+                                      <div className="text-gray-400 text-center text-xs">적용된 추가 할인이 없습니다.</div>
                                    )}
                               </div>
 
@@ -1158,8 +1158,8 @@
                                   <span className="text-3xl font-extrabold text-red-600">{calcResult.totalMonthly.toLocaleString()}</span>
                                   <span className="text-lg font-bold text-gray-900">원</span>
                                   <p className="text-xs text-gray-400 mt-1">
-                                      VAT 및 할부수수료(5.9%) 포함
-                                      {calcResult.insuranceDiscountMsg && <span className="text-blue-500 ml-1">{calcResult.insuranceDiscountMsg}</span>}
+                                     VAT 및 할부수수료(5.9%) 포함
+                                     {calcResult.insuranceDiscountMsg && <span className="text-blue-500 ml-1">{calcResult.insuranceDiscountMsg}</span>}
                                   </p>
                               </div>
                             </div>
@@ -1405,24 +1405,25 @@
                   
                   <div className="flex flex-col items-start text-left mb-6 text-xs text-gray-600">
                       <div className="w-full">
-                         <h5 className="font-bold text-gray-900 mb-4 text-sm">사업자 정보</h5>
-                         <p className="font-bold mb-1">{SITE_CONFIG.info.companyName}</p>
-                         <p className="mb-1">대표자: {SITE_CONFIG.info.representative} | 사업자등록번호: {SITE_CONFIG.info.businessNumber}</p>
-                         <p className="mb-1">주소: {SITE_CONFIG.info.address}</p>
-                         <p className="mb-1">통신판매업신고: {SITE_CONFIG.info.telecomNumber} | 개인정보관리책임자: {SITE_CONFIG.info.privacyManager}</p>
-                         
-                         {/* [NEW] KAIT 로고 HTML 코드 렌더링 영역 (비어있으면 표시 안됨) */}
-                         {SITE_CONFIG.info.kaitLogoHtml && (
-                             <div className="mt-4" dangerouslySetInnerHTML={{ __html: SITE_CONFIG.info.kaitLogoHtml }}></div>
-                         )}
+                          <h5 className="font-bold text-gray-900 mb-4 text-sm">사업자 정보</h5>
+                          <p className="font-bold mb-1">{SITE_CONFIG.info.companyName}</p>
+                          <p className="mb-1">대표자: {SITE_CONFIG.info.representative} | 사업자등록번호: {SITE_CONFIG.info.businessNumber}</p>
+                          <p className="mb-1">주소: {SITE_CONFIG.info.address}</p>
+                          <p className="mb-1">통신판매업신고: {SITE_CONFIG.info.telecomNumber} | 개인정보관리책임자: {SITE_CONFIG.info.privacyManager}</p>
                       </div>
                   </div>
 
                   {/* [수정] 로고 영역에 흰색 배경 박스 적용하여 구분감 부여 */}
                   <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm mb-8 w-full md:w-auto md:inline-block">
-                      <div className="flex flex-wrap items-center gap-4">
-                          <img src={SITE_CONFIG.info.ktCertImg} alt="KT 공식인증대리점" className="h-10 md:h-12 object-contain" />
-                          <div className="w-px h-8 bg-gray-200 mx-2 hidden md:block"></div> {/* 데스크탑용 구분선 */}
+                      <div className="flex flex-wrap items-center gap-6 justify-center md:justify-start">
+                          {/* KAIT 로고 */}
+                          {SITE_CONFIG.info.kaitLogoHtml && (
+                             <div className="flex items-center" dangerouslySetInnerHTML={{ __html: SITE_CONFIG.info.kaitLogoHtml }}></div>
+                          )}
+
+                          <div className="w-px h-8 bg-gray-200 hidden md:block"></div>
+
+                          {/* 공정거래위원회 로고 */}
                           <a href={SITE_CONFIG.info.ftcLink} target="_blank" rel="noreferrer">
                               <img src={SITE_CONFIG.info.ftcLogo} alt="공정거래위원회" className="h-10 md:h-12 object-contain hover:opacity-80 transition-opacity" />
                           </a>
