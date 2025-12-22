@@ -109,8 +109,23 @@
             phone: "010-2141-0137", // 우측 하단 전화 상담 버튼에 연결될 번호
             kakaoUrl: "http://pf.kakao.com/_xjVcQn/chat", // 카카오톡 상담 버튼 클릭 시 이동할 링크
             promotionText: "가전구독 프로모션 혜택상담 (선택사항)", // 상담폼 하단 체크박스 문구
-            topBannerText: "공식 온라인 대리점 인증 ", // [NEW] 사이트 최상단 회색 띠에 들어갈 인증 문구
-            mainPriceLabel: "실구매가" // [NEW] 메인화면 상품 카드에 표시될 가격 문구 (예: 실구매가, 할부원금 등)
+            topBannerText: "공식 온라인 대리점 인증", // [NEW] 사이트 최상단 회색 띠에 들어갈 인증 문구
+            mainPriceLabel: "실구매가", // [NEW] 메인화면 상품 카드에 표시될 가격 문구 (예: 실구매가, 할부원금 등)
+            ktCertImg: "https://i.ibb.co/S708ZYmS/gauri.png", // [NEW] 하단 KT 공식 인증 대리점 로고
+            ftcLogo: "https://i.ibb.co/21jL6FJj/gongjung.png", // [NEW] 하단 공정거래위원회 로고
+            ftcLink: "https://www.ftc.go.kr/www/index.do", // [NEW] 공정거래위원회 링크
+            
+            // [NEW] 하단 사업자 정보 (이곳에서 수정하면 하단에 반영됩니다)
+            companyName: "(주)KT 가우리엔터프라이즈",
+            representative: "현재훈",
+            businessNumber: "876-88-01684",
+            address: "대전광역시 동구 동서대로 1679, 106호",
+            telecomNumber: "2025-대전동구-0571",
+            privacyManager: "박범훈",
+
+            // [NEW] KAIT 로고 HTML 코드 (추후 발급받으면 따옴표 안에 코드를 넣으세요)
+            // 예: kaitLogoHtml: '<a href="..."><img src="..." /></a>'
+            kaitLogoHtml: '' 
           },
           
           // 2. 메인 배너 이미지 목록 (PC용 / 모바일용 구분)
@@ -143,15 +158,15 @@
               name: '아이폰 17 기본형', 
               img: 'https://i.ibb.co/HLP8HJn9/aip17.png', 
               tag: '신상 특가', 
-              isHot: true, // HOT 태그 표시 여부 (true/false)
-              capacity: ['256GB', '512GB'], // 선택 가능한 용량 목록
-              prices: { '256GB': 1287000, '512GB': 1584000 }, // 용량별 가격
+              isHot: true, 
+              capacity: ['256GB', '512GB'], 
+              prices: { '256GB': 1287000, '512GB': 1584000 }, 
               colors: [
                 {name:'라벤더', code:'#E6E6FA'}, {name:'세이지', code:'#9C9F84'}, {name:'블랙', code:'#000000'}, {name:'화이트', code:'#F5F5F5'}, {name:'블루', code:'#A7C7E7'}
               ],
               mandatoryPlan: '초이스 베이직(9만)', 
-              publicSupport: 450000, // 공시지원금 (원)
-              addSupport: 200000     // 추가지원금 (원)
+              publicSupport: 450000, 
+              addSupport: 200000 
             },
             { 
               id: 'ip17air', 
@@ -1245,15 +1260,33 @@
 
               <footer className="bg-gray-100 border-t border-gray-200 pt-12 pb-8">
                 <div className="max-w-7xl mx-auto px-4">
-                  <div className="flex flex-col items-start text-left mb-8 text-xs text-gray-600">
+                  
+                  <div className="flex flex-col items-start text-left mb-6 text-xs text-gray-600">
                       <div className="w-full">
                          <h5 className="font-bold text-gray-900 mb-4 text-sm">사업자 정보</h5>
-                         <p className="font-bold mb-1">(주)KT 가우리엔터프라이즈</p>
-                         <p className="mb-1">대표자: 현재훈 | 사업자등록번호: 876-88-01684</p>
-                         <p className="mb-1">주소: 대전광역시 동구 동서대로 1679, 106호</p>
-                         <p className="mb-1">통신판매업신고: 2025-대전동구-0571 | 개인정보관리책임자: 박범훈</p>
+                         <p className="font-bold mb-1">{SITE_CONFIG.info.companyName}</p>
+                         <p className="mb-1">대표자: {SITE_CONFIG.info.representative} | 사업자등록번호: {SITE_CONFIG.info.businessNumber}</p>
+                         <p className="mb-1">주소: {SITE_CONFIG.info.address}</p>
+                         <p className="mb-1">통신판매업신고: {SITE_CONFIG.info.telecomNumber} | 개인정보관리책임자: {SITE_CONFIG.info.privacyManager}</p>
+                         
+                         {/* [NEW] KAIT 로고 HTML 코드 렌더링 영역 (비어있으면 표시 안됨) */}
+                         {SITE_CONFIG.info.kaitLogoHtml && (
+                             <div className="mt-4" dangerouslySetInnerHTML={{ __html: SITE_CONFIG.info.kaitLogoHtml }}></div>
+                         )}
                       </div>
                   </div>
+
+                  {/* [수정] 로고 영역에 흰색 배경 박스 적용하여 구분감 부여 */}
+                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm mb-8 w-full md:w-auto md:inline-block">
+                      <div className="flex flex-wrap items-center gap-4">
+                          <img src={SITE_CONFIG.info.ktCertImg} alt="KT 공식인증대리점" className="h-10 md:h-12 object-contain" />
+                          <div className="w-px h-8 bg-gray-200 mx-2 hidden md:block"></div> {/* 데스크탑용 구분선 */}
+                          <a href={SITE_CONFIG.info.ftcLink} target="_blank" rel="noreferrer">
+                              <img src={SITE_CONFIG.info.ftcLogo} alt="공정거래위원회" className="h-10 md:h-12 object-contain hover:opacity-80 transition-opacity" />
+                          </a>
+                      </div>
+                  </div>
+
                   <div className="border-t border-gray-200 pt-8 text-center text-xs text-gray-400">
                       COPYRIGHT © KT GAURI. ALL RIGHTS RESERVED.
                   </div>
@@ -1269,6 +1302,3 @@
     </script>
 </body>
 </html>
-
-
-
