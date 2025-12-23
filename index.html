@@ -127,6 +127,14 @@
             // 예: kaitLogoHtml: '<a href="..."><img src="..." /></a>'
             kaitLogoHtml: `<img src="https://ictmarket.or.kr:8443/getCertIcon.do?cert_icon=AGT0000225826FA00331" style="cursor: pointer; height: 48px;" onclick="window.open('https://ictmarket.or.kr:8443/agent/pop_AgentCertIcon.do?AGENT_REQ_ID=AGT0000225826&AGENT_CD=FA00331','_blank','width=600, height=400, toolbar=no, menubar=no, scrollbars=no, resizable=no' )"/>` 
           },
+
+          // [NEW] 9. 메인 배너 위 팝업(오버레이) 설정 - 여기서 문구 수정 및 끄기/켜기 가능
+          mainPopup: {
+            isActive: true, // true: 보임, false: 숨김
+            badge: "공식 온라인 대리점 인증", // 상단 작은 뱃지 텍스트
+            title: "KT공식 인증 대리점 특가몰", // 큰 제목
+            btnText: "혜택 자세히 보기" // 버튼 텍스트
+          },
           
           // [NEW] 2. 상세페이지 추가 옵션 설정 (가격 및 할인율 관리)
           options: {
@@ -396,7 +404,8 @@
           const [currentBanner, setCurrentBanner] = useState(0);
           const [internetSpeed, setInternetSpeed] = useState('100M');
           const [internetStb, setInternetStb] = useState('genieA');
-          const [showBannerBox, setShowBannerBox] = useState(true);
+          // [수정] 관리자 설정(mainPopup.isActive)에 따라 초기값 설정
+          const [showBannerBox, setShowBannerBox] = useState(siteConfig.mainPopup.isActive);
           const [reviewIndex, setReviewIndex] = useState(0);
           
           const [consultForm, setConsultForm] = useState({
@@ -542,9 +551,9 @@
                         {showBannerBox && (
                           <div className="bg-white/90 backdrop-blur-md p-6 md:p-10 rounded-3xl shadow-2xl animate-fade-in-up relative pointer-events-auto border border-white/50">
                               <button onClick={() => setShowBannerBox(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors" aria-label="닫기"><IconX size={20} /></button>
-                              <span className="inline-block px-3 py-1 border border-red-500 text-red-500 font-bold rounded-full text-xs mb-3">공식 온라인 대리점 인증</span>
-                              <h2 className="text-3xl md:text-5xl font-extrabold leading-tight text-gray-900 mb-4">kt공식 인증 대리점 특가몰</h2>
-                              <button onClick={() => document.getElementById('products')?.scrollIntoView({behavior:'smooth'})} className="bg-red-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-red-700 transition transform hover:scale-105">혜택 자세히 보기</button>
+                              <span className="inline-block px-3 py-1 border border-red-500 text-red-500 font-bold rounded-full text-xs mb-3">{siteConfig.mainPopup.badge}</span>
+                              <h2 className="text-3xl md:text-5xl font-extrabold leading-tight text-gray-900 mb-4">{siteConfig.mainPopup.title}</h2>
+                              <button onClick={() => document.getElementById('products')?.scrollIntoView({behavior:'smooth'})} className="bg-red-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-red-700 transition transform hover:scale-105">{siteConfig.mainPopup.btnText}</button>
                           </div>
                         )}
                       </div>
