@@ -8,6 +8,17 @@
     <!-- [Naver Search Advisor] 네이버 소유확인 태그 -->
     <meta name="naver-site-verification" content="b4b6f91c837c5946c62c9937cf39b17f80178fb3" />
 
+    <!-- [SEO] 검색 엔진 최적화 및 SNS 공유 태그 (블로그에서 말한 부분이 여기입니다!) -->
+    <meta name="description" content="KT 공식 온라인 대리점 가우리엔터프라이즈 특가몰입니다. 갤럭시 S25, 아이폰17 등 최신 스마트폰 최저가 상담 및 인터넷+TV 결합할인 혜택을 만나보세요.">
+    <meta name="keywords" content="KT대리점, KT온라인샵, 핸드폰성지, 갤럭시S25, 아이폰17, 인터넷가입, 가우리엔터프라이즈">
+    
+    <!-- [Open Graph] 카카오톡/블로그 공유 시 보이는 정보 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="KT 공식 인증 대리점 특가몰">
+    <meta property="og:description" content="최신폰 특가, 인터넷+TV 최대 혜택! 공식 인증 대리점에서 안전하게 상담받으세요.">
+    <meta property="og:image" content="https://i.ibb.co/wFhfvmTv/KTLOGO03.jpg">
+    <meta property="og:url" content="https://ktmallstore.co.kr/"> <!-- 실제 도메인이 있다면 수정해주세요 -->
+
     <!-- [Google Ads] 구글 광고 성과 측정 태그 -->
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17795387426"></script>
@@ -1422,6 +1433,11 @@
                           <p className="mb-1">대표자: {SITE_CONFIG.info.representative} | 사업자등록번호: {SITE_CONFIG.info.businessNumber}</p>
                           <p className="mb-1">주소: {SITE_CONFIG.info.address}</p>
                           <p className="mb-1">통신판매업신고: {SITE_CONFIG.info.telecomNumber} | 개인정보관리책임자: {SITE_CONFIG.info.privacyManager}</p>
+                          
+                          {/* [NEW] KAIT 로고 HTML 코드 렌더링 영역 (비어있으면 표시 안됨) */}
+                          {SITE_CONFIG.info.kaitLogoHtml && (
+                             <div className="mt-4" dangerouslySetInnerHTML={{ __html: SITE_CONFIG.info.kaitLogoHtml }}></div>
+                          )}
                       </div>
                   </div>
 
