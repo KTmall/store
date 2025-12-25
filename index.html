@@ -181,6 +181,10 @@
           },
 
           // 3. 메인 배너 이미지 목록 (PC용 / 모바일용 구분)
+          // [TIP] 이미지 제작 권장 사이즈 (글자 잘림 방지)
+          // - PC용(pcImg): 가로 1920px * 세로 600px 이상 (가로로 긴 와이드 형태)
+          //   ※ 주의: 글자는 이미지 정중앙에 배치해야 다양한 모니터에서 잘리지 않고 보입니다.
+          // - 모바일용(mobileImg): 가로 1000px * 세로 1000px (정사각형 형태)
           banner: {
             images: [
               { pcImg: "https://i.ibb.co/N2KdFZNR/m1-1.jpg", mobileImg: "https://i.ibb.co/R4JrGC72/m1.jpg" },
@@ -546,11 +550,11 @@
                       </div>
 
                       {/* 메인 이미지 */}
-                      {/* [수정] 배너 여백 완전 제거 및 object-cover 시도 (단, 잘릴 수 있으니 contain 유지하되 컨테이너 크기 최적화) */}
+                      {/* [수정] PC는 object-cover로 꽉 차게, 모바일은 object-contain으로 유지 */}
                       <div className="absolute inset-0 flex items-center justify-center p-0">
                         <img 
                           src={img.pcImg} 
-                          className="hidden md:block w-full h-full object-contain drop-shadow-2xl" 
+                          className="hidden md:block w-full h-full object-cover object-center drop-shadow-2xl" 
                           alt="Main Banner" 
                         />
                         <img 
