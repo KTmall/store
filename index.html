@@ -119,7 +119,7 @@
             managerEmail: "ktgaurient@gmail.com" // 주문/상담 내용이 도착할 관리자 이메일
           },
           info: {
-            logoImg: "https://i.ibb.co/wFhfvmTv/KTLOGO03.jpg", // 사이트 좌측 상단 로고 이미지 주소
+            logoImg: "https://i.ibb.co/LDYWCm5t/lgo.jpg", // 사이트 좌측 상단 로고 이미지 주소
             phone: "010-2141-0137", // 우측 하단 전화 상담 버튼에 연결될 번호
             kakaoUrl: "http://pf.kakao.com/_xjVcQn/chat", // 카카오톡 상담 버튼 클릭 시 이동할 링크
             promotionText: "가전구독 프로모션 혜택상담 (선택사항)", // 상담폼 하단 체크박스 문구
@@ -185,13 +185,14 @@
           // - PC용(pcImg): 가로 1920px * 세로 600px 이상 (가로로 긴 와이드 형태)
           //   ※ 주의: 글자는 이미지 정중앙에 배치해야 다양한 모니터에서 잘리지 않고 보입니다.
           // - 모바일용(mobileImg): 가로 1000px * 세로 1000px (정사각형 형태)
+          //   ※ 모바일 화면에서는 가로 너비에 맞춰 높이도 1:1 비율(정사각형)로 자동 조절됩니다.
           banner: {
             images: [
-              { pcImg: "https://i.ibb.co/N2KdFZNR/m1-1.jpg", mobileImg: "https://i.ibb.co/R4JrGC72/m1.jpg" },
-              { pcImg: "https://i.ibb.co/Z1f7jqqw/m2-2.jpg", mobileImg: "https://i.ibb.co/Tq0P5bt5/m2.png" },
-              { pcImg: "https://i.ibb.co/nZPvgf4/m3-3.jpg", mobileImg: "https://i.ibb.co/FLqqfy1B/m3.png" },
-              { pcImg: "https://i.ibb.co/Y4dtTtnT/m4-4.jpg", mobileImg: "https://i.ibb.co/tMhDvT3z/m4.jpg" },
-              { pcImg: "https://i.ibb.co/RVwMSP7/m5-5.jpg", mobileImg: "https://i.ibb.co/tMhDvT3z/m5.png" }
+              { pcImg: "https://i.ibb.co/cSfpwWpK/pc1.jpg", mobileImg: "https://i.ibb.co/R4SBrLBc/m1.jpg" },
+              { pcImg: "https://i.ibb.co/wFXxR6mT/pc2.jpg", mobileImg: "https://i.ibb.co/Z6r6VZz3/m2.png" },
+              { pcImg: "https://i.ibb.co/WWHNJMZV/pc3.jpg", mobileImg: "https://i.ibb.co/h1Mb2bCh/m3.png" },
+              { pcImg: "https://i.ibb.co/hJkssTg7/pc4.jpg", mobileImg: "https://i.ibb.co/C3CHzKxk/m4.jpg" },
+              { pcImg: "https://i.ibb.co/XfbqhSHr/pc5.jpg", mobileImg: "https://i.ibb.co/bgpnW45F/m5.png" }
             ]
           },
 
@@ -530,8 +531,8 @@
             <div className="pb-20 bg-gray-50 relative">
               
               {/* 메인 슬라이더 */}
-              {/* [수정] 모바일 높이 h-[300px], md(데스크탑) 높이는 500px로 축소하여 여백 최소화 */}
-              <section className="relative w-full md:h-[500px] h-[300px] bg-gray-900 overflow-hidden">
+              {/* [수정] 모바일: aspect-square(정사각형 비율 유지), PC(md): aspect-auto(비율 해제) 및 높이 500px 고정 */}
+              <section className="relative w-full md:h-[500px] aspect-square md:aspect-auto bg-gray-900 overflow-hidden">
                 {siteConfig.banner.images.map((img, idx) => (
                   <div key={idx} className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${currentBanner === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                       
@@ -550,7 +551,7 @@
                       </div>
 
                       {/* 메인 이미지 */}
-                      {/* [수정] PC는 object-cover로 꽉 차게, 모바일은 object-contain으로 유지 */}
+                      {/* [수정] PC는 object-cover로 꽉 차게, 모바일은 1:1 컨테이너에 맞춰 꽉 차게 */}
                       <div className="absolute inset-0 flex items-center justify-center p-0">
                         <img 
                           src={img.pcImg} 
@@ -559,7 +560,7 @@
                         />
                         <img 
                           src={img.mobileImg} 
-                          className="block md:hidden w-full h-full object-contain drop-shadow-2xl" 
+                          className="block md:hidden w-full h-full object-cover object-center drop-shadow-2xl" 
                           alt="Main Banner" 
                         />
                       </div>
