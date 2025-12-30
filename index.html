@@ -132,7 +132,7 @@
                 { name: '미결합', discount: 0, type: 'fixed' },
                 { name: '프리미엄 싱글결합 (25% 요금할인)', discount: 0.25, type: 'percent' },
                 { name: '프리미엄 가족결합 (25% 요금할인)', discount: 0.25, type: 'percent' },
-                { name: '총액 결합할인 (기여도별 상이)', discount: 3300, type: 'fixed' },
+                { name: '총액 결합할인 (기여도별 상이)', discount: 0, type: 'total' }, // 기여도별 계산 로직 사용
                 { name: '우리가족 무선결합', discount: 3300, type: 'fixed' } 
              ]
           },
@@ -721,6 +721,8 @@
           const [cardApply, setCardApply] = useState(siteConfig.options.cards[0]);
           const [packApply, setPackApply] = useState(siteConfig.options.packs[0]);
           const [combination, setCombination] = useState(siteConfig.options.combinations[0]);
+          // [수정] 가족 요금 개별 입력을 위한 배열 상태 (최대 7명)
+          const [familyFees, setFamilyFees] = useState(Array(7).fill(''));
 
           const availablePlans = useMemo(() => {
             if (product.id === 'jump4') return plans.filter(p => p.price === 61000);
@@ -741,6 +743,11 @@
                 setSelectedPlan(defaultPlan);
             }
           }, [product, availablePlans]);
+
+          // 가족 요금 합계 계산 헬퍼 함수
+          const getFamilyFeeSum = () => {
+            return familyFees.reduce((sum, fee) => sum + (Number(fee) || 0), 0);
+          };
 
           useEffect(() => {
             if(!selectedPlan) return;
@@ -770,9 +777,36 @@
                 monthlyDeviceCost = Math.floor(monthlyDeviceCost / 10) * 10;
             }
 
+            // [수정] 결합 할인 계산 로직 (총액 결합 기여도별 할인 - 정밀 계산)
             let comboDiscount = 0;
-            if (combination.type === 'percent') comboDiscount = Math.floor(basePlanFee * combination.discount); 
-            else comboDiscount = combination.discount;
+            if (combination.type === 'percent') {
+              comboDiscount = Math.floor(basePlanFee * combination.discount); 
+            } else if (combination.type === 'total') {
+               // 총액 결합 할인 로직 (KT 인터넷 베이직 500M 기준)
+               const familySum = getFamilyFeeSum();
+               const totalMobileFee = basePlanFee + familySum;
+               let totalDiscountAmount = 0;
+
+               // 구간별 전체 모바일 할인액 설정 (500M 인터넷 기준)
+               if (totalMobileFee < 64900) {
+                   totalDiscountAmount = 0; 
+               } else if (totalMobileFee < 108900) {
+                   totalDiscountAmount = 5500;
+               } else if (totalMobileFee < 141900) {
+                   totalDiscountAmount = 16610;
+               } else if (totalMobileFee < 174900) {
+                   totalDiscountAmount = 22110;
+               } else {
+                   totalDiscountAmount = 27610;
+               }
+
+               // 내 기여도에 따른 할인액 계산 (내 요금 / 전체 요금)
+               if (totalMobileFee > 0 && totalDiscountAmount > 0) {
+                   comboDiscount = Math.floor((totalDiscountAmount * (basePlanFee / totalMobileFee)) / 10) * 10;
+               }
+            } else {
+              comboDiscount = combination.discount;
+            }
 
             const baseInsuranceFee = insurance.price || 0;
             let insuranceDiscount = 0;
@@ -800,14 +834,23 @@
               totalMonthly: total,
               insuranceDiscountMsg: insuranceDiscountMsg 
             });
-          }, [selectedCapacity, installmentPeriod, discountType, selectedPlan, product, insurance, cardApply, packApply, combination]);
+          }, [selectedCapacity, installmentPeriod, discountType, selectedPlan, product, insurance, cardApply, packApply, combination, familyFees]);
+
+          // 가족 요금 입력 핸들러
+          const handleFamilyFeeChange = (index, value) => {
+            const newFees = [...familyFees];
+            newFees[index] = value;
+            setFamilyFees(newFees);
+          };
 
           const handleOrder = () => {
             if (!customerName || !customerPhone) { alert("상담 접수를 위해 이름과 연락처를 입력해주세요."); return; }
             if(window.emailjs) {
+                const familySum = getFamilyFeeSum();
+                const familyFeeDetails = familyFees.map((fee, i) => fee ? `가족${i+1}: ${fee}원` : '').filter(Boolean).join(', ');
                 const params = {
                     name: customerName, phone: customerPhone, branch: '모바일주문',
-                    promo_item: `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}\n[요금제] ${selectedPlan.name} (월 ${selectedPlan.price.toLocaleString()}원)\n[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원' : '선택약정'}\n[추가옵션] \n- 보험: ${insurance.name}\n- 카드: ${cardApply.name}\n- 팩: ${packApply.name}\n- 결합: ${combination.name}\n[할인내역]\n- 약정할인: ${calcResult.contractDiscount}원\n- 결합할인: ${calcResult.comboDiscount}원\n- 카드할인: ${calcResult.cardDiscount}원\n- 보험할인: ${calcResult.insuranceDiscount}원\n[월납부] ${calcResult.totalMonthly.toLocaleString()}원 (5.9% 이자포함)`,
+                    promo_item: `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}\n[요금제] ${selectedPlan.name} (월 ${selectedPlan.price.toLocaleString()}원)\n[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원' : '선택약정'}\n[추가옵션] \n- 보험: ${insurance.name}\n- 카드: ${cardApply.name}\n- 팩: ${packApply.name}\n- 결합: ${combination.name} (가족합산: ${familySum}원 [${familyFeeDetails}])\n[할인내역]\n- 약정할인: ${calcResult.contractDiscount}원\n- 결합할인: ${calcResult.comboDiscount}원\n- 카드할인: ${calcResult.cardDiscount}원\n- 보험할인: ${calcResult.insuranceDiscount}원\n[월납부] ${calcResult.totalMonthly.toLocaleString()}원 (5.9% 이자포함)`,
                     date: new Date().toLocaleString(),
                     manager_email: siteConfig.email.managerEmail
                 };
@@ -818,7 +861,9 @@
 
           const handleKakaoConsult = () => {
              if (!customerName || !customerPhone) { alert("원활한 상담을 위해 이름과 연락처를 입력해주세요."); return; }
-             const textToCopy = `[KT 스토어 상담 신청]\n- 신청자: ${customerName}\n- 연락처: ${customerPhone}\n- 모델: ${product.name}\n- 용량: ${selectedCapacity}\n- 색상: ${selectedColor.name}\n- 요금제: ${selectedPlan ? selectedPlan.name : '선택없음'}\n- 약정조건: ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원금' : '선택약정'}\n- 추가옵션: \n  보험(${insurance.name}) \n  제휴카드(${cardApply.name}) \n  필수팩(${packApply.name})\n  결합할인(${combination.name})\n- 월 예상 납부금: ${calcResult.totalMonthly.toLocaleString()}원 (할부이자 5.9% 포함)\n\n위 내용으로 상담 신청합니다.`;
+             const familySum = getFamilyFeeSum();
+             const familyFeeDetails = familyFees.map((fee, i) => fee ? `가족${i+1}: ${fee}원` : '').filter(Boolean).join(', ');
+             const textToCopy = `[KT 스토어 상담 신청]\n- 신청자: ${customerName}\n- 연락처: ${customerPhone}\n- 모델: ${product.name}\n- 용량: ${selectedCapacity}\n- 색상: ${selectedColor.name}\n- 요금제: ${selectedPlan ? selectedPlan.name : '선택없음'}\n- 약정조건: ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공시지원금' : '선택약정'}\n- 추가옵션: \n  보험(${insurance.name}) \n  제휴카드(${cardApply.name}) \n  필수팩(${packApply.name})\n  결합할인(${combination.name})\n  (가족합산: ${familySum}원 [${familyFeeDetails}])\n- 월 예상 납부금: ${calcResult.totalMonthly.toLocaleString()}원 (할부이자 5.9% 포함)\n\n위 내용으로 상담 신청합니다.`;
              const textArea = document.createElement("textarea");
              textArea.value = textToCopy;
              textArea.style.position = "fixed"; textArea.style.left = "-9999px";
@@ -872,6 +917,29 @@
                               <div><label className="block text-xs font-bold mb-1 text-gray-600">필수팩</label><select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={JSON.stringify(packApply)} onChange={e => setPackApply(JSON.parse(e.target.value))}>{siteConfig.options.packs.map((opt, i) => <option key={i} value={JSON.stringify(opt)}>{opt.name}</option>)}</select></div>
                               <div><label className="block text-xs font-bold mb-1 text-gray-600">결합할인</label><select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={JSON.stringify(combination)} onChange={e => setCombination(JSON.parse(e.target.value))}>{siteConfig.options.combinations.map((opt, i) => <option key={i} value={JSON.stringify(opt)}>{opt.name}</option>)}</select></div>
                             </div>
+                            
+                            {/* [추가] 총액 결합 할인 또는 프리미엄 가족 결합 선택 시 가족 요금 입력창 (7명) */}
+                            {(combination.type === 'total' || combination.name.includes('프리미엄 가족결합')) && (
+                                <div className="mt-2 p-4 bg-blue-50 rounded-xl border border-blue-100 animate-fade-in">
+                                    <label className="block text-xs font-bold mb-2 text-blue-800">가족 구성원 요금 입력 (본인 제외, 최대 7명)</label>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {familyFees.map((fee, index) => (
+                                            <input 
+                                                key={index}
+                                                type="number" 
+                                                placeholder={`가족${index + 1} 요금`} 
+                                                className="w-full p-2 border border-blue-200 rounded text-sm focus:outline-none focus:border-blue-500 bg-white"
+                                                value={fee}
+                                                onChange={(e) => handleFamilyFeeChange(index, e.target.value)}
+                                            />
+                                        ))}
+                                    </div>
+                                    <div className="text-right mt-2 text-blue-600 font-bold text-sm">
+                                        가족 합계: {getFamilyFeeSum().toLocaleString()}원
+                                    </div>
+                                    <p className="text-[10px] text-blue-500 mt-1">* 입력하신 가족 요금 합계에 따라 할인이 적용 및 기록됩니다.</p>
+                                </div>
+                            )}
                         </div>
                         <div className="bg-white p-5 rounded-xl border border-gray-200">
                           <label className="block text-sm font-bold mb-3 text-gray-800">할인 방법</label>
@@ -905,6 +973,9 @@
                                    {calcResult.cardDiscount > 0 && (<div className="flex justify-between text-gray-600"><span>제휴카드 할인</span><span>-{calcResult.cardDiscount.toLocaleString()}원</span></div>)}
                                    {calcResult.insuranceDiscount > 0 && (<div className="flex justify-between text-gray-600"><span>멤버십 보험 할인</span><span>-{calcResult.insuranceDiscount.toLocaleString()}원</span></div>)}
                                    {(calcResult.contractDiscount === 0 && calcResult.comboDiscount === 0 && calcResult.cardDiscount === 0 && calcResult.insuranceDiscount === 0) && (<div className="text-gray-400 text-center text-xs">적용된 추가 할인이 없습니다.</div>)}
+                                   <div className="mt-2 text-xs text-gray-500 text-right border-t border-red-100 pt-2">
+                                      * 정확한 할인내용은 접수 후 상담을 통해 확인 가능합니다.
+                                   </div>
                               </div>
                               {(insurance.price > 0 || packApply.price > 0) && (<div className="flex justify-between text-gray-500 mt-2 text-sm"><span>부가서비스(보험/팩)</span><span>+{((insurance.price || 0) + (packApply.price || 0)).toLocaleString()}원</span></div>)}
                             </div>
