@@ -136,15 +136,22 @@
                 { name: '우리가족 무선결합', discount: 3300, type: 'fixed' } 
              ]
           },
+
+          // 3. 메인 배너 이미지 목록 (PC용 / 모바일용 구분)
+          // [TIP] 이미지 제작 권장 사이즈 (글자 잘림 방지)
+          // - PC용(pcImg): 가로 1920px * 세로 600px 이상 (가로로 긴 와이드 형태)
+          //   ※ 주의: 글자는 이미지 정중앙에 배치해야 다양한 모니터에서 잘리지 않고 보입니다.
+          // - 모바일용(mobileImg): 가로 1000px * 세로 1000px (정사각형 형태)
+          //   ※ 모바일 화면에서는 가로 너비에 맞춰 높이도 1:1 비율(정사각형)로 자동 조절됩니다.
           banner: {
             images: [
               { pcImg: "https://i.ibb.co/cSfpwWpK/pc1.jpg", mobileImg: "https://i.ibb.co/R4SBrLBc/m1.jpg" },
               { pcImg: "https://i.ibb.co/wFXxR6mT/pc2.jpg", mobileImg: "https://i.ibb.co/Z6r6VZz3/m2.png" },
               { pcImg: "https://i.ibb.co/WWHNJMZV/pc3.jpg", mobileImg: "https://i.ibb.co/h1Mb2bCh/m3.png" },
               { pcImg: "https://i.ibb.co/hJkssTg7/pc4.jpg", mobileImg: "https://i.ibb.co/C3CHzKxk/m4.jpg" },
-              { pcImg: "", mobileImg: "" }
+              { pcImg: "https://i.ibb.co/XfbqhSHr/pc5.jpg", mobileImg: "https://i.ibb.co/bgpnW45F/m5.png" }
             ]
-          }, // <= Fixed missing comma
+          },
           preOrder: {
             isActive: true,
             badge: "COMING SOON",
@@ -1266,4 +1273,3 @@
     </script>
 </body>
 </html>
-
