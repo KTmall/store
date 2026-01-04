@@ -5,21 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KT 공식 인증 대리점 특가몰</title>
 
-    <!-- [Naver Search Advisor] 네이버 소유확인 태그 -->
     <meta name="naver-site-verification" content="b4b6f91c837c5946c62c9937cf39b17f80178fb3" />
 
-    <!-- [SEO] 검색 엔진 최적화 -->
     <meta name="description" content="KT 공식 온라인 대리점 가우리엔터프라이즈 특가몰입니다. 갤럭시 S25, 아이폰17 등 최신 스마트폰 최저가 상담 및 인터넷+TV 결합할인 혜택을 만나보세요.">
     <meta name="keywords" content="KT대리점, KT온라인샵, 핸드폰성지, 갤럭시S25, 아이폰17, 인터넷가입, 가우리엔터프라이즈">
-    
-    <!-- [Open Graph] 카카오톡/블로그 공유 시 정보 -->
+     
     <meta property="og:type" content="website">
     <meta property="og:title" content="KT 공식 인증 대리점 특가몰">
     <meta property="og:description" content="최신폰 특가, 인터넷+TV 최대 혜택! 공식 인증 대리점에서 안전하게 상담받으세요.">
     <meta property="og:image" content="https://i.ibb.co/LDYWCm5t/lgo.jpg">
     <meta property="og:url" content="https://ktmallstore.co.kr/">
 
-    <!-- [Google Ads] 태그 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17795387426"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -27,18 +23,14 @@
       gtag('js', new Date());
       gtag('config', 'AW-17795387426');
     </script>
-    
-    <!-- React & ReactDOM -->
+     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel -->
+     
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Tailwind CSS -->
+     
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -74,16 +66,27 @@
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
 
+        // 연락처 자동 하이픈 함수
+        const formatPhoneNumber = (value) => {
+            const cleanNum = value.replace(/[^0-9]/g, '');
+            if (cleanNum.length <= 3) return cleanNum;
+            if (cleanNum.length <= 7) return `${cleanNum.slice(0, 3)}-${cleanNum.slice(3)}`;
+            return `${cleanNum.slice(0, 3)}-${cleanNum.slice(3, 7)}-${cleanNum.slice(7, 11)}`;
+        };
+
         /* ================================================================
            [관리자 설정 영역]
            ================================================================
         */
         const SITE_CONFIG = {
-          email: {
-            publicKey: "8xONgUdC9c0JycduK",
-            serviceId: "service_paxmkkl",
-            templateId: "template_x37d4fg",
-            managerEmail: "ktgaurient@gmail.com"
+          // [추가] 공지사항 팝업 (기간 설정 가능)
+          noticePopup: {
+            isActive: true, // 팝업 사용 여부 (false면 기간 상관없이 안 뜸)
+            startDate: "2025-01-01", // 시작일 (YYYY-MM-DD)
+            endDate: "2026-12-31",   // 종료일 (YYYY-MM-DD)
+            title: "🔔 시스템 긴급 공지",
+            content: `이메일 접수 시스템 오류로 인해<br/>현재 <strong>카카오톡 접수만 가능</strong>합니다.<br/><br/>이메일 접수 시스템은 빠른 시일 안에 복구하겠습니다.<br/><br/>최근 이메일로 접수하신 고객님께서는<br/>번거로우시더라도 <span class="text-red-600 font-bold">카카오톡으로 재접수</span> 부탁드립니다.`,
+            btnText: "확인했습니다"
           },
           info: {
             logoImg: "https://i.ibb.co/LDYWCm5t/lgo.jpg",
@@ -137,12 +140,13 @@
              ]
           },
           banner: {
+            // [수정] 각 이미지별 isActive 속성 추가
             images: [
-              { pcImg: "https://i.ibb.co/cSfpwWpK/pc1.jpg", mobileImg: "https://i.ibb.co/R4SBrLBc/m1.jpg" },
-              { pcImg: "https://i.ibb.co/wFXxR6mT/pc2.jpg", mobileImg: "https://i.ibb.co/Z6r6VZz3/m2.png" },
-              { pcImg: "https://i.ibb.co/WWHNJMZV/pc3.jpg", mobileImg: "https://i.ibb.co/h1Mb2bCh/m3.png" },
-              { pcImg: "https://i.ibb.co/hJkssTg7/pc4.jpg", mobileImg: "https://i.ibb.co/C3CHzKxk/m4.jpg" },
-              { pcImg: "https://i.ibb.co/XfbqhSHr/pc5.jpg", mobileImg: "https://i.ibb.co/bgpnW45F/m5.png" }
+              { isActive: true, pcImg: "https://i.ibb.co/cSfpwWpK/pc1.jpg", mobileImg: "https://i.ibb.co/R4SBrLBc/m1.jpg" },
+              { isActive: true, pcImg: "https://i.ibb.co/wFXxR6mT/pc2.jpg", mobileImg: "https://i.ibb.co/Z6r6VZz3/m2.png" },
+              { isActive: true, pcImg: "https://i.ibb.co/WWHNJMZV/pc3.jpg", mobileImg: "https://i.ibb.co/h1Mb2bCh/m3.png" },
+              { isActive: true, pcImg: "https://i.ibb.co/hJkssTg7/pc4.jpg", mobileImg: "https://i.ibb.co/C3CHzKxk/m4.jpg" },
+              { isActive: true, pcImg: "https://i.ibb.co/XfbqhSHr/pc5.jpg", mobileImg: "https://i.ibb.co/bgpnW45F/m5.png" }
             ]
           },
           preOrder: {
@@ -152,7 +156,7 @@
             description: "출시 예정인 최신 모델을 가장 먼저 만나보세요.<br/>알림 신청을 하시면 오픈 즉시 문자로 알려드립니다.",
             models: ['Galaxy S26 Ultra', 'Galaxy S26', 'Z Fold 8', 'Z Flip 8']
           },
-          
+           
           specialProducts: [
             // 1. 아이폰 17 기본형
             { 
@@ -175,7 +179,7 @@
               publicSupport: 550000, 
               addSupport: 200000 
             },
-            
+             
             // 2. 아이폰 17 AIR
             { 
               id: 'ip17air', 
@@ -337,7 +341,7 @@
               addSupport: 108000 
             }
           ],
-          
+           
           internet: {
             cards: [
               { id: 'plan1', name: "지니 TV 베이직", desc: "230여개 채널", badge: "" },
@@ -441,20 +445,26 @@
           const [internetStb, setInternetStb] = useState('genieA');
           const [showBannerBox, setShowBannerBox] = useState(siteConfig.mainPopup.isActive);
           const [reviewIndex, setReviewIndex] = useState(0);
-          
+          const [showNotice, setShowNotice] = useState(false); // [추가] 공지 팝업 상태
+           
           const [consultForm, setConsultForm] = useState({
             name: '', phone: '',
-            interests: { internet: true, mobile: false },
+            interests: { internet: false, mobile: false }, // [수정] 기본 선택 해제
             mobileModel: '', netSpeed: '100M', tvCount: '베이직', settop: '기가지니A', combine: '미결합', promo: false
           });
 
+          // [추가] 활성화된 배너만 필터링
+          const activeBanners = useMemo(() => {
+             return siteConfig.banner.images.filter(img => img.isActive);
+          }, [siteConfig.banner.images]);
+
           useEffect(() => {
-            if (!siteConfig.banner.images.length) return;
+            if (!activeBanners.length) return;
             const timer = setInterval(() => {
-              setCurrentBanner(prev => (prev + 1) % siteConfig.banner.images.length);
+              setCurrentBanner(prev => (prev + 1) % activeBanners.length);
             }, 3000);
             return () => clearInterval(timer);
-          }, [siteConfig.banner.images]);
+          }, [activeBanners]);
 
           useEffect(() => {
             if (!reviews || !reviews.length) return;
@@ -463,6 +473,21 @@
             }, 2000);
             return () => clearInterval(timer);
           }, [reviews]);
+
+          // [추가] 공지사항 팝업 기간 체크
+          useEffect(() => {
+             if (siteConfig.noticePopup && siteConfig.noticePopup.isActive) {
+                 const now = new Date();
+                 const start = new Date(siteConfig.noticePopup.startDate);
+                 const end = new Date(siteConfig.noticePopup.endDate);
+                 // 종료일 23:59:59까지 유효하도록 설정
+                 end.setHours(23, 59, 59, 999);
+                 
+                 if (now >= start && now <= end) {
+                     setShowNotice(true);
+                 }
+             }
+          }, [siteConfig.noticePopup]);
 
           const currentReviews = useMemo(() => {
             if (!reviews || !reviews.length) return [];
@@ -490,28 +515,35 @@
 
           const handleConsultSubmit = (e) => {
             e.preventDefault();
-            if (!window.emailjs) { alert('메일 서버 연결 중입니다. 잠시 후 다시 시도해주세요.'); return; }
             const { internet, mobile } = consultForm.interests;
             if (!internet && !mobile) { alert('최소 하나의 관심 상품을 선택해주세요.'); return; }
+            if (!consultForm.name || !consultForm.phone) { alert("이름과 연락처를 입력해주세요."); return; }
+
             let details = [];
             if (internet) details.push(`[인터넷+TV] 속도:${consultForm.netSpeed}, TV:${consultForm.tvCount}, 셋탑:${consultForm.settop}, 결합:${consultForm.combine}`);
             if (mobile) details.push(`[휴대폰] 희망기종:${consultForm.mobileModel || '미입력'}`);
             details.push(`[프로모션동의] ${consultForm.promo ? '동의' : '미동의'}`);
-            
-            // [수정] 이메일 본문에 신청자 정보 포함
-            const promoItemContent = `[빠른상담신청]\n이름: ${consultForm.name}\n연락처: ${consultForm.phone}\n\n${details.join('\n')}`;
+             
+            // 카카오톡 전송용 텍스트 생성
+            const textToCopy = `[KT 스토어 빠른 상담 신청]\n- 이름: ${consultForm.name}\n- 연락처: ${consultForm.phone}\n\n${details.join('\n')}\n\n위 내용으로 상담 신청합니다.`;
 
-            const params = {
-              name: consultForm.name,
-              phone: consultForm.phone,
-              branch: '빠른상담신청',
-              promo_item: promoItemContent, // 본문에 내용 통합
-              date: new Date().toLocaleString(),
-              manager_email: siteConfig.email.managerEmail
-            };
-            window.emailjs.send(siteConfig.email.serviceId, siteConfig.email.templateId, params)
-              .then(() => { alert('상담 신청이 완료되었습니다! 빠르게 연락드리겠습니다.'); setConsultForm(prev => ({...prev, name: '', phone: ''})); })
-              .catch(err => alert('전송 실패: ' + JSON.stringify(err)));
+            // 클립보드 복사 및 카카오톡 이동
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            textArea.style.position = "fixed"; textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.select();
+            try { 
+                document.execCommand('copy'); 
+                alert("상담 내용이 복사되었습니다.\n카카오톡 채널 채팅창에 '붙여넣기' 후 전송해주세요!"); 
+                window.open(siteConfig.info.kakaoUrl, '_blank');
+                setConsultForm(prev => ({...prev, name: '', phone: ''}));
+            } catch (err) { 
+                console.error('Copy failed', err); 
+                alert("자동 복사에 실패했습니다. 상담창에서 바로 문의해주세요."); 
+                window.open(siteConfig.info.kakaoUrl, '_blank');
+            }
+            document.body.removeChild(textArea);
           };
 
           const calcRealPrice = (prod) => {
@@ -526,10 +558,10 @@
           // [NEW] 메인화면용 최저가 계산기 (모델별 기준 요금제 적용)
           const calcBestPriceInfo = (prod) => {
             if (!prod.prices || Object.keys(prod.prices).length === 0) return { price: "가격문의", label: "" };
-            
+             
             // 1. 기기값 (첫번째 용량 기준)
             const devicePrice = Object.values(prod.prices)[0]; 
-            
+             
             // 2. 기준 요금제 설정 (모델별 상이)
             let planFee = 90000; // 기본 9만원
             if (prod.id === 'jump4') planFee = 61000; // Jump4는 6.1만 기준
@@ -539,7 +571,7 @@
             // A. 공통지원금 혜택 (공시+추가)
             // A17의 경우 메인 화면에서는 '최대 혜택'을 보여주기 위해 신규가입(추가지원금 포함) 기준으로 계산
             const subsidyBenefit = prod.publicSupport + prod.addSupport;
-            
+             
             // B. 선택약정 혜택 (요금할인 25% * 24개월 + 추가지원금)
             const contractTotalDiscount = (planFee * 0.25 * 24) + prod.addSupport;
 
@@ -556,7 +588,7 @@
                 finalPrice = Math.max(0, devicePrice - subsidyBenefit);
                 label = "공통지원금 기준";
             }
-            
+             
             return {
                 price: finalPrice === 0 ? "0원" : `${finalPrice.toLocaleString()}원`,
                 label: label
@@ -571,8 +603,28 @@
 
           return (
             <div className="pb-20 bg-gray-50 relative">
+              
+              {/* [추가] 공지사항 팝업 */}
+              {showNotice && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4 animate-fade-in">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden animate-scale-up">
+                        <div className="bg-red-600 p-4 flex justify-between items-center">
+                            <h3 className="text-white font-bold text-lg flex items-center gap-2">
+                                <span>{siteConfig.noticePopup.title}</span>
+                            </h3>
+                            <button onClick={() => setShowNotice(false)} className="text-white/80 hover:text-white transition"><IconX size={24}/></button>
+                        </div>
+                        <div className="p-6 text-center">
+                            <div className="text-gray-700 text-sm leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: siteConfig.noticePopup.content }}></div>
+                            <button onClick={() => setShowNotice(false)} className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition">{siteConfig.noticePopup.btnText}</button>
+                        </div>
+                    </div>
+                </div>
+              )}
+
               <section className="relative w-full md:h-[500px] aspect-square md:aspect-auto bg-gray-900 overflow-hidden">
-                {siteConfig.banner.images.map((img, idx) => (
+                {/* [수정] 활성화된 배너만 렌더링 */}
+                {activeBanners.map((img, idx) => (
                   <div key={idx} className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${currentBanner === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                       <div className="absolute inset-0 w-full h-full overflow-hidden">
                         <img src={img.pcImg} className="hidden md:block w-full h-full object-cover blur-2xl opacity-50 scale-110" alt="" />
@@ -629,41 +681,41 @@
               </section>
 
               <section className="bg-white py-16 px-4 border-t border-gray-100" id="internet">
-                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-10"><span className="text-red-600 font-bold text-sm tracking-widest mb-2">INTERNET & TV</span><h2 className="text-3xl font-black text-gray-900">KT 인터넷 + TV 결합할인</h2></div>
-                    <div className="bg-white rounded-3xl p-6 md:p-10 shadow-xl border border-gray-200">
-                       <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8 border-b border-gray-100 pb-8">
-                          <div className="flex gap-2 bg-gray-100 p-1 rounded-xl">
-                             {['100M', '500M', '1G'].map(speed => (
-                                <button key={speed} onClick={() => setInternetSpeed(speed)} className={`px-4 py-2 rounded-lg text-sm font-bold transition ${internetSpeed === speed ? 'bg-white shadow text-red-600' : 'text-gray-500'}`}>{speed}</button>
-                             ))}
-                          </div>
-                          <div className="flex items-center gap-2">
-                             <span className="text-sm font-bold text-gray-600 flex items-center"><IconMonitor size={16} className="inline mr-1"/> 셋탑박스:</span>
-                             <select className="bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm font-bold outline-none" value={internetStb} onChange={e => setInternetStb(e.target.value)}>
-                                <option value="genieA">기가지니A</option><option value="genie3A">기가지니3</option><option value="genie4">지니4</option><option value="sound">사운드바</option>
-                             </select>
-                          </div>
-                       </div>
-                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                          {siteConfig.internet.cards.map((card, idx) => {
-                             const [org, sale] = getInternetPrice(`plan${idx+1}`);
-                             return (
-                                <div key={card.id} className={`border rounded-2xl p-6 transition hover:border-red-500 hover:shadow-lg ${card.badge ? 'border-red-200 bg-red-50/10' : 'border-gray-200 bg-white'}`}>
-                                   {card.badge && <span className="inline-block bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-bold mb-2">{card.badge}</span>}
-                                   <h3 className="font-bold text-lg text-gray-900">{card.name}</h3>
-                                   <p className="text-xs text-gray-500 mb-4">{card.desc}</p>
-                                   <div className="space-y-2 mb-4">
-                                      <div className="flex justify-between text-xs text-gray-400 line-through"><span>기본료</span><span>{org}</span></div>
-                                      <div className="flex justify-between items-end border-t border-gray-100 pt-3"><span className="font-bold text-gray-700">결합가</span><span className="text-2xl font-black text-red-600">{sale}</span></div>
-                                   </div>
-                                   <button onClick={() => { setConsultForm(prev => ({ ...prev, interests: { ...prev.interests, internet: true } })); document.getElementById('consult-form').scrollIntoView({ behavior: 'smooth' }); }} className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-600 transition">신청하기</button>
-                                </div>
-                             );
-                          })}
-                       </div>
-                    </div>
-                 </div>
+                  <div className="max-w-6xl mx-auto">
+                     <div className="text-center mb-10"><span className="text-red-600 font-bold text-sm tracking-widest mb-2">INTERNET & TV</span><h2 className="text-3xl font-black text-gray-900">KT 인터넷 + TV 결합할인</h2></div>
+                     <div className="bg-white rounded-3xl p-6 md:p-10 shadow-xl border border-gray-200">
+                        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8 border-b border-gray-100 pb-8">
+                           <div className="flex gap-2 bg-gray-100 p-1 rounded-xl">
+                              {['100M', '500M', '1G'].map(speed => (
+                                 <button key={speed} onClick={() => setInternetSpeed(speed)} className={`px-4 py-2 rounded-lg text-sm font-bold transition ${internetSpeed === speed ? 'bg-white shadow text-red-600' : 'text-gray-500'}`}>{speed}</button>
+                              ))}
+                           </div>
+                           <div className="flex items-center gap-2">
+                              <span className="text-sm font-bold text-gray-600 flex items-center"><IconMonitor size={16} className="inline mr-1"/> 셋탑박스:</span>
+                              <select className="bg-gray-50 border border-gray-200 rounded-lg p-2 text-sm font-bold outline-none" value={internetStb} onChange={e => setInternetStb(e.target.value)}>
+                                 <option value="genieA">기가지니A</option><option value="genie3A">기가지니3</option><option value="genie4">지니4</option><option value="sound">사운드바</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                           {siteConfig.internet.cards.map((card, idx) => {
+                              const [org, sale] = getInternetPrice(`plan${idx+1}`);
+                              return (
+                                 <div key={card.id} className={`border rounded-2xl p-6 transition hover:border-red-500 hover:shadow-lg ${card.badge ? 'border-red-200 bg-red-50/10' : 'border-gray-200 bg-white'}`}>
+                                    {card.badge && <span className="inline-block bg-red-600 text-white text-[10px] px-2 py-0.5 rounded font-bold mb-2">{card.badge}</span>}
+                                    <h3 className="font-bold text-lg text-gray-900">{card.name}</h3>
+                                    <p className="text-xs text-gray-500 mb-4">{card.desc}</p>
+                                    <div className="space-y-2 mb-4">
+                                       <div className="flex justify-between text-xs text-gray-400 line-through"><span>기본료</span><span>{org}</span></div>
+                                       <div className="flex justify-between items-end border-t border-gray-100 pt-3"><span className="font-bold text-gray-700">결합가</span><span className="text-2xl font-black text-red-600">{sale}</span></div>
+                                    </div>
+                                    <button onClick={() => { setConsultForm(prev => ({ ...prev, interests: { ...prev.interests, internet: true } })); document.getElementById('consult-form').scrollIntoView({ behavior: 'smooth' }); }} className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-red-600 transition">신청하기</button>
+                                 </div>
+                              );
+                           })}
+                        </div>
+                     </div>
+                  </div>
               </section>
 
               <section className="bg-gray-50 py-16 border-t border-gray-200">
@@ -695,46 +747,46 @@
               </section>
 
               <section id="consult-form" className="bg-gradient-to-b from-white to-gray-50 py-20 px-4">
-                 <div className="max-w-lg mx-auto bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
-                    <div className="text-center mb-8"><span className="bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">빠른 상담</span><h3 className="text-2xl font-bold mb-2 text-gray-900">궁금한 점이 있으신가요?</h3><p className="text-gray-500 text-sm">원하시는 상품을 선택(중복 가능)하시면 자세히 안내해 드립니다.</p></div>
-                    <form onSubmit={handleConsultSubmit} className="space-y-6">
-                       <div className="flex gap-3">
-                          <button type="button" onClick={() => toggleInterest('internet')} className={`flex-1 py-4 rounded-xl text-sm font-bold transition border-2 ${consultForm.interests.internet ? 'bg-red-50 border-red-500 text-red-600' : 'bg-gray-50 border-transparent text-gray-400 hover:bg-gray-100'}`}><IconWifi className={`w-5 h-5 mx-auto mb-1 ${consultForm.interests.internet ? 'text-red-500' : 'text-gray-400'}`}/> 인터넷+TV</button>
-                          <button type="button" onClick={() => toggleInterest('mobile')} className={`flex-1 py-4 rounded-xl text-sm font-bold transition border-2 ${consultForm.interests.mobile ? 'bg-red-50 border-red-500 text-red-600' : 'bg-gray-50 border-transparent text-gray-400 hover:bg-gray-100'}`}><IconSmartphone className={`w-5 h-5 mx-auto mb-1 ${consultForm.interests.mobile ? 'text-red-500' : 'text-gray-400'}`}/> 휴대폰</button>
-                       </div>
-                       <div className="space-y-4">
-                         <div className="space-y-2">
-                           <input type="text" required placeholder="이름" className="w-full bg-white border border-gray-200 rounded-xl p-3 text-gray-900 focus:border-red-500 outline-none transition-all text-sm" value={consultForm.name} onChange={e => setConsultForm({...consultForm, name: e.target.value})} />
-                           {/* [수정] 메인화면 연락처 입력창 하나로 통일 */}
-                           <input type="tel" required placeholder="연락처 (예: 010-1234-5678)" className="w-full bg-white border border-gray-200 rounded-xl p-3 text-gray-900 focus:border-red-500 outline-none transition-all text-sm" value={consultForm.phone} onChange={e => setConsultForm({...consultForm, phone: e.target.value})} />
-                         </div>
-                         {consultForm.interests.internet && (
-                           <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3 animate-fade-in">
-                             <p className="text-xs font-bold text-slate-500 mb-1">인터넷+TV 상담 옵션</p>
-                             <div className="grid grid-cols-2 gap-2">
-                               <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm" value={consultForm.netSpeed} onChange={e => setConsultForm({...consultForm, netSpeed: e.target.value})}><option value="100M">100M (슬림)</option><option value="500M">500M (베이직)</option><option value="1G">1G (에센스)</option></select>
-                               <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm" value={consultForm.tvCount} onChange={e => setConsultForm({...consultForm, tvCount: e.target.value})}><option value="베이직">베이직</option><option value="지니 TV 모든G">지니 TV 모든G</option><option value="지니 TV 디즈니+">지니 TV 디즈니+</option></select>
-                             </div>
-                             <div className="grid grid-cols-2 gap-2">
-                                <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm" value={consultForm.settop} onChange={e => setConsultForm({...consultForm, settop: e.target.value})}><option value="기가지니A">기가지니A</option><option value="기가지니3">기가지니3</option><option value="지니4">지니4</option><option value="사운드바">사운드바</option></select>
-                                <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm" value={consultForm.combine} onChange={e => setConsultForm({...consultForm, combine: e.target.value})}><option value="미결합">휴대폰 결합 없음</option><option value="결합(1회선)">휴대폰 결합 (1회선)</option><option value="결합(2회선 이상)">휴대폰 결합 (2회선 이상)</option></select>
-                             </div>
-                           </div>
-                         )}
-                         {consultForm.interests.mobile && (
-                           <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 animate-fade-in">
-                             <p className="text-xs font-bold text-slate-500 mb-2">휴대폰 상담 옵션</p>
-                             <input type="text" placeholder="상담 받을 기종 (예: 아이폰17)" className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm outline-none focus:border-red-500" value={consultForm.mobileModel} onChange={e => setConsultForm({...consultForm, mobileModel: e.target.value})} />
-                           </div>
-                         )}
-                       </div>
-                       <div className="flex items-center gap-2 py-2">
-                          <input type="checkbox" id="footer-promo" checked={consultForm.promo} onChange={e => setConsultForm({...consultForm, promo: e.target.checked})} className="w-5 h-5 rounded text-red-600 focus:ring-red-600 border-gray-300"/>
-                          <label htmlFor="footer-promo" className="text-sm text-gray-500 cursor-pointer">{siteConfig.info.promotionText}</label>
-                       </div>
-                       <button type="submit" className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-red-200 transform active:scale-[0.98]">무료 상담 신청하기</button>
-                    </form>
-                 </div>
+                  <div className="max-w-lg mx-auto bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+                     <div className="text-center mb-8"><span className="bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">빠른 상담</span><h3 className="text-2xl font-bold mb-2 text-gray-900">궁금한 점이 있으신가요?</h3><p className="text-gray-500 text-sm">원하시는 상품을 선택(중복 가능)하시면 자세히 안내해 드립니다.</p></div>
+                     <form onSubmit={handleConsultSubmit} className="space-y-6">
+                        <div className="flex gap-3">
+                           <button type="button" onClick={() => toggleInterest('internet')} className={`flex-1 py-4 rounded-xl text-sm font-bold transition border-2 ${consultForm.interests.internet ? 'bg-red-50 border-red-500 text-red-600' : 'bg-gray-50 border-transparent text-gray-400 hover:bg-gray-100'}`}><IconWifi className={`w-5 h-5 mx-auto mb-1 ${consultForm.interests.internet ? 'text-red-500' : 'text-gray-400'}`}/> 인터넷+TV</button>
+                           <button type="button" onClick={() => toggleInterest('mobile')} className={`flex-1 py-4 rounded-xl text-sm font-bold transition border-2 ${consultForm.interests.mobile ? 'bg-red-50 border-red-500 text-red-600' : 'bg-gray-50 border-transparent text-gray-400 hover:bg-gray-100'}`}><IconSmartphone className={`w-5 h-5 mx-auto mb-1 ${consultForm.interests.mobile ? 'text-red-500' : 'text-gray-400'}`}/> 휴대폰</button>
+                        </div>
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <input type="text" required placeholder="이름" className="w-full bg-white border border-gray-200 rounded-xl p-3 text-gray-900 focus:border-red-500 outline-none transition-all text-sm" value={consultForm.name} onChange={e => setConsultForm({...consultForm, name: e.target.value})} />
+                            {/* [수정] 연락처 자동 하이픈 적용 */}
+                            <input type="tel" required placeholder="연락처 (예: 010-1234-5678)" maxLength="13" className="w-full bg-white border border-gray-200 rounded-xl p-3 text-gray-900 focus:border-red-500 outline-none transition-all text-sm" value={consultForm.phone} onChange={e => setConsultForm({...consultForm, phone: formatPhoneNumber(e.target.value)})} />
+                          </div>
+                          {consultForm.interests.internet && (
+                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3 animate-fade-in">
+                              <p className="text-xs font-bold text-slate-500 mb-1">인터넷+TV 상담 옵션</p>
+                              <div className="grid grid-cols-2 gap-2">
+                                <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm" value={consultForm.netSpeed} onChange={e => setConsultForm({...consultForm, netSpeed: e.target.value})}><option value="100M">100M (슬림)</option><option value="500M">500M (베이직)</option><option value="1G">1G (에센스)</option></select>
+                                <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm" value={consultForm.tvCount} onChange={e => setConsultForm({...consultForm, tvCount: e.target.value})}><option value="베이직">베이직</option><option value="지니 TV 모든G">지니 TV 모든G</option><option value="지니 TV 디즈니+">지니 TV 디즈니+</option></select>
+                              </div>
+                              <div className="grid grid-cols-2 gap-2">
+                                 <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm" value={consultForm.settop} onChange={e => setConsultForm({...consultForm, settop: e.target.value})}><option value="기가지니A">기가지니A</option><option value="기가지니3">기가지니3</option><option value="지니4">지니4</option><option value="사운드바">사운드바</option></select>
+                                 <select className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm" value={consultForm.combine} onChange={e => setConsultForm({...consultForm, combine: e.target.value})}><option value="미결합">휴대폰 결합 없음</option><option value="결합(1회선)">휴대폰 결합 (1회선)</option><option value="결합(2회선 이상)">휴대폰 결합 (2회선 이상)</option></select>
+                              </div>
+                            </div>
+                          )}
+                          {consultForm.interests.mobile && (
+                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 animate-fade-in">
+                              <p className="text-xs font-bold text-slate-500 mb-2">휴대폰 상담 옵션</p>
+                              <input type="text" placeholder="상담 받을 기종 (예: 아이폰17)" className="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm outline-none focus:border-red-500" value={consultForm.mobileModel} onChange={e => setConsultForm({...consultForm, mobileModel: e.target.value})} />
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 py-2">
+                           <input type="checkbox" id="footer-promo" checked={consultForm.promo} onChange={e => setConsultForm({...consultForm, promo: e.target.checked})} className="w-5 h-5 rounded text-red-600 focus:ring-red-600 border-gray-300"/>
+                           <label htmlFor="footer-promo" className="text-sm text-gray-500 cursor-pointer">{siteConfig.info.promotionText}</label>
+                        </div>
+                        <button type="submit" className="w-full bg-[#FAE100] hover:bg-[#F9E000] text-[#371D1E] py-4 rounded-xl font-bold text-lg transition shadow-lg transform active:scale-[0.98] flex items-center justify-center gap-2"><IconMessage size={20} fill="currentColor" /> 카카오톡으로 상담 신청하기</button>
+                     </form>
+                  </div>
               </section>
             </div>
           );
@@ -768,7 +820,7 @@
           useEffect(() => {
             if(availablePlans.length > 0) setSelectedPlan(availablePlans[0]);
           }, [product, availablePlans]);
-          
+           
           useEffect(() => {
             if(availablePlans.length > 0) {
                 const defaultPlan = availablePlans.find(p => p.price === 90000) || availablePlans[0];
@@ -805,11 +857,11 @@
             if(!selectedPlan) return;
             const prices = product.prices || {};
             let devicePrice = prices[selectedCapacity] || Object.values(prices)[0] || 0;
-            
+             
             let appliedSubsidy = 0;
             let currentPublicSupport = 0;
             let currentAddSupport = 0;
-            
+             
             const basePlanFee = selectedPlan.price;
             let contractDiscount = 0;
 
@@ -922,26 +974,6 @@
               return '기기변경';
           };
 
-          const handleOrder = () => {
-            if (!customerName || !customerPhone) { alert("상담 접수를 위해 이름과 연락처를 입력해주세요."); return; }
-            if(window.emailjs) {
-                const familySum = getFamilyFeeSum();
-                const familyFeeDetails = familyFees.map((fee, i) => fee ? `가족${i+1}: ${fee}원` : '').filter(Boolean).join(', ');
-                
-                // [수정] 이메일 본문에 신청자 정보 포함
-                const promoItemContent = `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}\n[신청자] ${customerName} (${customerPhone})\n[가입유형] ${getSignupTypeText(signupType)}\n[요금제] ${selectedPlan.name} (월 ${selectedPlan.price.toLocaleString()}원)\n[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공통지원' : '선택약정'}\n[추가옵션] \n- 보험: ${insurance.name}\n- 카드: ${cardApply.name}\n- 팩: ${packApply.name}\n- 결합: ${combination.name} (가족합산: ${familySum}원 [${familyFeeDetails}])\n[할인내역]\n- 약정할인: ${calcResult.contractDiscount}원\n- 결합할인: ${calcResult.comboDiscount}원\n- 카드할인: ${calcResult.cardDiscount}원\n- 보험할인: ${calcResult.insuranceDiscount}원\n[지원금] 공통: ${calcResult.finalPublicSupport}원 / 추가: ${calcResult.finalAddSupport}원\n[월납부] ${calcResult.totalMonthly.toLocaleString()}원 (5.9% 이자포함)`;
-
-                const params = {
-                    name: customerName, phone: customerPhone, branch: '모바일주문',
-                    promo_item: promoItemContent, // 본문에 내용 통합
-                    date: new Date().toLocaleString(),
-                    manager_email: siteConfig.email.managerEmail
-                };
-                window.emailjs.send(siteConfig.email.serviceId, siteConfig.email.templateId, params).then(() => console.log("Email sent successfully")).catch(e => console.error("Email send failed:", e));
-            }
-            alert("이메일 상담 접수가 되었습니다.");
-          }
-
           const handleKakaoConsult = () => {
              if (!customerName || !customerPhone) { alert("원활한 상담을 위해 이름과 연락처를 입력해주세요."); return; }
              const familySum = getFamilyFeeSum();
@@ -1020,7 +1052,7 @@
                               <div><label className="block text-xs font-bold mb-1 text-gray-600">필수팩</label><select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={JSON.stringify(packApply)} onChange={e => setPackApply(JSON.parse(e.target.value))}>{siteConfig.options.packs.map((opt, i) => <option key={i} value={JSON.stringify(opt)}>{opt.name}</option>)}</select></div>
                               <div><label className="block text-xs font-bold mb-1 text-gray-600">결합할인</label><select className="w-full p-2 border border-gray-200 rounded-lg text-sm" value={JSON.stringify(combination)} onChange={e => setCombination(JSON.parse(e.target.value))}>{siteConfig.options.combinations.map((opt, i) => <option key={i} value={JSON.stringify(opt)}>{opt.name}</option>)}</select></div>
                             </div>
-                            
+                             
                             {(combination.type === 'total' || combination.name.includes('프리미엄 가족결합')) && (
                                 <div className="mt-2 p-4 bg-blue-50 rounded-xl border border-blue-100 animate-fade-in">
                                     <label className="block text-xs font-bold mb-2 text-blue-800">가족 구성원 요금 입력 (본인 제외, 최대 7명)</label>
@@ -1074,7 +1106,8 @@
                           <div className="flex items-center gap-2 mb-3"><span className="font-bold text-gray-800 text-lg">신청자 정보</span><span className="text-xs text-red-500 font-medium">* 필수 입력</span></div>
                           <div className="space-y-3">
                             <div><input type="text" placeholder="이름" className="w-full p-3 border border-gray-200 rounded-lg outline-none focus:border-red-500 text-sm bg-gray-50 focus:bg-white transition-colors" value={customerName} onChange={(e) => setCustomerName(e.target.value)} /></div>
-                            <div><input type="tel" placeholder="연락처 (예: 010-1234-5678)" className="w-full p-3 border border-gray-200 rounded-lg outline-none focus:border-red-500 text-sm bg-gray-50 focus:bg-white transition-colors" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} /></div>
+                            {/* [수정] 연락처 자동 하이픈 적용 */}
+                            <div><input type="tel" placeholder="연락처 (예: 010-1234-5678)" maxLength="13" className="w-full p-3 border border-gray-200 rounded-lg outline-none focus:border-red-500 text-sm bg-gray-50 focus:bg-white transition-colors" value={customerPhone} onChange={(e) => setCustomerPhone(formatPhoneNumber(e.target.value))} /></div>
                           </div>
                         </div>
                         <div className="border-t-2 border-gray-900 pt-6 mt-8">
@@ -1096,14 +1129,14 @@
                                       </div>
                                   ) : (
                                        <div className="w-full">
-                                           {calcResult.finalAddSupport > 0 ? (
-                                              <div className="flex justify-between">
-                                                  <span>추가 지원금</span>
-                                                  <span>-{calcResult.finalAddSupport.toLocaleString()}원</span>
-                                              </div>
-                                           ) : (
-                                              <div className="flex justify-between"><span>공통지원금</span><span>0원</span></div>
-                                           )}
+                                            {calcResult.finalAddSupport > 0 ? (
+                                                <div className="flex justify-between">
+                                                    <span>추가 지원금</span>
+                                                    <span>-{calcResult.finalAddSupport.toLocaleString()}원</span>
+                                                </div>
+                                             ) : (
+                                                <div className="flex justify-between"><span>공통지원금</span><span>0원</span></div>
+                                             )}
                                        </div>
                                   )}
                               </div>
@@ -1133,8 +1166,8 @@
                             </div>
                         </div>
                         <div className="flex gap-3">
-                            <button onClick={handleOrder} className="flex-1 py-4 border border-gray-300 rounded-xl font-bold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition">이메일 상담 접수</button>
-                            <button onClick={handleKakaoConsult} className="flex-[2] py-4 bg-[#FAE100] text-[#371D1E] rounded-xl font-bold text-lg hover:bg-[#F9E000] shadow-lg transition flex items-center justify-center gap-2"><IconMessage size={20} fill="currentColor" /> 카카오톡 상담접수</button>
+                            {/* 이메일 버튼 삭제됨, 카카오톡 버튼 w-full로 변경 */}
+                            <button onClick={handleKakaoConsult} className="w-full py-4 bg-[#FAE100] text-[#371D1E] rounded-xl font-bold text-lg hover:bg-[#F9E000] shadow-lg transition flex items-center justify-center gap-2"><IconMessage size={20} fill="currentColor" /> 카카오톡 상담접수</button>
                         </div>
                       </div>
                   </div>
@@ -1151,22 +1184,34 @@
           const [showPreOrderModal, setShowPreOrderModal] = useState(false);
           const [preOrderForm, setPreOrderForm] = useState({ model: SITE_CONFIG.preOrder.models[0], name: '', phone: '' });
 
-          useEffect(() => {
-            const script = document.createElement('script');
-            script.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js";
-            script.async = true;
-            script.onload = () => { if (window.emailjs && SITE_CONFIG.email.publicKey) window.emailjs.init(SITE_CONFIG.email.publicKey); };
-            document.body.appendChild(script);
-          }, []);
+          // EmailJS 로딩 useEffect 삭제됨
 
           const handleProductClick = (product) => { setSelectedProduct(product); setCurrentView('detail'); window.scrollTo(0, 0); };
           const handleBack = () => { setCurrentView('home'); setSelectedProduct(null); window.scrollTo(0, 0); };
 
           const handlePreOrderSubmit = (e) => {
               e.preventDefault();
-              if (!window.emailjs) { alert('메일 서버 연결 중입니다. 잠시 후 다시 시도해주세요.'); return; }
-              const params = { name: preOrderForm.name, phone: preOrderForm.phone, branch: '사전예약', promo_item: `[사전예약 알림신청]\n이름: ${preOrderForm.name}\n관심모델: ${preOrderForm.model}\n연락처: ${preOrderForm.phone}`, date: new Date().toLocaleString(), manager_email: SITE_CONFIG.email.managerEmail };
-              window.emailjs.send(SITE_CONFIG.email.serviceId, SITE_CONFIG.email.templateId, params).then(() => { alert('사전예약 알림 신청이 완료되었습니다.'); setShowPreOrderModal(false); setPreOrderForm({ ...preOrderForm, name: '', phone: '' }); }).catch(err => alert('전송 실패: ' + JSON.stringify(err)));
+              if (!preOrderForm.name || !preOrderForm.phone) { alert('이름과 연락처를 모두 입력해주세요.'); return; }
+              
+              const textToCopy = `[KT 스토어 사전예약 알림신청]\n- 이름: ${preOrderForm.name}\n- 연락처: ${preOrderForm.phone}\n- 관심모델: ${preOrderForm.model}\n\n위 내용으로 사전예약 알림을 신청합니다.`;
+              
+              const textArea = document.createElement("textarea");
+              textArea.value = textToCopy;
+              textArea.style.position = "fixed"; textArea.style.left = "-9999px";
+              document.body.appendChild(textArea);
+              textArea.select();
+              try { 
+                  document.execCommand('copy'); 
+                  alert("신청 내용이 복사되었습니다.\n카카오톡 채널 채팅창에 '붙여넣기' 후 전송해주세요!"); 
+                  setShowPreOrderModal(false); 
+                  setPreOrderForm({ ...preOrderForm, name: '', phone: '' });
+                  window.open(SITE_CONFIG.info.kakaoUrl, '_blank');
+              } catch (err) { 
+                  console.error('Copy failed', err); 
+                  alert("자동 복사에 실패했습니다. 상담창에서 바로 문의해주세요."); 
+                  window.open(SITE_CONFIG.info.kakaoUrl, '_blank');
+              }
+              document.body.removeChild(textArea);
           };
 
           return (
@@ -1207,7 +1252,7 @@
                     onBack={handleBack} 
                 />
               )}
-              
+               
               {showPreOrderModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fade-in">
                   <div className="bg-white rounded-3xl p-8 max-w-lg w-full relative shadow-2xl animate-scale-up border-2 border-red-500 overflow-hidden">
@@ -1222,7 +1267,8 @@
                       </div>
                       <div className="pt-2 space-y-3">
                         <input type="text" placeholder="이름" className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-red-500 outline-none transition-colors" required value={preOrderForm.name} onChange={(e) => setPreOrderForm({...preOrderForm, name: e.target.value})}/>
-                        <input type="tel" placeholder="알림 받을 연락처 (010-0000-0000)" className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-red-500 outline-none transition-colors" required value={preOrderForm.phone} onChange={(e) => setPreOrderForm({...preOrderForm, phone: e.target.value})}/>
+                        {/* [수정] 연락처 자동 하이픈 적용 */}
+                        <input type="tel" placeholder="알림 받을 연락처 (010-0000-0000)" maxLength="13" className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-red-500 outline-none transition-colors" required value={preOrderForm.phone} onChange={(e) => setPreOrderForm({...preOrderForm, phone: formatPhoneNumber(e.target.value)})}/>
                       </div>
                       <button type="submit" className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition shadow-lg">알림 신청하기</button>
                     </form>
