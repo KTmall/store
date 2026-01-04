@@ -136,13 +136,6 @@
                 { name: '우리가족 무선결합', discount: 3300, type: 'fixed' } 
              ]
           },
-
-          // 3. 메인 배너 이미지 목록 (PC용 / 모바일용 구분)
-          // [TIP] 이미지 제작 권장 사이즈 (글자 잘림 방지)
-          // - PC용(pcImg): 가로 1920px * 세로 600px 이상 (가로로 긴 와이드 형태)
-          //   ※ 주의: 글자는 이미지 정중앙에 배치해야 다양한 모니터에서 잘리지 않고 보입니다.
-          // - 모바일용(mobileImg): 가로 1000px * 세로 1000px (정사각형 형태)
-          //   ※ 모바일 화면에서는 가로 너비에 맞춰 높이도 1:1 비율(정사각형)로 자동 조절됩니다.
           banner: {
             images: [
               { pcImg: "https://i.ibb.co/cSfpwWpK/pc1.jpg", mobileImg: "https://i.ibb.co/R4SBrLBc/m1.jpg" },
@@ -380,7 +373,7 @@
             { id: 4, user: '최*호', device: 'Z Flip 7', rating: 5, content: '디자인이 너무 예뻐요. 배송도 하루만에 왔습니다.', date: '2025.09.11', img: 'https://i.ibb.co/FL8xTVtW/re-f766.jpg' },
             { id: 5, user: '정*아', device: '인터넷+TV', rating: 5, content: '결합할인 받아서 통신비가 많이 줄었어요.', date: '2025.03.10', img: '' },
             { id: 6, user: '강*우', device: '아이폰 17', rating: 4, content: '상담원이 친절하게 설명해주셔서 좋았습니다.', date: '2025.10.09', img: '' },
-            { id: 7, user: '조*현', device: '갤럭시 S25', rating: 5, content: '역시 화면이 시원시원하네요. 대만족입니다.', date: '2025.03.08', img: '' },
+            { id: 7, user: '조*현', device: '갤럭시 S25', rating: 5, content: '역시 화면이 시원시원하네요. 대만족입니다.', date: '2025.03.08', img: 'https://i.ibb.co/6cTRN0Fs/s931n.png' },
             { id: 8, user: '윤*비', device: 'Z Fold 7', rating: 5, content: '업무용으로 샀는데 멀티태스킹이 편해요.', date: '2025.09.28', img: 'https://i.ibb.co/m5VsfLDR/re-f966.jpg' },
             { id: 9, user: '장*석', device: '갤럭시 A17', rating: 4, content: '부모님 효도폰으로 해드렸는데 좋아하시네요.', date: '2025.11.06', img: '' },
             { id: 10, user: '임*희', device: '아이폰 17 AIR', rating: 5, content: '가볍고 얇아서 들고 다니기 편해요.', date: '2025.11.05', img: '' },
@@ -450,7 +443,7 @@
           const [reviewIndex, setReviewIndex] = useState(0);
           
           const [consultForm, setConsultForm] = useState({
-            name: '', phone: '010', phoneBody: '',
+            name: '', phone: '',
             interests: { internet: true, mobile: false },
             mobileModel: '', netSpeed: '100M', tvCount: '베이직', settop: '기가지니A', combine: '미결합', promo: false
           });
@@ -504,16 +497,20 @@
             if (internet) details.push(`[인터넷+TV] 속도:${consultForm.netSpeed}, TV:${consultForm.tvCount}, 셋탑:${consultForm.settop}, 결합:${consultForm.combine}`);
             if (mobile) details.push(`[휴대폰] 희망기종:${consultForm.mobileModel || '미입력'}`);
             details.push(`[프로모션동의] ${consultForm.promo ? '동의' : '미동의'}`);
+            
+            // [수정] 이메일 본문에 신청자 정보 포함
+            const promoItemContent = `[빠른상담신청]\n이름: ${consultForm.name}\n연락처: ${consultForm.phone}\n\n${details.join('\n')}`;
+
             const params = {
               name: consultForm.name,
-              phone: `${consultForm.phone}-${consultForm.phoneBody}`,
+              phone: consultForm.phone,
               branch: '빠른상담신청',
-              promo_item: details.join('\n'),
+              promo_item: promoItemContent, // 본문에 내용 통합
               date: new Date().toLocaleString(),
               manager_email: siteConfig.email.managerEmail
             };
             window.emailjs.send(siteConfig.email.serviceId, siteConfig.email.templateId, params)
-              .then(() => { alert('상담 신청이 완료되었습니다! 빠르게 연락드리겠습니다.'); setConsultForm(prev => ({...prev, name: '', phoneBody: ''})); })
+              .then(() => { alert('상담 신청이 완료되었습니다! 빠르게 연락드리겠습니다.'); setConsultForm(prev => ({...prev, name: '', phone: ''})); })
               .catch(err => alert('전송 실패: ' + JSON.stringify(err)));
           };
 
@@ -708,10 +705,8 @@
                        <div className="space-y-4">
                          <div className="space-y-2">
                            <input type="text" required placeholder="이름" className="w-full bg-white border border-gray-200 rounded-xl p-3 text-gray-900 focus:border-red-500 outline-none transition-all text-sm" value={consultForm.name} onChange={e => setConsultForm({...consultForm, name: e.target.value})} />
-                           <div className="flex gap-2">
-                              <select className="bg-white border border-gray-200 rounded-xl p-3 text-gray-900 outline-none w-24 focus:border-red-500 text-sm" value={consultForm.phone} onChange={e => setConsultForm({...consultForm, phone: e.target.value})}><option>010</option><option>011</option></select>
-                              <input type="tel" required placeholder="1234-5678" className="flex-1 bg-white border border-gray-200 rounded-xl p-3 text-gray-900 focus:border-red-500 outline-none transition-all text-sm" value={consultForm.phoneBody} onChange={e => setConsultForm({...consultForm, phoneBody: e.target.value})} />
-                           </div>
+                           {/* [수정] 메인화면 연락처 입력창 하나로 통일 */}
+                           <input type="tel" required placeholder="연락처 (예: 010-1234-5678)" className="w-full bg-white border border-gray-200 rounded-xl p-3 text-gray-900 focus:border-red-500 outline-none transition-all text-sm" value={consultForm.phone} onChange={e => setConsultForm({...consultForm, phone: e.target.value})} />
                          </div>
                          {consultForm.interests.internet && (
                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 space-y-3 animate-fade-in">
@@ -932,9 +927,13 @@
             if(window.emailjs) {
                 const familySum = getFamilyFeeSum();
                 const familyFeeDetails = familyFees.map((fee, i) => fee ? `가족${i+1}: ${fee}원` : '').filter(Boolean).join(', ');
+                
+                // [수정] 이메일 본문에 신청자 정보 포함
+                const promoItemContent = `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}\n[신청자] ${customerName} (${customerPhone})\n[가입유형] ${getSignupTypeText(signupType)}\n[요금제] ${selectedPlan.name} (월 ${selectedPlan.price.toLocaleString()}원)\n[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공통지원' : '선택약정'}\n[추가옵션] \n- 보험: ${insurance.name}\n- 카드: ${cardApply.name}\n- 팩: ${packApply.name}\n- 결합: ${combination.name} (가족합산: ${familySum}원 [${familyFeeDetails}])\n[할인내역]\n- 약정할인: ${calcResult.contractDiscount}원\n- 결합할인: ${calcResult.comboDiscount}원\n- 카드할인: ${calcResult.cardDiscount}원\n- 보험할인: ${calcResult.insuranceDiscount}원\n[지원금] 공통: ${calcResult.finalPublicSupport}원 / 추가: ${calcResult.finalAddSupport}원\n[월납부] ${calcResult.totalMonthly.toLocaleString()}원 (5.9% 이자포함)`;
+
                 const params = {
                     name: customerName, phone: customerPhone, branch: '모바일주문',
-                    promo_item: `[주문] ${product.name} / ${selectedCapacity} / ${selectedColor.name}\n[가입유형] ${getSignupTypeText(signupType)}\n[요금제] ${selectedPlan.name} (월 ${selectedPlan.price.toLocaleString()}원)\n[조건] ${installmentPeriod}개월 / ${discountType === 'subsidy' ? '공통지원' : '선택약정'}\n[추가옵션] \n- 보험: ${insurance.name}\n- 카드: ${cardApply.name}\n- 팩: ${packApply.name}\n- 결합: ${combination.name} (가족합산: ${familySum}원 [${familyFeeDetails}])\n[할인내역]\n- 약정할인: ${calcResult.contractDiscount}원\n- 결합할인: ${calcResult.comboDiscount}원\n- 카드할인: ${calcResult.cardDiscount}원\n- 보험할인: ${calcResult.insuranceDiscount}원\n[지원금] 공통: ${calcResult.finalPublicSupport}원 / 추가: ${calcResult.finalAddSupport}원\n[월납부] ${calcResult.totalMonthly.toLocaleString()}원 (5.9% 이자포함)`,
+                    promo_item: promoItemContent, // 본문에 내용 통합
                     date: new Date().toLocaleString(),
                     manager_email: siteConfig.email.managerEmail
                 };
